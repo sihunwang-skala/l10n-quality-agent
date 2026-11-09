@@ -3,11 +3,22 @@
 > 한국어 문장을 목표 언어·로케일에 맞게 번역하고, **MQM 기반 평가 → 오류 유형별 전문 수정 → 재평가 → Agent의 전략 판단 → 사람 승인**까지 품질 개선 과정을 추적하는 LangChain 기반 번역 품질 개선 에이전트.
 > A LangChain-based agent that translates Korean into locale-specific target languages, evaluates with MQM, fixes errors category by category, and keeps a full audit trail with human-in-the-loop approval.
 
-![Python](https://img.shields.io/badge/python-3.11-blue) ![LangChain](https://img.shields.io/badge/LangChain-LCEL-green) ![Ollama](https://img.shields.io/badge/local%20LLM-Ollama%20%2B%20Qwen-orange) ![License](https://img.shields.io/badge/code-MIT-lightgrey)
 
 <p align="center">
   <img src="docs/images/ui-input.png" alt="Gradio 입력 화면">
 </p>
+
+## 🛠 주요 기술 (Tech Stack)
+
+| 구분 | 기술 |
+|---|---|
+| **언어** | ![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=for-the-badge&logo=python&logoColor=white) |
+| **LLM 프레임워크** | ![LangChain](https://img.shields.io/badge/LangChain_(LCEL)-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge&logo=pydantic&logoColor=white) |
+| **모델** | ![Ollama](https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white) ![Qwen](https://img.shields.io/badge/Qwen3.5_4B-615CED?style=for-the-badge) ![OpenAI](https://img.shields.io/badge/OpenAI_gpt--5--mini-412991?style=for-the-badge&logo=openai&logoColor=white) |
+| **UI** | ![Gradio](https://img.shields.io/badge/Gradio-F97316?style=for-the-badge&logo=gradio&logoColor=white) |
+| **데이터·평가** | ![pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) ![FLORES+](https://img.shields.io/badge/FLORES%2B-CC_BY--SA_4.0-lightgrey?style=for-the-badge) ![MQM](https://img.shields.io/badge/MQM-error_taxonomy-2E7D32?style=for-the-badge) |
+| **테스트** | ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white) |
+| **라이선스** | ![MIT](https://img.shields.io/badge/code-MIT-yellow?style=for-the-badge) |
 
 ---
 
