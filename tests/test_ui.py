@@ -232,3 +232,9 @@ def test_mode_guide_states_input_and_intent():
     for mode, needle in ((ui.MODE_POC, "테스트"), (ui.MODE_DIRECT, "타이핑"), (ui.MODE_CSV, "자동")):
         html = render_mode_guide(mode)
         assert needle in html and "입력할 것" in html and "이럴 때" in html
+
+
+def test_hero_openai_badge_says_key_state_not_that_openai_ran():
+    from l10n_quality_agent.ui_render import render_hero
+    assert "Mock (키 없음)" in render_hero("Mock, 키 없음", [])
+    assert "API 키 설정됨" in render_hero("실제 실행", []) and "실제 실행" not in render_hero("실제 실행", [])

@@ -107,32 +107,26 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 
 왼쪽 맨 위 **① 어떻게 입력할까요?** 에서 방식을 고르면, 그 방식에서 *무엇을 입력하고 무슨 일을 하는지* 설명 카드가 함께 바뀝니다. 어느 방식이든 이후 흐름(번역 → MQM 평가 → 수정 → 사람 승인)은 같습니다.
 
-<table>
-  <tr>
-    <td width="45%" valign="top">
-      <h4>🧪 PoC 테스트</h4>
-      <p><b>입력:</b> 내장 문장 30개 중 1개 선택 (타이핑 없음)</p>
-      <p><b>용도:</b> 설치 확인, 데모, 모델·프롬프트 변경 전후 비교</p>
-    </td>
-    <td width="55%"><img src="docs/images/ui-mode-poc.png" alt="PoC 테스트 모드" width="460"></td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <h4>✍️ 직접 입력</h4>
-      <p><b>입력:</b> 한국어 원문(필수), 보호 용어·추가 지시(선택)</p>
-      <p><b>용도:</b> 사람이 한 문장씩 넣어 품질 점검</p>
-    </td>
-    <td><img src="docs/images/ui-mode-direct.png" alt="직접 입력 모드" width="460"></td>
-  </tr>
-  <tr>
-    <td valign="top">
-      <h4>📄 CSV 업로드</h4>
-      <p><b>입력:</b> <code>한국어</code> 열이 있는 CSV 파일 (선택 열: <code>id</code>, <code>목표국가</code>, <code>보호용어</code>, <code>추가지시</code> · 최대 30문장)</p>
-      <p><b>용도:</b> 여러 문장을 자동으로 일괄 번역</p>
-    </td>
-    <td><img src="docs/images/ui-mode-csv.png" alt="CSV 업로드 모드" width="460"></td>
-  </tr>
-</table>
+#### 🧪 PoC 테스트 — 내장 예시 문장
+
+- **입력:** 내장 문장 30개 중 1개 선택 (타이핑 없음)
+- **용도:** 설치 확인, 데모, 모델·프롬프트 변경 전후 비교
+
+<img src="docs/images/ui-mode-poc.png" alt="PoC 테스트 모드" width="800">
+
+#### ✍️ 직접 입력 — 사람이 타이핑
+
+- **입력:** 한국어 원문(필수), 보호 용어·추가 지시(선택)
+- **용도:** 사람이 한 문장씩 넣어 품질 점검
+
+<img src="docs/images/ui-mode-direct.png" alt="직접 입력 모드" width="800">
+
+#### 📄 CSV 업로드 — 자동 일괄 번역
+
+- **입력:** `한국어` 열이 있는 CSV 파일 (선택 열: `id`, `목표국가`, `보호용어`, `추가지시` · 최대 30문장)
+- **용도:** 여러 문장을 자동으로 일괄 번역
+
+<img src="docs/images/ui-mode-csv.png" alt="CSV 업로드 모드" width="800">
 
 - **CSV 업로드**는 파일을 올리는 즉시 검증하고 "몇 문장·몇 건이 실행될지"를 미리 보여줍니다. 문제가 있으면 실행을 막고 이유를 알려줍니다. 양식은 [`data/batch_input_template.csv`](data/batch_input_template.csv)입니다. 한 행에 여러 국가를 넣을 때는 `Japan|Italy`처럼 씁니다.
 - 일괄 실행 중 한 문장이 실패해도 나머지는 계속 진행합니다.
@@ -142,13 +136,13 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 
 **진행 단계(번역 → MQM 평가 → 전문 수정 → 재검증 → 사람 승인), 상태 배지, 원문·번역 비교, 수정 이력(채택/Rollback), Agent 판단 근거**를 국가별 카드로 보여줍니다. 아래는 CSV 두 행(일본어·프랑스어)을 일괄 실행한 화면입니다.
 
-![실행 결과](docs/images/ui-run.png)
+<img src="docs/images/ui-run.png" alt="실행 결과" width="800">
 
 ### 검토 · 승인
 
 남은 MQM 오류와 실패 사유를 확인하고, 이전 버전과의 **변경점(diff)** 을 본 뒤 **직접 수정 / AI 재수정 / 최종 승인 / 거부**를 선택합니다. 프랑스어 예시는 숫자·단위 대응을 자동으로 확정할 수 없어 수정 후보를 거부(Rollback)하고 `HUMAN_REVIEW_REQUIRED`로 넘긴 사례입니다.
 
-![검토·승인](docs/images/ui-review.png)
+<img src="docs/images/ui-review.png" alt="검토·승인" width="800">
 
 > 화면 속 결과(일본어·프랑스어 번역, MQM 오류, 수정 이력)는 로컬 Qwen3.5 4B로 실제 실행해 `runs/`에 저장된 기록을 UI에서 다시 불러와 캡처한 것입니다. 문장(예: 가상의 스타트업 `BlueBridge Labs`, 데이터센터 백업 안내)은 모두 작성자가 직접 만든 예시입니다. 실패 사례를 숨기지 않고 사람 검토로 넘기는 것이 이 시스템의 의도된 동작입니다.
 
