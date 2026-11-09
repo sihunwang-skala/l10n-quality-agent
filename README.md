@@ -32,13 +32,13 @@
 
 | 구분 | 기술 |
 |---|---|
-| **언어** | ![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=for-the-badge&logo=python&logoColor=white) |
-| **LLM 프레임워크** | ![LangChain](https://img.shields.io/badge/LangChain_(LCEL)-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=for-the-badge&logo=pydantic&logoColor=white) |
-| **모델** | ![Ollama](https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white) ![Qwen](https://img.shields.io/badge/Qwen3.5_4B-615CED?style=for-the-badge) ![OpenAI](https://img.shields.io/badge/OpenAI_gpt--5--mini-412991?style=for-the-badge&logo=openai&logoColor=white) |
-| **UI** | ![Gradio](https://img.shields.io/badge/Gradio-F97316?style=for-the-badge&logo=gradio&logoColor=white) |
-| **데이터·평가** | ![pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white) ![FLORES+](https://img.shields.io/badge/FLORES%2B-CC_BY--SA_4.0-lightgrey?style=for-the-badge) ![MQM](https://img.shields.io/badge/MQM-error_taxonomy-2E7D32?style=for-the-badge) |
-| **테스트** | ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=for-the-badge&logo=pytest&logoColor=white) |
-| **라이선스** | ![MIT](https://img.shields.io/badge/code-MIT-yellow?style=for-the-badge) |
+| **언어** | ![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white) |
+| **LLM 프레임워크** | ![LangChain](https://img.shields.io/badge/LangChain_(LCEL)-1C3C3C?style=flat-square&logo=langchain&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white) |
+| **모델** | ![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white) ![Qwen](https://img.shields.io/badge/Qwen3.5_4B-615CED?style=flat-square) ![OpenAI](https://img.shields.io/badge/OpenAI_gpt--5--mini-412991?style=flat-square&logo=openai&logoColor=white) |
+| **UI** | ![Gradio](https://img.shields.io/badge/Gradio-F97316?style=flat-square&logo=gradio&logoColor=white) |
+| **데이터·평가** | ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![FLORES+](https://img.shields.io/badge/FLORES%2B-CC_BY--SA_4.0-lightgrey?style=flat-square) ![MQM](https://img.shields.io/badge/MQM-error_taxonomy-2E7D32?style=flat-square) |
+| **테스트** | ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white) |
+| **라이선스** | ![MIT](https://img.shields.io/badge/code-MIT-yellow?style=flat-square) |
 
 ---
 
