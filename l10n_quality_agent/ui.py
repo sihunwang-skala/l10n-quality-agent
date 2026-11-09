@@ -27,6 +27,20 @@ from .results_csv import FIELDS, RESULTS_CSV, SOURCE_CSV, save_result
 from .schemas import AgentStatus, TranslationRequest
 from .terminology import Terminology, default_terminology_path
 from .tm import TranslationMemory, default_tm_path
+from .ui_render import (
+    CSS,
+    render_batch_error,
+    render_batch_summary,
+    render_csv_check,
+    render_empty,
+    render_mode_guide,
+    render_hero,
+    render_live,
+    render_run_card,
+    render_status_stats,
+    render_version_diff,
+    stage_from_message,
+)
 from .workflow import QualityWorkflow
 
 COUNTRIES = list(COUNTRY_LANGUAGE)
@@ -165,7 +179,9 @@ def save_selected_result(run_map, country, results_path):
     return message, *load_results_view(results_path)
 
 
-def run_translation(source, countries, terms, instruction, use_openai, results_path=str(RESULTS_CSV)):
+def run_translation(
+    source, countries, terms, instruction, use_openai, results_path=str(RESULTS_CSV), row_label=""
+):
     selected = countries if isinstance(countries, list) else [countries]
     selected = [country for country in selected if country]
     if not selected:
@@ -173,6 +189,9 @@ def run_translation(source, countries, terms, instruction, use_openai, results_p
     if not source or not source.strip():
         raise gr.Error("한국어 원문을 입력하세요.")
 
+    # 접힌 Accordion 안의 입력칸은 한 번도 열지 않으면 None으로 넘어올 수 있다.
+    terms = terms or ""
+    instruction = instruction or ""
     terminology = _terminology()
     dne = _dne()
 
@@ -180,8 +199,12 @@ def run_translation(source, countries, terms, instruction, use_openai, results_p
 
     run_map = {}
     transcript = []
+    done_cards: list[str] = []
+    stage = 0
     # 국가별로 독립 실행해 한 국가의 실패가 다른 국가 결과를 덮지 않게 한다.
     for country_index, country in enumerate(selected, 1):
+
+        label = f"{row_label} · {country}" if row_label else country  # 일괄 실행에서 행을 구분
 
         def tag(msg: str, _country=country) -> str:
             return f"[{_country}] {msg}" if multi else msg
@@ -216,6 +239,7 @@ def run_translation(source, countries, terms, instruction, use_openai, results_p
                 if message_type == "step":
                     country_steps.append(tag(_readable_step(message)))
                     heartbeat = []
+                    stage = stage_from_message(message)
                 else:
                     heartbeat = [tag(message)]
                 summary = (
@@ -225,7 +249,10 @@ def run_translation(source, countries, terms, instruction, use_openai, results_p
                 live = "\n\n".join(
                     [summary] + transcript + ["\n\n".join(country_steps + heartbeat)]
                 )
-                yield live, run_map, gr.update(), gr.update()
+                dashboard = render_live(
+                    label, country_index, len(selected), stage, message.splitlines()[0], done_cards
+                )
+                yield live, run_map, gr.update(), gr.update(), dashboard
             except StopIteration as finished:
                 record = finished.value
                 break
@@ -241,7 +268,8 @@ def run_translation(source, countries, terms, instruction, use_openai, results_p
         saved_message = _save_result(record, results_path)
         country_steps.append(tag(f"최종: {record.status.value}\nrun_id={record.run_id}\n\n{record.current_version.translation}"))
         country_steps.append(tag(saved_message))
-        run_map[country] = record.run_id
+        run_map[label] = record.run_id
+        done_cards.append(render_run_card(record, label))
         transcript.append(
             f"## {country} 완료 ({country_index}/{len(selected)})\n\n" + "\n\n".join(country_steps)
         )
@@ -251,9 +279,180 @@ def run_translation(source, countries, terms, instruction, use_openai, results_p
                 [f"전체 진행: {country_index}/{len(selected)}개 완료"] + transcript
             ),
             run_map,
-            gr.update(choices=list(run_map), value=country),
+            gr.update(choices=list(run_map), value=label),
             gr.update(choices=versions, value=versions[-1] if versions else None),
+            "".join(done_cards),
         )
+
+
+# ── 입력 방식 3가지 ───────────────────────────────────────────
+MODE_POC = "🧪 PoC 테스트 (내장 예시 문장)"
+MODE_DIRECT = "✍️ 직접 입력 (사람이 타이핑)"
+MODE_CSV = "📄 CSV 업로드 (자동 일괄 번역)"
+MODES = [MODE_POC, MODE_DIRECT, MODE_CSV]
+
+BATCH_MAX_ROWS = 30  # 로컬 모델은 문장당 수십 초~수 분이 걸려 상한을 둔다
+BATCH_TEMPLATE = FLORES_PROCESSED_DIR.parents[1] / "batch_input_template.csv"
+CSV_COUNTRY_SEPARATORS = "|,;"
+
+
+def _sample_text(choice: str | None) -> str:
+    """'889: 문장' 형식의 드롭다운 값에서 문장만 꺼낸다."""
+    if not choice:
+        return ""
+    return choice.split(": ", 1)[1] if ": " in choice else choice
+
+
+def parse_batch_csv(path, default_countries) -> tuple[list[dict], list[str]]:
+    """업로드한 CSV를 검증하고 실행할 행 목록으로 바꾼다. (rows, errors) 반환.
+
+    필수 열: 한국어. 선택 열: id, 목표국가, 보호용어, 추가지시.
+    목표국가 열이 비어 있는 행은 화면에서 고른 목표 국가를 쓴다.
+    """
+    if not path:
+        return [], ["CSV 파일을 업로드하세요."]
+    file = Path(path)
+    if file.suffix.lower() != ".csv" or not file.is_file():
+        return [], ["확장자가 .csv인 파일을 올려주세요."]
+    try:
+        with file.open(encoding="utf-8-sig", newline="") as handle:
+            reader = csv.DictReader(handle)
+            fields = reader.fieldnames or []
+            records = list(reader)
+    except UnicodeDecodeError:
+        return [], ["UTF-8로 저장된 CSV만 읽을 수 있습니다. (엑셀: 'CSV UTF-8'로 저장)"]
+    if "한국어" not in fields:
+        return [], [f"'한국어' 열이 없습니다. (현재 열: {', '.join(fields) or '없음'})"]
+
+    defaults = [c for c in (default_countries if isinstance(default_countries, list) else [default_countries]) if c]
+    rows, errors = [], []
+    for index, record in enumerate(records, 1):
+        source = (record.get("한국어") or "").strip()
+        if not source:
+            continue  # 빈 줄은 건너뛴다
+        cell = (record.get("목표국가") or "").strip()
+        countries = defaults
+        if cell:
+            normalized = cell
+            for separator in CSV_COUNTRY_SEPARATORS:
+                normalized = normalized.replace(separator, "|")
+            countries = [part.strip() for part in normalized.split("|") if part.strip()]
+        unknown = [c for c in countries if c not in COUNTRY_LANGUAGE]
+        if unknown:
+            errors.append(f"{index}번째 행: 알 수 없는 국가 {unknown}")
+        if not countries:
+            errors.append(f"{index}번째 행: 목표 국가가 없습니다 (화면에서 고르거나 '목표국가' 열을 채우세요)")
+        rows.append(
+            {
+                "label": (record.get("id") or "").strip() or f"#{index}",
+                "source": source,
+                "countries": countries,
+                "terms": (record.get("보호용어") or "").strip(),
+                "instruction": (record.get("추가지시") or "").strip(),
+            }
+        )
+    if not rows:
+        errors.append("번역할 문장이 없습니다. '한국어' 열에 내용이 있는지 확인하세요.")
+    if len(rows) > BATCH_MAX_ROWS:
+        errors.append(f"한 번에 최대 {BATCH_MAX_ROWS}문장까지 실행할 수 있습니다. (현재 {len(rows)}문장)")
+    return rows, errors
+
+
+def preview_batch_csv(path, countries):
+    """파일을 올리면 바로 검증해서 '무엇이 어떻게 실행될지'를 미리 보여준다."""
+    rows, errors = parse_batch_csv(path, countries)
+    if not path:
+        return "", pd.DataFrame(columns=["id", "한국어", "목표국가"])
+    preview = pd.DataFrame(
+        [
+            {"id": r["label"], "한국어": r["source"], "목표국가": ", ".join(r["countries"])}
+            for r in rows
+        ],
+        columns=["id", "한국어", "목표국가"],
+    )
+    jobs = sum(len(r["countries"]) for r in rows)
+    return render_csv_check(len(rows), jobs, errors), preview
+
+
+def run_batch(csv_path, countries, use_openai, results_path=str(RESULTS_CSV)):
+    """CSV의 모든 행을 순서대로 자동 실행한다. 한 행이 실패해도 다음 행은 계속한다."""
+    rows, errors = parse_batch_csv(csv_path, countries)
+    if errors:
+        raise gr.Error("CSV를 확인하세요: " + " / ".join(errors[:5]))
+    total = sum(len(r["countries"]) for r in rows)
+
+    batch_map: dict[str, str] = {}
+    prior_cards = ""
+    log_parts: list[str] = []
+    done, failed = 0, 0
+    last_country_update, last_version_update = gr.update(), gr.update()
+
+    for number, row in enumerate(rows, 1):
+        header = f"### 문장 {number}/{len(rows)} ({row['label']}): {row['source']}"
+        inner = run_translation(
+            row["source"], row["countries"], row["terms"], row["instruction"],
+            use_openai, results_path, row_label=row["label"],
+        )
+        final = None
+        try:
+            for log, row_map, country_update, version_update, dash in inner:
+                final = (row_map, country_update, version_update, dash)
+                yield (
+                    "\n\n".join(log_parts + [header, log]),
+                    {**batch_map, **row_map},
+                    last_country_update,
+                    last_version_update,
+                    render_batch_summary(done, failed, total) + prior_cards + dash,
+                )
+        except Exception as exc:  # 한 문장이 실패해도 일괄 실행은 이어간다
+            failed += len(row["countries"])
+            log_parts.append(f"{header}\n실패: {type(exc).__name__}: {exc}")
+            prior_cards += render_batch_error(row["label"], row["source"], f"{type(exc).__name__}: {exc}")
+            if final:
+                batch_map.update(final[0])
+            continue
+        batch_map.update(final[0])
+        done += len(row["countries"])
+        prior_cards += final[3]
+        log_parts.append(header + "\n" + log)
+        last_country_update = gr.update(choices=list(batch_map), value=final[1].get("value"))
+        last_version_update = final[2]
+        yield (
+            "\n\n".join(log_parts),
+            dict(batch_map),
+            last_country_update,
+            last_version_update,
+            render_batch_summary(done, failed, total) + prior_cards,
+        )
+
+
+def run_selected_mode(
+    mode, sample_choice, source, csv_path, countries, terms, instruction, use_openai,
+    results_path=str(RESULTS_CSV),
+):
+    """선택한 입력 방식에 맞는 실행 경로로 보낸다. 이후 흐름(번역→MQM→수정→승인)은 모두 같다."""
+    if mode == MODE_CSV:
+        yield from run_batch(csv_path, countries, use_openai, results_path)
+    elif mode == MODE_POC:
+        sentence = _sample_text(sample_choice)
+        if not sentence:
+            raise gr.Error("내장 예시 문장을 선택하세요.")
+        yield from run_translation(sentence, countries, "", "", use_openai, results_path)
+    else:
+        yield from run_translation(source, countries, terms, instruction, use_openai, results_path)
+
+
+def switch_mode(mode):
+    return (
+        render_mode_guide(mode),
+        gr.update(visible=mode == MODE_POC),
+        gr.update(visible=mode == MODE_DIRECT),
+        gr.update(visible=mode == MODE_CSV),
+    )
+
+
+def preview_sample(choice):
+    return _sample_text(choice)
 
 
 def set_status(run_map, country, action, results_path=str(RESULTS_CSV)):
@@ -355,120 +554,207 @@ def ai_revise(run_map, country, version, instruction, model_choice, results_path
     )
 
 
+def show_run(run_map, country, version=None):
+    """선택한 국가의 결과 카드, 버전 diff, 편집창 초기값을 만든다."""
+    run_id = (run_map or {}).get(country)
+    if not run_id:
+        return render_empty(), "", gr.update()
+    record = workflow.store.load(run_id)
+    chosen = int(version) if version else None
+    current = record.versions[-1].translation if record.versions else ""
+    return render_run_card(record, country), render_version_diff(record, chosen), gr.update(value=current)
+
+
+def show_run_card(run_map, country, version=None):
+    """승인/수정 후 카드와 diff만 갱신한다 (편집창은 건드리지 않는다)."""
+    card, diff, _ = show_run(run_map, country, version)
+    return card, diff
+
+
+def _csv_stats(path: str) -> str:
+    frame = load_results_view(path)[0]
+    return render_status_stats(frame["상태"].tolist()) if len(frame) else ""
+
+
+def _resource_badges() -> list[str]:
+    return [
+        name
+        for name, loaded in (("TM", _tm()), ("용어집", _terminology()), ("DNE", _dne()))
+        if loaded is not None
+    ]
+
+
 def build_app() -> gr.Blocks:
+    openai_tag = "실제 실행" if is_openai_configured() else "Mock, 키 없음"
     with gr.Blocks(title="L10n Quality Agent") as app:
-        gr.Markdown("# L10n Quality Agent")
-        gr.Markdown(
-            "번역 직후 고정 우선순위 규칙 대신 **Qwen Agent가 바로** MQM 결과를 보고 다음 전략을 결정합니다. "
-            "목표 언어가 English인 국가는 Wikivoyage KO→EN 용어집/DNE/TM이 자동 적용됩니다."
-        )
+        gr.HTML(render_hero(openai_tag, _resource_badges()))
         run_map = gr.State({})
 
-        with gr.Row():
-            sample_choice = gr.Dropdown(
-                _sample_sentence_choices(), label="예시 문장 불러오기 (선택 시 아래 원문에 채워짐)"
-            )
-        source = gr.Textbox(label="한국어 원문")
-        countries = gr.Dropdown(
-            COUNTRIES,
-            value=[COUNTRIES[0]],
-            multiselect=True,
-            label="목표 국가(복수 선택 가능)",
-        )
-        terms = gr.Textbox(label="보호 용어(쉼표 구분)")
-        instruction = gr.Textbox(label="추가 지시")
-        openai_tag = "실제 실행" if is_openai_configured() else "Mock, 키 없음"
-        use_openai = gr.Checkbox(
-            value=False, label=f"Qwen Agent도 실패하면 OpenAI Agent 개입 ({openai_tag})"
-        )
-        results_path = gr.Textbox(
-            value=str(RESULTS_CSV), label="결과 저장 파일", interactive=False
-        )
-        run_button = gr.Button("번역 실행")
-        output = gr.Textbox(label="실행 과정 · TM/용어집/DNE · MQM · 수정 이력 · 최종 상태", lines=22)
+        with gr.Row(equal_height=False):
+            # ── 왼쪽: 입력 ─────────────────────────────
+            with gr.Column(scale=4, min_width=320):
+                gr.Markdown("### ① 어떻게 입력할까요?")
+                mode = gr.Radio(MODES, value=MODE_POC, show_label=False)
+                mode_guide = gr.HTML(render_mode_guide(MODE_POC))
 
-        gr.Markdown("### 결과 검토 및 HITL")
-        result_country = gr.Dropdown(label="결과 검토 대상 국가")
-        version = gr.Dropdown(label="이전 번역 버전")
+                with gr.Group(visible=True) as poc_group:
+                    sample_choice = gr.Dropdown(
+                        _sample_sentence_choices(),
+                        label="내장 예시 문장 (총 30개)",
+                        info="고르기만 하면 됩니다. 입력할 내용은 없습니다",
+                    )
+                    sample_preview = gr.Textbox(label="선택한 문장 (읽기 전용)", lines=3, interactive=False)
 
-        with gr.Group():
-            gr.Markdown("**A. 직접 수정**")
-            edit_box = gr.Textbox(label="번역문을 직접 편집")
-            edit_button = gr.Button("직접 수정 저장")
+                with gr.Group(visible=False) as direct_group:
+                    source = gr.Textbox(
+                        label="한국어 원문 (필수)", lines=4, placeholder="번역할 한국어 문장을 직접 입력하세요"
+                    )
+                    terms = gr.Textbox(
+                        label="보호 용어 (선택)",
+                        info="번역에서 그대로 유지할 단어. 쉼표로 구분 · 예: BlueBridge Labs, Pro",
+                    )
+                    instruction = gr.Textbox(
+                        label="추가 지시 (선택)", lines=2, placeholder="예: 격식체로, 약어는 풀어서"
+                    )
 
-        with gr.Group():
-            gr.Markdown("**B. AI에게 추가 지시**")
-            revision_instruction = gr.Textbox(label="선택 버전에 대한 추가 수정 지시")
-            model_choice = gr.Radio(
-                ["Qwen (로컬, 실제 실행)", f"OpenAI ({openai_tag})"],
-                value="Qwen (로컬, 실제 실행)",
-                label="모델 선택",
-            )
-            ai_revise_button = gr.Button("AI 재수정 실행")
+                with gr.Group(visible=False) as csv_group:
+                    csv_template = gr.File(
+                        value=str(BATCH_TEMPLATE) if BATCH_TEMPLATE.exists() else None,
+                        label="CSV 양식 (내려받아 채워서 올리세요)",
+                        interactive=False,
+                    )
+                    csv_upload = gr.File(
+                        label="번역할 CSV 업로드", file_types=[".csv"], type="filepath"
+                    )
+                    csv_check = gr.HTML()
+                    csv_preview = gr.Dataframe(
+                        label="업로드 내용 미리보기", interactive=False, wrap=True, max_height=220
+                    )
 
-        with gr.Row():
-            approve = gr.Button("최종 승인")
-            reject = gr.Button("거부")
+                gr.Markdown("### ② 어느 나라 번역으로?")
+                countries = gr.Dropdown(
+                    COUNTRIES,
+                    value=[COUNTRIES[0]],
+                    multiselect=True,
+                    show_label=False,
+                    info="여러 개 선택하면 국가별로 따로 실행됩니다. (CSV의 '목표국가' 열이 있으면 그 행은 열 값이 우선)",
+                )
+                with gr.Accordion("고급 옵션", open=False):
+                    use_openai = gr.Checkbox(
+                        value=False, label=f"Qwen이 실패하면 OpenAI Agent 개입 ({openai_tag})"
+                    )
+                    results_path = gr.Textbox(
+                        value=str(RESULTS_CSV), label="결과 저장 파일", interactive=False
+                    )
+                run_button = gr.Button("▶ 번역 실행", variant="primary", size="lg")
 
-        with gr.Accordion("저장된 결과 CSV", open=True):
-            gr.Markdown("번역·수정 결과는 자동 저장됩니다. 아래에서 현재 선택한 결과를 다시 저장하거나 CSV를 내려받을 수 있습니다.")
-            save_current = gr.Button("현재 선택 결과 CSV에 저장")
-            refresh_results = gr.Button("저장된 CSV 새로고침")
-            results_message = gr.Textbox(label="저장 상태", interactive=False)
-            results_summary = gr.Textbox(
-                value=load_results_view(str(RESULTS_CSV))[2],
-                label="CSV 행 수와 저장 위치",
-                interactive=False,
-            )
-            results_preview = gr.Dataframe(
-                value=load_results_view(str(RESULTS_CSV))[0],
-                label="저장된 결과 미리보기",
-                interactive=False,
-                wrap=True,
-            )
-            results_file = gr.File(
-                value=load_results_view(str(RESULTS_CSV))[1],
-                label="결과 CSV 열기·다운로드",
-                interactive=False,
-            )
+            # ── 오른쪽: 결과 ───────────────────────────
+            with gr.Column(scale=7, min_width=420):
+                with gr.Tabs():
+                    with gr.Tab("실행 결과"):
+                        dashboard = gr.HTML(render_empty())
 
-        sample_choice.change(load_sample_sentence, [sample_choice], [source])
+                    with gr.Tab("검토 · 승인"):
+                        with gr.Row():
+                            result_country = gr.Dropdown(label="검토 대상 국가", scale=2)
+                            version = gr.Dropdown(label="비교할 이전 버전", scale=1)
+                        review_card = gr.HTML(render_empty())
+                        diff_html = gr.HTML()
+                        with gr.Tabs():
+                            with gr.Tab("✏️ 직접 수정"):
+                                edit_box = gr.Textbox(label="번역문 직접 편집", lines=3)
+                                edit_button = gr.Button("직접 수정 저장")
+                            with gr.Tab("🤖 AI 재수정"):
+                                revision_instruction = gr.Textbox(
+                                    label="선택 버전에 대한 추가 수정 지시", lines=2
+                                )
+                                model_choice = gr.Radio(
+                                    ["Qwen (로컬, 실제 실행)", f"OpenAI ({openai_tag})"],
+                                    value="Qwen (로컬, 실제 실행)",
+                                    label="모델 선택",
+                                )
+                                ai_revise_button = gr.Button("AI 재수정 실행")
+                        with gr.Row():
+                            approve = gr.Button("✓ 최종 승인", variant="primary")
+                            reject = gr.Button("✕ 거부", variant="stop")
+                        action_message = gr.Textbox(label="처리 결과", lines=4, interactive=False)
+
+                    with gr.Tab("저장된 결과 CSV"):
+                        gr.Markdown("번역·수정 결과는 자동 저장됩니다. 현재 선택한 결과를 다시 저장하거나 CSV를 내려받을 수 있습니다.")
+                        results_stats = gr.HTML(_csv_stats(str(RESULTS_CSV)))
+                        with gr.Row():
+                            save_current = gr.Button("현재 선택 결과 저장")
+                            refresh_results = gr.Button("새로고침")
+                        results_message = gr.Textbox(label="저장 상태", interactive=False)
+                        results_summary = gr.Textbox(
+                            value=load_results_view(str(RESULTS_CSV))[2],
+                            label="CSV 행 수와 저장 위치",
+                            interactive=False,
+                        )
+                        results_preview = gr.Dataframe(
+                            value=load_results_view(str(RESULTS_CSV))[0],
+                            label="저장된 결과 미리보기",
+                            interactive=False,
+                            wrap=True,
+                        )
+                        results_file = gr.File(
+                            value=load_results_view(str(RESULTS_CSV))[1],
+                            label="결과 CSV 열기·다운로드",
+                            interactive=False,
+                        )
+
+                    with gr.Tab("상세 로그"):
+                        output = gr.Textbox(
+                            label="실행 과정 · TM/용어집/DNE · MQM · 수정 이력 · 최종 상태",
+                            lines=24,
+                            interactive=False,
+                        )
+
+        mode.change(switch_mode, [mode], [mode_guide, poc_group, direct_group, csv_group])
+        sample_choice.change(preview_sample, [sample_choice], [sample_preview])
+        csv_upload.change(preview_batch_csv, [csv_upload, countries], [csv_check, csv_preview])
+        countries.change(preview_batch_csv, [csv_upload, countries], [csv_check, csv_preview])
         run_button.click(
-            run_translation,
-            [source, countries, terms, instruction, use_openai, results_path],
-            [output, run_map, result_country, version],
+            run_selected_mode,
+            [mode, sample_choice, source, csv_upload, countries, terms, instruction, use_openai, results_path],
+            [output, run_map, result_country, version, dashboard],
+        ).then(
+            show_run, [run_map, result_country, version], [review_card, diff_html, edit_box]
         )
-        result_country.change(refresh_versions, [run_map, result_country], version)
+        result_country.change(refresh_versions, [run_map, result_country], version).then(
+            show_run, [run_map, result_country, version], [review_card, diff_html, edit_box]
+        )
+        version.change(show_run_card, [run_map, result_country, version], [review_card, diff_html])
         edit_button.click(
-            direct_edit, [run_map, result_country, edit_box, results_path], output
-        )
+            direct_edit, [run_map, result_country, edit_box, results_path], action_message
+        ).then(show_run_card, [run_map, result_country, version], [review_card, diff_html])
         ai_revise_button.click(
             ai_revise,
             [run_map, result_country, version, revision_instruction, model_choice, results_path],
-            [output, run_map, version],
-        )
+            [action_message, run_map, version],
+        ).then(show_run, [run_map, result_country, version], [review_card, diff_html, edit_box])
         approve.click(
             approve_with_file_choice,
             [run_map, result_country, results_path],
-            [output, results_path],
-        )
+            [action_message, results_path],
+        ).then(show_run_card, [run_map, result_country, version], [review_card, diff_html])
         reject.click(
             lambda runs, country, path: set_status(runs, country, "reject", path),
             [run_map, result_country, results_path],
-            output,
-        )
+            action_message,
+        ).then(show_run_card, [run_map, result_country, version], [review_card, diff_html])
         save_current.click(
             save_selected_result,
             [run_map, result_country, results_path],
             [results_message, results_preview, results_file, results_summary],
-        )
+        ).then(_csv_stats, [results_path], results_stats)
         refresh_results.click(
             load_results_view,
             [results_path],
             [results_preview, results_file, results_summary],
-        )
+        ).then(_csv_stats, [results_path], results_stats)
     return app
 
 
 if __name__ == "__main__":
-    build_app().launch()
+    build_app().launch(theme=gr.themes.Soft(primary_hue="indigo"), css=CSS)
