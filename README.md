@@ -179,4 +179,4 @@ pytest -q tests                    # 테스트
 
 - ORCID: [0009-0007-0605-7760](https://orcid.org/0009-0007-0605-7760)
 - GitHub: [@sihunwang-skala](https://github.com/sihunwang-skala) (현재 사용 중인 계정) · 이전 계정 [@sihunwang](https://github.com/sihunwang)과 동일 인물이 운영합니다.
-- *Applied Statistics with R* (David Dalpiaz, STAT 420 교재) 기여자로 [책의 감사 명단](https://book.stat420.org/)에 이름이 올라 있습니다.
+- 일리노이 대학교(UIUC) 통계학 교과서 *Applied Statistics with R* (David Dalpiaz, STAT 420) 기여자로 [책의 감사 명단](https://book.stat420.org/)에 이름이 올라 있습니다.
