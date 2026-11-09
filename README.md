@@ -6,7 +6,7 @@
 ![Python](https://img.shields.io/badge/python-3.11-blue) ![LangChain](https://img.shields.io/badge/LangChain-LCEL-green) ![Ollama](https://img.shields.io/badge/local%20LLM-Ollama%20%2B%20Qwen-orange) ![License](https://img.shields.io/badge/code-MIT-lightgrey)
 
 <p align="center">
-  <img src="docs/images/ui-input.png" alt="Gradio 입력 화면" width="900">
+  <img src="docs/images/ui-input.png" alt="Gradio 입력 화면">
 </p>
 
 ---
@@ -51,7 +51,7 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 ```
 
 <p align="center">
-  <img src="docs/images/architecture.png" alt="LangChain 체인과 Python 제어 구조" width="900">
+  <img src="docs/images/architecture.png" alt="LangChain 체인과 Python 제어 구조">
 </p>
 
 모델 호출은 **LangChain 체인(LCEL)** 으로, 실행 순서·채택 여부·검증은 **Python 코드**로 제어합니다. 더 자세한 구조는 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)와 [docs/agent_flow.mmd](docs/agent_flow.mmd)를 참고하세요.
