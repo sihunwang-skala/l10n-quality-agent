@@ -25,7 +25,7 @@
 
 
 <p align="center">
-  <img src="docs/images/ui-run.png" alt="Gradio UI: CSV 일괄 번역 실행 결과" width="900">
+  <img src="docs/images/ui-hero.png" alt="L10n Quality Agent Gradio UI" width="900">
 </p>
 
 ## 🛠 주요 기술 (Tech Stack)
@@ -115,14 +115,28 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 
 <table>
   <tr>
-    <td align="center"><b>🧪 PoC 테스트</b></td>
-    <td align="center"><b>✍️ 직접 입력</b></td>
-    <td align="center"><b>📄 CSV 업로드</b></td>
+    <td width="45%" valign="top">
+      <h4>🧪 PoC 테스트</h4>
+      <p><b>입력:</b> 내장 문장 30개 중 1개 선택 (타이핑 없음)</p>
+      <p><b>용도:</b> 설치 확인, 데모, 모델·프롬프트 변경 전후 비교</p>
+    </td>
+    <td width="55%"><img src="docs/images/ui-mode-poc.png" alt="PoC 테스트 모드" width="460"></td>
   </tr>
   <tr>
-    <td valign="top"><img src="docs/images/ui-mode-poc.png" alt="PoC 테스트 모드"></td>
-    <td valign="top"><img src="docs/images/ui-mode-direct.png" alt="직접 입력 모드"></td>
-    <td valign="top"><img src="docs/images/ui-mode-csv.png" alt="CSV 업로드 모드"></td>
+    <td valign="top">
+      <h4>✍️ 직접 입력</h4>
+      <p><b>입력:</b> 한국어 원문(필수), 보호 용어·추가 지시(선택)</p>
+      <p><b>용도:</b> 사람이 한 문장씩 넣어 품질 점검</p>
+    </td>
+    <td><img src="docs/images/ui-mode-direct.png" alt="직접 입력 모드" width="460"></td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <h4>📄 CSV 업로드</h4>
+      <p><b>입력:</b> <code>한국어</code> 열이 있는 CSV 파일</p>
+      <p><b>용도:</b> 여러 문장을 자동으로 일괄 번역</p>
+    </td>
+    <td><img src="docs/images/ui-mode-csv.png" alt="CSV 업로드 모드" width="460"></td>
   </tr>
 </table>
 
