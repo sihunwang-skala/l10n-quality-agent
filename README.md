@@ -106,14 +106,17 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 **1. 입력 — 한국어 원문과 여러 목표 국가를 선택하면 국가별로 독립 실행됩니다.**
 
 ![입력 화면](docs/images/ui-input.png)
+*↑ 핵심 부분 확대 · [전체 화면 보기](docs/images/full/ui-input.png)*
 
 **2. 일본어 실행 — 'San Jose' 표기 오류를 `spelling` 전략으로 수정하고, 이어서 Agent가 `fluency`를 시도했지만 오류가 줄지 않아 후보를 거부(Rollback)한 뒤 사람 검토로 넘기는 과정.**
 
 ![일본어 실행](docs/images/ui-run-japanese.png)
+*↑ 핵심 부분 확대 · [전체 화면 보기](docs/images/full/ui-run-japanese.png)*
 
 **3. 프랑스어 실행 — Agent가 `fluency` → `accuracy` 순으로 전략을 바꿔가며 판단 근거를 남기고, 숫자·단위 대응을 자동으로 확정할 수 없어 수정 후보를 거부한 뒤 `HUMAN_REVIEW_REQUIRED`로 종료.**
 
 ![프랑스어 실행](docs/images/ui-run-french.png)
+*↑ 핵심 부분 확대 · [전체 화면 보기](docs/images/full/ui-run-french.png)*
 
 > 위 화면의 문장(예: 가상의 스타트업 `BlueBridge Labs`, 데이터센터 백업 안내)은 모두 작성자가 직접 만든 예시입니다. 실패 사례를 숨기지 않고 사람 검토로 넘기는 것이 이 시스템의 의도된 동작입니다.
 
