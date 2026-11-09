@@ -1,7 +1,27 @@
 # L10n Quality Agent
 
-> 한국어 문장을 목표 언어·로케일에 맞게 번역하고, **MQM 기반 평가 → 오류 유형별 전문 수정 → 재평가 → Agent의 전략 판단 → 사람 승인**까지 품질 개선 과정을 추적하는 LangChain 기반 번역 품질 개선 에이전트.
-> A LangChain-based agent that translates Korean into locale-specific target languages, evaluates with MQM, fixes errors category by category, and keeps a full audit trail with human-in-the-loop approval.
+> **AI 번역의 품질 문제를 "찾고 → 유형별로 고치고 → 다시 검증하고 → 사람이 승인"하는 과정으로 관리하는 번역 품질 개선 에이전트입니다.**
+> *An agent that translates Korean into other languages, finds errors with a standard quality framework (MQM), fixes them one category at a time, re-checks every change, and leaves the final approval to a human.*
+
+### 한눈에 이해하기
+
+- **무엇을 하나요?** 한국어 문장을 영어·일본어·프랑스어 등으로 번역한 뒤, AI가 번역 오류를 스스로 찾아 고치고, 고친 과정을 전부 기록합니다.
+- **왜 필요한가요?** AI에게 "여기만 고쳐줘"라고 해도 멀쩡한 부분까지 바꿔 버리거나 새 오류를 만들 때가 있습니다. 그래서 오류 종류별로 담당 도구를 나누고, 고칠 때마다 전체를 다시 평가해서 나빠지면 되돌립니다.
+- **누가 쓰나요?** 번역·현지화 품질을 다루는 사람, 번역 품질 자동화에 관심 있는 개발자.
+
+### 용어 설명
+
+| 용어 | 뜻 |
+|---|---|
+| **L10n (Localization, 현지화)** | 단어를 옮기는 번역을 넘어, 대상 국가의 언어·표기·문화에 맞게 콘텐츠를 맞추는 작업. *Localization*은 L과 n 사이에 글자가 10개라서 L10n으로 줄여 씁니다. ([Wikipedia](https://en.wikipedia.org/wiki/Language_localisation)) |
+| **MQM (Multidimensional Quality Metrics)** | 번역 오류를 정확성(accuracy)·용어(terminology)·철자(spelling)·문법(grammar)·문체(style)·유창성(fluency) 등으로 나누고 심각도를 매기는 번역 품질 평가 프레임워크. ([themqm.org](https://themqm.org/)) |
+| **Agent (에이전트)** | 정해진 순서대로만 실행하지 않고, 현재 상태(남은 오류, 이전 수정 이력)를 보고 LLM이 다음에 할 일을 스스로 고르는 방식. |
+| **LCEL** | LangChain Expression Language. 프롬프트 → 모델 → 출력 파서를 `|`로 이어 붙이는 LangChain의 체인 작성 방식. ([문서](https://python.langchain.com/)) |
+| **Human-in-the-loop (HITL)** | 자동 처리 중 판단이 어려운 지점에서 사람이 검토·승인하도록 두는 설계. |
+| **TM (Translation Memory)** | 이전에 번역한 문장 쌍을 저장해 재사용하는 번역 메모리. |
+| **DNE (Do Not Edit)** | 이미 맞게 번역된 표현이 이후 수정 단계에서 바뀌지 않도록 보호하는 목록. |
+| **FLORES+** | 200개 안팎 언어의 공개 번역 평가 데이터셋. 이 프로젝트의 테스트 데이터로 사용. ([GitHub](https://github.com/openlanguagedata/flores)) |
+| **Ollama / Qwen** | 내 컴퓨터에서 LLM을 돌리는 도구([ollama.com](https://ollama.com))와 오픈 모델([Qwen](https://github.com/QwenLM/Qwen3)). |
 
 
 <p align="center">
@@ -152,4 +172,8 @@ pytest -q tests                    # 테스트
 
 ## 작성자
 
-Sihun Wang — 개인 프로젝트
+**Sihun Wang (왕시훈)** — 개인 프로젝트
+
+- ORCID: [0009-0007-0605-7760](https://orcid.org/0009-0007-0605-7760)
+- GitHub: [@sihunwang-skala](https://github.com/sihunwang-skala) (현재 사용 중인 계정) · 이전 계정 [@sihunwang](https://github.com/sihunwang)과 동일 인물이 운영합니다.
+- *Applied Statistics with R* (David Dalpiaz, STAT 420 교재) 기여자로 [책의 감사 명단](https://book.stat420.org/)에 이름이 올라 있습니다.
