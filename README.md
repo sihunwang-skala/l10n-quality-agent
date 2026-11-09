@@ -25,7 +25,7 @@
 
 
 <p align="center">
-  <img src="docs/images/ui-input.png" alt="Gradio 입력 화면">
+  <img src="docs/images/ui-run.png" alt="Gradio UI: CSV 일괄 번역 실행 결과" width="900">
 </p>
 
 ## 🛠 주요 기술 (Tech Stack)
@@ -99,23 +99,50 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 | OpenAI 에스컬레이션 | Qwen Agent가 못 푼 사례를 `gpt-5-mini`로 한 번 더 시도 (키 없으면 Mock으로 자동 대체) |
 | Human-in-the-loop | 승인·거부·직접 수정·AI 재수정, `human_review` 상태 |
 | 추적성 | 실행마다 `run_id`와 전체 이력을 JSON 저장, 결과는 CSV 누적 |
-| UI / CLI | Gradio 웹 UI(다중 국가 선택·단계별 진행 표시) 및 터미널 CLI |
+| UI / CLI | Gradio 웹 UI(PoC·직접 입력·CSV 일괄 3가지 입력 방식, 단계별 진행 표시, 버전 diff) 및 터미널 CLI |
 
 ## 실행 화면
 
-**1. 입력 — 한국어 원문과 여러 목표 국가를 선택하면 국가별로 독립 실행됩니다.**
+### 입력 방식 3가지
 
-![입력 화면](docs/images/ui-input.png)
+왼쪽 맨 위 **① 어떻게 입력할까요?** 에서 방식을 고르면, 그 방식에서 *무엇을 입력하고 무슨 일을 하는지* 설명 카드가 함께 바뀝니다. 어느 방식이든 이후 흐름(번역 → MQM 평가 → 수정 → 사람 승인)은 같습니다.
 
-**2. 일본어 실행 — 'San Jose' 표기 오류를 `spelling` 전략으로 수정하고, 이어서 Agent가 `fluency`를 시도했지만 오류가 줄지 않아 후보를 거부(Rollback)한 뒤 사람 검토로 넘기는 과정.**
+| 방식 | 입력할 것 | 용도 |
+|---|---|---|
+| 🧪 **PoC 테스트** | 내장 예시 문장 30개 중 1개 선택 (타이핑 없음) | 설치 확인, 데모, 모델·프롬프트 변경 전후 비교 |
+| ✍️ **직접 입력** | 한국어 원문(필수), 보호 용어·추가 지시(선택) | 사람이 한 문장씩 넣어 품질 점검 |
+| 📄 **CSV 업로드** | `한국어` 열이 있는 CSV (선택 열: `id`, `목표국가`, `보호용어`, `추가지시`, 최대 30문장) | 여러 문장을 **자동으로 일괄 번역** |
 
-![일본어 실행](docs/images/ui-run-japanese.png)
+<table>
+  <tr>
+    <td align="center"><b>🧪 PoC 테스트</b></td>
+    <td align="center"><b>✍️ 직접 입력</b></td>
+    <td align="center"><b>📄 CSV 업로드</b></td>
+  </tr>
+  <tr>
+    <td valign="top"><img src="docs/images/ui-mode-poc.png" alt="PoC 테스트 모드"></td>
+    <td valign="top"><img src="docs/images/ui-mode-direct.png" alt="직접 입력 모드"></td>
+    <td valign="top"><img src="docs/images/ui-mode-csv.png" alt="CSV 업로드 모드"></td>
+  </tr>
+</table>
 
-**3. 프랑스어 실행 — Agent가 `fluency` → `accuracy` 순으로 전략을 바꿔가며 판단 근거를 남기고, 숫자·단위 대응을 자동으로 확정할 수 없어 수정 후보를 거부한 뒤 `HUMAN_REVIEW_REQUIRED`로 종료.**
+- **CSV 업로드**는 파일을 올리는 즉시 검증하고 "몇 문장·몇 건이 실행될지"를 미리 보여줍니다. 문제가 있으면 실행을 막고 이유를 알려줍니다. 양식은 [`data/batch_input_template.csv`](data/batch_input_template.csv)입니다. 한 행에 여러 국가를 넣을 때는 `Japan|Italy`처럼 씁니다.
+- 일괄 실행 중 한 문장이 실패해도 나머지는 계속 진행합니다.
+- **자동으로 하는 것은 번역·평가·수정까지**이고, **최종 승인은 항상 사람이** 합니다.
 
-![프랑스어 실행](docs/images/ui-run-french.png)
+### 실행 결과
 
-> 위 화면의 문장(예: 가상의 스타트업 `BlueBridge Labs`, 데이터센터 백업 안내)은 모두 작성자가 직접 만든 예시입니다. 실패 사례를 숨기지 않고 사람 검토로 넘기는 것이 이 시스템의 의도된 동작입니다.
+**진행 단계(번역 → MQM 평가 → 전문 수정 → 재검증 → 사람 승인), 상태 배지, 원문·번역 비교, 수정 이력(채택/Rollback), Agent 판단 근거**를 국가별 카드로 보여줍니다. 아래는 CSV 두 행(일본어·프랑스어)을 일괄 실행한 화면입니다.
+
+![실행 결과](docs/images/ui-run.png)
+
+### 검토 · 승인
+
+남은 MQM 오류와 실패 사유를 확인하고, 이전 버전과의 **변경점(diff)** 을 본 뒤 **직접 수정 / AI 재수정 / 최종 승인 / 거부**를 선택합니다. 프랑스어 예시는 숫자·단위 대응을 자동으로 확정할 수 없어 수정 후보를 거부(Rollback)하고 `HUMAN_REVIEW_REQUIRED`로 넘긴 사례입니다.
+
+![검토·승인](docs/images/ui-review.png)
+
+> 화면 속 결과(일본어·프랑스어 번역, MQM 오류, 수정 이력)는 로컬 Qwen3.5 4B로 실제 실행해 `runs/`에 저장된 기록을 UI에서 다시 불러와 캡처한 것입니다. 문장(예: 가상의 스타트업 `BlueBridge Labs`, 데이터센터 백업 안내)은 모두 작성자가 직접 만든 예시입니다. 실패 사례를 숨기지 않고 사람 검토로 넘기는 것이 이 시스템의 의도된 동작입니다.
 
 ## 폴더 구조
 
@@ -128,7 +155,8 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 │   ├── openai_agent.py        # OpenAI 에스컬레이션 (Mock 포함)
 │   ├── validation.py          # 숫자·단위·보호 용어 결정적 검사
 │   ├── tm.py / terminology.py / dne.py   # 번역 메모리·용어집·Do-Not-Edit
-│   ├── ui.py / cli.py         # Gradio UI, CLI
+│   ├── ui.py / ui_render.py   # Gradio UI, UI 화면(HTML) 렌더링
+│   ├── cli.py                 # CLI
 │   └── storage.py / schemas.py / results_csv.py
 ├── data/flores_plus/          # 공개 FLORES+ 원본·선정 샘플과 파생 리소스
 ├── scripts/                   # 데이터 선정·리소스 생성·통합 실행 스크립트
@@ -165,7 +193,7 @@ pytest -q tests                    # 테스트
 
 ## 현재 한계와 향후 계획
 
-- 단일 문장 중심이며, Batch·비동기 Queue·다중 사용자는 미구현입니다.
+- CSV 일괄 번역은 순차 실행(최대 30문장)입니다. 비동기 Queue·병렬 처리·다중 사용자는 미구현입니다.
 - LangGraph Checkpointer(임의 중간 단계 복원)는 미구현입니다. 저장된 번역 버전에서 새 실행을 시작하는 방식입니다.
 - 소형 로컬 모델(`qwen3.5:4b`) 기준이라 판단 품질에 한계가 있으며, 모델별 정량 비교와 Golden Dataset 평가는 향후 과제입니다.
 - RAG/Vector DB는 현재 범위에서 제외했습니다.
