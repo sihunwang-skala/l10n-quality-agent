@@ -1,0 +1,53 @@
+<mxfile host="app.diagrams.net" modified="2026-09-22T00:00:00.000Z" agent="Codex" version="24.7.17" type="device">
+  <diagram id="l10n-agent-flow" name="L10n Agent Flow">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="L10n Quality Agent · 전체 처리 흐름" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=26;fontStyle=1;fontColor=#F2F6FB;" vertex="1" parent="1">
+          <mxGeometry x="60" y="45" width="820" height="45" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="번역 결과를 만들고, 검사하고, 필요한 경우 사람에게 넘긴다" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontColor=#A9B9CA;" vertex="1" parent="1">
+          <mxGeometry x="62" y="92" width="820" height="30" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="input" value="&lt;b&gt;1. 입력&lt;/b&gt;&lt;br&gt;원문 · 국가 · 보호 용어" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#14243A;strokeColor=#42D6C4;strokeWidth=2;fontColor=#F2F6FB;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="60" y="220" width="210" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="translate" value="&lt;b&gt;2. 초기 번역&lt;/b&gt;&lt;br&gt;LangChain Prompt → Qwen" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#14243A;strokeColor=#42D6C4;strokeWidth=2;fontColor=#F2F6FB;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="340" y="220" width="210" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="check" value="&lt;b&gt;3. 품질 검사&lt;/b&gt;&lt;br&gt;Python 안전 검증&lt;br&gt;+ MQM 평가" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#14243A;strokeColor=#FFC36A;strokeWidth=2;fontColor=#F2F6FB;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="620" y="220" width="210" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="agent" value="&lt;b&gt;4. Agent 판단&lt;/b&gt;&lt;br&gt;수정 영역 선택&lt;br&gt;또는 human_review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#14243A;strokeColor=#FFC36A;strokeWidth=2;fontColor=#F2F6FB;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="900" y="220" width="210" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="revise" value="&lt;b&gt;5. 수정·재평가&lt;/b&gt;&lt;br&gt;revise() → 검증&lt;br&gt;→ MQM 재평가" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#14243A;strokeColor=#FFC36A;strokeWidth=2;fontColor=#F2F6FB;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="220" width="210" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="human" value="&lt;b&gt;6. 최종 처리&lt;/b&gt;&lt;br&gt;사람 승인·거부&lt;br&gt;CSV · JSON 저장" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#14243A;strokeColor=#FA807D;strokeWidth=2;fontColor=#F2F6FB;fontSize=16;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="220" width="210" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#42D6C4;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="input" target="translate"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#42D6C4;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="translate" target="check"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FFC36A;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="check" target="agent"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FFC36A;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="agent" target="revise"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#FFC36A;strokeWidth=2;endArrow=block;" edge="1" parent="1" source="revise" target="human"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="loop" value="실패하면 사람 검토" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;strokeColor=#FA807D;fontColor=#FA807D;fontSize=13;endArrow=block;" edge="1" parent="1" source="revise" target="human"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1285" y="390"/><mxPoint x="1565" y="390"/></Array></mxGeometry></mxCell>
+
+        <mxCell id="note1" value="&lt;b&gt;구조의 핵심&lt;/b&gt;&lt;br&gt;Planner Chain + Python 실행&lt;br&gt;실제 Tool-calling Agent는 아님" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F1C30;strokeColor=#31465C;fontColor=#A9B9CA;fontSize=15;align=left;verticalAlign=middle;spacingLeft=14;" vertex="1" parent="1">
+          <mxGeometry x="220" y="470" width="360" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="note2" value="&lt;b&gt;자동화의 경계&lt;/b&gt;&lt;br&gt;후보 채택은 Python 검증과 MQM 재평가를&lt;br&gt;통과한 경우에만 가능" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F1C30;strokeColor=#31465C;fontColor=#A9B9CA;fontSize=15;align=left;verticalAlign=middle;spacingLeft=14;" vertex="1" parent="1">
+          <mxGeometry x="760" y="470" width="420" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="note3" value="&lt;b&gt;결과&lt;/b&gt;&lt;br&gt;번역문 · 오류 근거 · 수정 이력 · 상태" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0F1C30;strokeColor=#31465C;fontColor=#A9B9CA;fontSize=15;align=left;verticalAlign=middle;spacingLeft=14;" vertex="1" parent="1">
+          <mxGeometry x="1300" y="470" width="300" height="100" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,218 @@
+{
+  "run_id": "0b67226f2cff4cd28e9de4c862ae98e6",
+  "request": {
+    "source": "대화식 디자인은 프로젝트의 구성 요소가 서로 연결되어야 하지만, 별도의 개체로도 말이 되어야 합니다.",
+    "target_language": "German",
+    "target_country": "Germany",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T08:24:17+09:00",
+  "updated_at": "2026-09-22T08:24:44+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+      "created_at": "2026-09-22T08:24:17+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+            "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Entitäten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '구체적인 존재로 인식되다'나 '독립적인 주체로 행동할 수 있다'는 뉘앙스가 더 적절합니다. 'Entitäten'라는 용어는 철학적이거나 추상적일 수 있어, 디자인 컨텍스트에서는 'Einheiten' (단위) 또는 'Komponenten' (구성 요소) 을 사용하여 'als eigenständige Einheiten agieren können' 등으로 표현하는 것이 더 자연스럽고 명확할 수 있습니다. 다만, 이는 문맥에 따라 허용 가능한 해석의 차이일 뿐 절대적인 오류는 아닙니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    },
+    {
+      "version": 2,
+      "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Akteure fungieren können.",
+      "created_at": "2026-09-22T08:24:37+09:00",
+      "based_on_version": 1,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "eigenständige Akteure",
+            "explanation": "원문의 '별도의 개체'는 독립적인 존재나 요소 (einzelne Entität/Objekt) 를 의미할 가능성이 높으나, 번역문에서 이를 'Akteure'(주체/행위자) 로 해석하여 번역했습니다. 디자인 컨텍스트에서 구성 요소가 독립적으로 기능한다는 의미라면 'eigenständige Elemente' 또는 'unabhängige Einheiten'이 더 적절할 수 있으나, 'Akteure'는 인간이나 조직에 대한 표현으로 쓰이는 경우가 많아 문맥상 다소 과장되거나 불필요한 해석일 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    },
+    {
+      "version": 3,
+      "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+      "created_at": "2026-09-22T08:24:44+09:00",
+      "based_on_version": 2,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+            "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Einheiten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '독립적인 존재로 활동하다' 또는 '개별적으로 행동할 수 있다'는 뉘앙스를 더 잘 전달하는 것이 적절합니다. 'Einheiten'은 군사적 단위를 연상시킬 수 있어, 디자인 컨텍스트에서는 'Einheiten' 대신 'Elemente'나 'Komponenten'을 사용하여 '독립적인 요소로 기능할 수 있다'는 표현이 더 자연스럽습니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "fluency",
+      "attempt": 1,
+      "input_translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+      "candidate": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten agieren können.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+          "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Entitäten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '구체적인 존재로 인식되다'나 '독립적인 주체로 행동할 수 있다'는 뉘앙스가 더 적절합니다. 'Entitäten'라는 용어는 철학적이거나 추상적일 수 있어, 디자인 컨텍스트에서는 'Einheiten' (단위) 또는 'Komponenten' (구성 요소) 을 사용하여 'als eigenständige Einheiten agieren können' 등으로 표현하는 것이 더 자연스럽고 명확할 수 있습니다. 다만, 이는 문맥에 따라 허용 가능한 해석의 차이일 뿐 절대적인 오류는 아닙니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+            "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Entitäten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '구체적인 존재로 인식되다'나 '독립적인 주체로 행동할 수 있다'는 뉘앙스가 더 적절합니다. 'Entitäten'라는 용어는 철학적이거나 추상적일 수 있어, 디자인 컨텍스트에서는 'Einheiten' (단위) 또는 'Komponenten' (구성 요소) 을 사용하여 'als eigenständige Einheiten agieren können' 등으로 표현하는 것이 더 자연스럽고 명확할 수 있습니다. 다만, 이는 문맥에 따라 허용 가능한 해석의 차이일 뿐 절대적인 오류는 아닙니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "agieren können",
+            "explanation": "번역문에서 'agieren können'은 독일어 문맥상 다소 어색합니다. 원문의 '말이 되어야 합니다'는 독립적인 존재나 행위 주체로 기능할 수 있다는 의미이므로, 'als eigenständige Einheiten fungieren können'(주체로서 기능할 수 있다) 또는 'als eigenständige Entitäten betrachtet werden können'(독립적인 개체로 간주될 수 있다)와 같이 더 자연스러운 표현이 적합합니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T08:24:30+09:00"
+    },
+    {
+      "step": 2,
+      "category": "fluency",
+      "attempt": 2,
+      "input_translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+      "candidate": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Akteure fungieren können.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+          "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Entitäten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '구체적인 존재로 인식되다'나 '독립적인 주체로 행동할 수 있다'는 뉘앙스가 더 적절합니다. 'Entitäten'라는 용어는 철학적이거나 추상적일 수 있어, 디자인 컨텍스트에서는 'Einheiten' (단위) 또는 'Komponenten' (구성 요소) 을 사용하여 'als eigenständige Einheiten agieren können' 등으로 표현하는 것이 더 자연스럽고 명확할 수 있습니다. 다만, 이는 문맥에 따라 허용 가능한 해석의 차이일 뿐 절대적인 오류는 아닙니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": true,
+      "failure_reasons": [],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+            "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Entitäten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '구체적인 존재로 인식되다'나 '독립적인 주체로 행동할 수 있다'는 뉘앙스가 더 적절합니다. 'Entitäten'라는 용어는 철학적이거나 추상적일 수 있어, 디자인 컨텍스트에서는 'Einheiten' (단위) 또는 'Komponenten' (구성 요소) 을 사용하여 'als eigenständige Einheiten agieren können' 등으로 표현하는 것이 더 자연스럽고 명확할 수 있습니다. 다만, 이는 문맥에 따라 허용 가능한 해석의 차이일 뿐 절대적인 오류는 아닙니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "eigenständige Akteure",
+            "explanation": "원문의 '별도의 개체'는 독립적인 존재나 요소 (einzelne Entität/Objekt) 를 의미할 가능성이 높으나, 번역문에서 이를 'Akteure'(주체/행위자) 로 해석하여 번역했습니다. 디자인 컨텍스트에서 구성 요소가 독립적으로 기능한다는 의미라면 'eigenständige Elemente' 또는 'unabhängige Einheiten'이 더 적절할 수 있으나, 'Akteure'는 인간이나 조직에 대한 표현으로 쓰이는 경우가 많아 문맥상 다소 과장되거나 불필요한 해석일 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T08:24:37+09:00"
+    },
+    {
+      "step": 3,
+      "category": "accuracy",
+      "attempt": 1,
+      "input_translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Akteure fungieren können.",
+      "candidate": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "minor",
+          "span": "eigenständige Akteure",
+          "explanation": "원문의 '별도의 개체'는 독립적인 존재나 요소 (einzelne Entität/Objekt) 를 의미할 가능성이 높으나, 번역문에서 이를 'Akteure'(주체/행위자) 로 해석하여 번역했습니다. 디자인 컨텍스트에서 구성 요소가 독립적으로 기능한다는 의미라면 'eigenständige Elemente' 또는 'unabhängige Einheiten'이 더 적절할 수 있으나, 'Akteure'는 인간이나 조직에 대한 표현으로 쓰이는 경우가 많아 문맥상 다소 과장되거나 불필요한 해석일 수 있습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": true,
+      "failure_reasons": [],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "eigenständige Akteure",
+            "explanation": "원문의 '별도의 개체'는 독립적인 존재나 요소 (einzelne Entität/Objekt) 를 의미할 가능성이 높으나, 번역문에서 이를 'Akteure'(주체/행위자) 로 해석하여 번역했습니다. 디자인 컨텍스트에서 구성 요소가 독립적으로 기능한다는 의미라면 'eigenständige Elemente' 또는 'unabhängige Einheiten'이 더 적절할 수 있으나, 'Akteure'는 인간이나 조직에 대한 표현으로 쓰이는 경우가 많아 문맥상 다소 과장되거나 불필요한 해석일 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+            "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Einheiten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '독립적인 존재로 활동하다' 또는 '개별적으로 행동할 수 있다'는 뉘앙스를 더 잘 전달하는 것이 적절합니다. 'Einheiten'은 군사적 단위를 연상시킬 수 있어, 디자인 컨텍스트에서는 'Einheiten' 대신 'Elemente'나 'Komponenten'을 사용하여 '독립적인 요소로 기능할 수 있다'는 표현이 더 자연스럽습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T08:24:44+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+      "explanation": "번역문에서 '별도의 개체로도 말이 되어야 합니다'를 'als eigenständige Einheiten fungieren können'으로 번역했습니다. 원문의 '말이 되다 (sprechen)'는 '기능하다 (fungieren)'보다 '독립적인 존재로 활동하다' 또는 '개별적으로 행동할 수 있다'는 뉘앙스를 더 잘 전달하는 것이 적절합니다. 'Einheiten'은 군사적 단위를 연상시킬 수 있어, 디자인 컨텍스트에서는 'Einheiten' 대신 'Elemente'나 'Komponenten'을 사용하여 '독립적인 요소로 기능할 수 있다'는 표현이 더 자연스럽습니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "fluency 영역 수정 2회 실패"
+  ]
+}

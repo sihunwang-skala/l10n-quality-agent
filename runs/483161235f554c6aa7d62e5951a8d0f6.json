@@ -1,0 +1,201 @@
+{
+  "run_id": "483161235f554c6aa7d62e5951a8d0f6",
+  "request": {
+    "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+    "target_language": "Italian",
+    "target_country": "Italy",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T08:22:05+09:00",
+  "updated_at": "2026-09-22T08:22:34+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "I prodotti pronti per il consumo nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche fornelli o altri dispositivi per cucinare.",
+      "created_at": "2026-09-22T08:22:06+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "I prodotti pronti per il consumo nei supermercati",
+            "explanation": "원문 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti per il consumo'로 번역하여 '조리된 음식'이나 '요리 완료 상태의 제품'으로 오해할 소지가 있습니다. 즉석식품 (preparati al momento) 은 일반적으로 냉동 또는 가공식품을 지칭하며, 원문의 맥락상 '즉석 조리 식품'이 더 적절합니다.",
+            "suggested_fix": "I prodotti pronti per il consumo"
+          },
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "fornelli o altri dispositivi per cucinare",
+            "explanation": "원문 '전자레인지나 다른 수단'은 주로 전자레인지 (microonde) 와 같은 가열 장치를 의미합니다. 번역문에서 'fornelli'는 일반적으로 조리대, 가스레인지 또는 오븐을 지칭하는 용어로, 전자레인지를 직접적으로 대체하지 않습니다. 또한 원문의 '다른 수단'이 구체적으로 무엇을 지칭하는지 명확하지 않으나, 'fornelli'만으로는 전자레인지의 존재를 충분히 반영하지 못합니다.",
+            "suggested_fix": "microonde o altri dispositivi per cucinare"
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "accuracy",
+      "attempt": 1,
+      "input_translation": "I prodotti pronti per il consumo nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche fornelli o altri dispositivi per cucinare.",
+      "candidate": "I prodotti pronti al momento nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche microonde o altri dispositivi per cucinare.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "major",
+          "span": "I prodotti pronti per il consumo nei supermercati",
+          "explanation": "원문 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti per il consumo'로 번역하여 '조리된 음식'이나 '요리 완료 상태의 제품'으로 오해할 소지가 있습니다. 즉석식품 (preparati al momento) 은 일반적으로 냉동 또는 가공식품을 지칭하며, 원문의 맥락상 '즉석 조리 식품'이 더 적절합니다.",
+          "suggested_fix": "I prodotti pronti per il consumo"
+        },
+        {
+          "category": "accuracy",
+          "severity": "major",
+          "span": "fornelli o altri dispositivi per cucinare",
+          "explanation": "원문 '전자레인지나 다른 수단'은 주로 전자레인지 (microonde) 와 같은 가열 장치를 의미합니다. 번역문에서 'fornelli'는 일반적으로 조리대, 가스레인지 또는 오븐을 지칭하는 용어로, 전자레인지를 직접적으로 대체하지 않습니다. 또한 원문의 '다른 수단'이 구체적으로 무엇을 지칭하는지 명확하지 않으나, 'fornelli'만으로는 전자레인지의 존재를 충분히 반영하지 못합니다.",
+          "suggested_fix": "microonde o altri dispositivi per cucinare"
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "MQM span이 번역문에 없음: accuracy / '즉석식품'",
+        "MQM span이 번역문에 없음: fluency / '다른 수단'"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "I prodotti pronti per il consumo nei supermercati",
+            "explanation": "원문 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti per il consumo'로 번역하여 '조리된 음식'이나 '요리 완료 상태의 제품'으로 오해할 소지가 있습니다. 즉석식품 (preparati al momento) 은 일반적으로 냉동 또는 가공식품을 지칭하며, 원문의 맥락상 '즉석 조리 식품'이 더 적절합니다.",
+            "suggested_fix": "I prodotti pronti per il consumo"
+          },
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "fornelli o altri dispositivi per cucinare",
+            "explanation": "원문 '전자레인지나 다른 수단'은 주로 전자레인지 (microonde) 와 같은 가열 장치를 의미합니다. 번역문에서 'fornelli'는 일반적으로 조리대, 가스레인지 또는 오븐을 지칭하는 용어로, 전자레인지를 직접적으로 대체하지 않습니다. 또한 원문의 '다른 수단'이 구체적으로 무엇을 지칭하는지 명확하지 않으나, 'fornelli'만으로는 전자레인지의 존재를 충분히 반영하지 못합니다.",
+            "suggested_fix": "microonde o altri dispositivi per cucinare"
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "즉석식품",
+            "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti al momento'로 번역했을 때 문맥상 '조리된 음식'이나 '즉석 조리 가능한 음식'으로 오해될 여지가 있습니다. Italian 에서 'pronto da mangiare'가 더 자연스럽고 정확한 표현일 수 있으나, 현재 번역은 원문의 핵심 의미 (조리 없이 즉시 섭취) 를 완전히 전달하지 못했습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "다른 수단",
+            "explanation": "'다른 수단'을 'altri dispositivi'로 번역했는데, 문맥상 '기타 조리 도구'를 의미하므로 'dispositivi per cucinare'가 더 명확하고 자연스러운 표현입니다. 단순히 'dispositivi'라고만 하면 의미가 불분명할 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T08:22:25+09:00"
+    },
+    {
+      "step": 2,
+      "category": "accuracy",
+      "attempt": 2,
+      "input_translation": "I prodotti pronti per il consumo nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche fornelli o altri dispositivi per cucinare.",
+      "candidate": "I prodotti pronti al momento nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche microonde o altri dispositivi per cucinare.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "major",
+          "span": "I prodotti pronti per il consumo nei supermercati",
+          "explanation": "원문 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti per il consumo'로 번역하여 '조리된 음식'이나 '요리 완료 상태의 제품'으로 오해할 소지가 있습니다. 즉석식품 (preparati al momento) 은 일반적으로 냉동 또는 가공식품을 지칭하며, 원문의 맥락상 '즉석 조리 식품'이 더 적절합니다.",
+          "suggested_fix": "I prodotti pronti per il consumo"
+        },
+        {
+          "category": "accuracy",
+          "severity": "major",
+          "span": "fornelli o altri dispositivi per cucinare",
+          "explanation": "원문 '전자레인지나 다른 수단'은 주로 전자레인지 (microonde) 와 같은 가열 장치를 의미합니다. 번역문에서 'fornelli'는 일반적으로 조리대, 가스레인지 또는 오븐을 지칭하는 용어로, 전자레인지를 직접적으로 대체하지 않습니다. 또한 원문의 '다른 수단'이 구체적으로 무엇을 지칭하는지 명확하지 않으나, 'fornelli'만으로는 전자레인지의 존재를 충분히 반영하지 못합니다.",
+          "suggested_fix": "microonde o altri dispositivi per cucinare"
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "MQM span이 번역문에 없음: accuracy / '즉석식품'",
+        "MQM span이 번역문에 없음: fluency / '다른 수단'"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "I prodotti pronti per il consumo nei supermercati",
+            "explanation": "원문 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti per il consumo'로 번역하여 '조리된 음식'이나 '요리 완료 상태의 제품'으로 오해할 소지가 있습니다. 즉석식품 (preparati al momento) 은 일반적으로 냉동 또는 가공식품을 지칭하며, 원문의 맥락상 '즉석 조리 식품'이 더 적절합니다.",
+            "suggested_fix": "I prodotti pronti per il consumo"
+          },
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "fornelli o altri dispositivi per cucinare",
+            "explanation": "원문 '전자레인지나 다른 수단'은 주로 전자레인지 (microonde) 와 같은 가열 장치를 의미합니다. 번역문에서 'fornelli'는 일반적으로 조리대, 가스레인지 또는 오븐을 지칭하는 용어로, 전자레인지를 직접적으로 대체하지 않습니다. 또한 원문의 '다른 수단'이 구체적으로 무엇을 지칭하는지 명확하지 않으나, 'fornelli'만으로는 전자레인지의 존재를 충분히 반영하지 못합니다.",
+            "suggested_fix": "microonde o altri dispositivi per cucinare"
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "즉석식품",
+            "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti al momento'로 번역했을 때 문맥상 '조리된 음식'이나 '즉석 조리 가능한 음식'으로 오해될 여지가 있습니다. Italian 에서 'pronto da mangiare'가 더 자연스럽고 정확한 표현일 수 있으나, 현재 번역은 원문의 핵심 의미 (조리 없이 즉시 섭취) 를 완전히 전달하지 못했습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "다른 수단",
+            "explanation": "'다른 수단'을 'altri dispositivi'로 번역했는데, 문맥상 '기타 조리 도구'를 의미하므로 'dispositivi per cucinare'가 더 명확하고 자연스러운 표현입니다. 단순히 'dispositivi'라고만 하면 의미가 불분명할 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T08:22:34+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "accuracy",
+      "severity": "major",
+      "span": "I prodotti pronti per il consumo nei supermercati",
+      "explanation": "원문 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'pronti per il consumo'로 번역하여 '조리된 음식'이나 '요리 완료 상태의 제품'으로 오해할 소지가 있습니다. 즉석식품 (preparati al momento) 은 일반적으로 냉동 또는 가공식품을 지칭하며, 원문의 맥락상 '즉석 조리 식품'이 더 적절합니다.",
+      "suggested_fix": "I prodotti pronti per il consumo"
+    },
+    {
+      "category": "accuracy",
+      "severity": "major",
+      "span": "fornelli o altri dispositivi per cucinare",
+      "explanation": "원문 '전자레인지나 다른 수단'은 주로 전자레인지 (microonde) 와 같은 가열 장치를 의미합니다. 번역문에서 'fornelli'는 일반적으로 조리대, 가스레인지 또는 오븐을 지칭하는 용어로, 전자레인지를 직접적으로 대체하지 않습니다. 또한 원문의 '다른 수단'이 구체적으로 무엇을 지칭하는지 명확하지 않으나, 'fornelli'만으로는 전자레인지의 존재를 충분히 반영하지 못합니다.",
+      "suggested_fix": "microonde o altri dispositivi per cucinare"
+    }
+  ],
+  "failure_reasons": [
+    "accuracy 영역 수정 2회 실패"
+  ]
+}

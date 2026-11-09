@@ -1,0 +1,41 @@
+{
+  "run_id": "5ba46791760241e79781c040f8e93c20",
+  "request": {
+    "source": "개인 VPN(가상 사설망) 공급자는 정치적 검열과 상업적 IP-지역 제한을 모두 우회할 수 있는 훌륭한 방법이다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "AWAITING_HUMAN_APPROVAL",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:46:28+09:00",
+  "updated_at": "2026-09-22T12:46:30+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Personal VPN (Virtual Private Network) providers are an excellent way to bypass both political censorship and commercial IP-based restrictions.",
+      "created_at": "2026-09-22T12:46:29+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": []
+      }
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [],
+  "failure_reasons": [],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": []
+}

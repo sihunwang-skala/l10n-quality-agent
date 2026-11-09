@@ -1,0 +1,90 @@
+{
+  "run_id": "be25d5d06243442d931b5d7834190664",
+  "request": {
+    "source": "이 냉장고는 에너지 소비를 20% 줄입니다.",
+    "target_language": "English",
+    "target_country": "Australia",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "AWAITING_HUMAN_APPROVAL",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-21T18:47:57+09:00",
+  "updated_at": "2026-09-21T18:50:38+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "This refrigerator reduce energy consumption by 20%.",
+      "created_at": "2026-09-21T18:47:57+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "grammar",
+            "severity": "major",
+            "span": "reduce",
+            "explanation": "주어 'This refrigerator' 가 단수 (singular) 이므로, 동사는 'reduces' 로 변형되어야 합니다. 현재 번역문은 다수/원형인 'reduce' 를 사용하여 문법 오류가 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    },
+    {
+      "version": 2,
+      "translation": "This refrigerator reduces energy consumption by 20%.",
+      "created_at": "2026-09-21T18:50:38+09:00",
+      "based_on_version": 1,
+      "instruction": "",
+      "mqm": {
+        "errors": []
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "grammar",
+      "attempt": 1,
+      "input_translation": "This refrigerator reduce energy consumption by 20%.",
+      "candidate": "This refrigerator reduces energy consumption by 20%.",
+      "selected_errors": [
+        {
+          "category": "grammar",
+          "severity": "major",
+          "span": "reduce",
+          "explanation": "주어 'This refrigerator' 가 단수 (singular) 이므로, 동사는 'reduces' 로 변형되어야 합니다. 현재 번역문은 다수/원형인 'reduce' 를 사용하여 문법 오류가 있습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": true,
+      "failure_reasons": [],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "grammar",
+            "severity": "major",
+            "span": "reduce",
+            "explanation": "주어 'This refrigerator' 가 단수 (singular) 이므로, 동사는 'reduces' 로 변형되어야 합니다. 현재 번역문은 다수/원형인 'reduce' 를 사용하여 문법 오류가 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": []
+      },
+      "created_at": "2026-09-21T18:50:38+09:00"
+    }
+  ],
+  "unresolved_errors": [],
+  "failure_reasons": []
+}

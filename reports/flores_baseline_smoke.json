@@ -1,0 +1,63 @@
+{
+  "summary": {
+    "German": {
+      "n": 2,
+      "mean_chrf_a": 51.99,
+      "mean_chrf_b": 54.4,
+      "mean_seconds_a": 3.56,
+      "mean_seconds_b": 27.02,
+      "mean_attempts_b": 2.5,
+      "status_counts_b": {
+        "HUMAN_REVIEW_REQUIRED": 2
+      }
+    }
+  },
+  "results": [
+    {
+      "split": "dev",
+      "id": 453,
+      "target_language": "German",
+      "source": "대화식 디자인은 프로젝트의 구성 요소가 서로 연결되어야 하지만, 별도의 개체로도 말이 되어야 합니다.",
+      "reference": "Ein interaktives Design erfordert, dass sich die Komponenten eines Projektes miteinander verbinden, dass sie aber auch als eigenständige Einheiten Sinn ergeben.",
+      "baseline_a": {
+        "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+        "chrf": 58.76129078833717,
+        "seconds": 5.54
+      },
+      "baseline_b": {
+        "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+        "chrf": 62.91814607627108,
+        "seconds": 27.42,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 3,
+        "attempts": 3,
+        "accepted_attempts": 2,
+        "rejected_attempts": 1,
+        "run_id": "44eeea1dabca4426bc69fe3e65e37b24"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 792,
+      "target_language": "German",
+      "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+      "reference": "Supermärkte erhalten eine zunehmende Vielfalt an Fertiggerichten. Einige bieten sogar Mikrowellen und andere Methoden zum Aufwärmen des Essens.",
+      "baseline_a": {
+        "translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Ladungen auch Geräte wie Mikrowellenherde oder alternative Zubereitungsmöglichkeiten anbieten.",
+        "chrf": 45.22730024252041,
+        "seconds": 1.58
+      },
+      "baseline_b": {
+        "translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Supermärkte auch Geräte wie Mikrowellenherde oder andere Zubereitungsmöglichkeiten anbieten.",
+        "chrf": 45.88899352014875,
+        "seconds": 26.62,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 2,
+        "attempts": 2,
+        "accepted_attempts": 1,
+        "rejected_attempts": 1,
+        "run_id": "8a8bda0ccc62429da555cda4b4f6ece3"
+      }
+    }
+  ]
+}

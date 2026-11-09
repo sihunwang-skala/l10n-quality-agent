@@ -1,0 +1,151 @@
+{
+  "run_id": "a730904c40c242b7b0d40a34854a09e6",
+  "request": {
+    "source": "현지의 동물 종류에 대한 지식이 없는 지역에서는 바닥에 놓인 매트리스나 패드 위에서 자면 안 됩니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:43:04+09:00",
+  "updated_at": "2026-09-22T12:43:34+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "In areas where there is no knowledge of local wildlife, you should not sleep on mattresses or pads placed on the ground.",
+      "created_at": "2026-09-22T12:43:05+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "local wildlife",
+            "explanation": "원문의 '동물'은 포유류, 조류, 파충류 등 모든 동물을 포함하는 광범위한 개념입니다. 번역문에서 이를 'wildlife(야생동물)'로 한정지었으나, 원문이 특정 야생동물을 언급한 것이 아니라 일반적인 동물 종에 대한 지식을 요구하므로, 'local animals' 또는 'local fauna'가 더 정확한 표현일 수 있습니다. 다만, 문맥상 큰 오역은 아니나 엄밀한 정확성에서는 약간의 불일치가 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "accuracy",
+      "attempt": 1,
+      "input_translation": "In areas where there is no knowledge of local wildlife, you should not sleep on mattresses or pads placed on the ground.",
+      "candidate": "In areas where there is no knowledge of local animals, you should not sleep on mattresses or pads placed on the ground.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "minor",
+          "span": "local wildlife",
+          "explanation": "원문의 '동물'은 포유류, 조류, 파충류 등 모든 동물을 포함하는 광범위한 개념입니다. 번역문에서 이를 'wildlife(야생동물)'로 한정지었으나, 원문이 특정 야생동물을 언급한 것이 아니라 일반적인 동물 종에 대한 지식을 요구하므로, 'local animals' 또는 'local fauna'가 더 정확한 표현일 수 있습니다. 다만, 문맥상 큰 오역은 아니나 엄밀한 정확성에서는 약간의 불일치가 있습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 accuracy 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "local wildlife",
+            "explanation": "원문의 '동물'은 포유류, 조류, 파충류 등 모든 동물을 포함하는 광범위한 개념입니다. 번역문에서 이를 'wildlife(야생동물)'로 한정지었으나, 원문이 특정 야생동물을 언급한 것이 아니라 일반적인 동물 종에 대한 지식을 요구하므로, 'local animals' 또는 'local fauna'가 더 정확한 표현일 수 있습니다. 다만, 문맥상 큰 오역은 아니나 엄밀한 정확성에서는 약간의 불일치가 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "In areas where there is no knowledge of local animals",
+            "explanation": "원문의 '현지의 동물 종류에 대한 지식이 없는 지역'은 특정 지역의 동물을 모른다는 것을 의미하지만, 번역문에서 이를 '동물이 없는 지역'이나 '위험한 동물이 없는 지역'으로 오해할 수 있는 맥락적 불확실성이 있습니다. 원문이 강조하는 것은 해당 지역 특유의 위험 동물에 대한 정보가 부족하다는 점이며, 이는 단순히 동물이 존재하지 않는다는 뜻이 아닙니다. 그러나 문맥상 '동물이 없는 곳'이라는 해석도 가능하므로 중대한 오류로 보기는 어렵지만, 정확성을 높이기 위해 'In areas where people lack knowledge of local wildlife' 등으로 수정할 여지가 있습니다.",
+            "suggested_fix": "In areas where there is no knowledge of local animals"
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:43:17+09:00"
+    },
+    {
+      "step": 2,
+      "category": "accuracy",
+      "attempt": 2,
+      "input_translation": "In areas where there is no knowledge of local wildlife, you should not sleep on mattresses or pads placed on the ground.",
+      "candidate": "In areas where there is no knowledge of local animals, you should not sleep on mattresses or pads placed on the ground.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "minor",
+          "span": "local wildlife",
+          "explanation": "원문의 '동물'은 포유류, 조류, 파충류 등 모든 동물을 포함하는 광범위한 개념입니다. 번역문에서 이를 'wildlife(야생동물)'로 한정지었으나, 원문이 특정 야생동물을 언급한 것이 아니라 일반적인 동물 종에 대한 지식을 요구하므로, 'local animals' 또는 'local fauna'가 더 정확한 표현일 수 있습니다. 다만, 문맥상 큰 오역은 아니나 엄밀한 정확성에서는 약간의 불일치가 있습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 accuracy 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "local wildlife",
+            "explanation": "원문의 '동물'은 포유류, 조류, 파충류 등 모든 동물을 포함하는 광범위한 개념입니다. 번역문에서 이를 'wildlife(야생동물)'로 한정지었으나, 원문이 특정 야생동물을 언급한 것이 아니라 일반적인 동물 종에 대한 지식을 요구하므로, 'local animals' 또는 'local fauna'가 더 정확한 표현일 수 있습니다. 다만, 문맥상 큰 오역은 아니나 엄밀한 정확성에서는 약간의 불일치가 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "In areas where there is no knowledge of local animals",
+            "explanation": "원문의 '현지의 동물 종류에 대한 지식이 없는 지역'은 특정 지역의 동물을 모른다는 것을 의미하지만, 번역문에서 이를 '동물이 없는 지역'이나 '위험한 동물이 없는 지역'으로 오해할 수 있는 맥락적 불확실성이 있습니다. 원문이 강조하는 것은 해당 지역 특유의 위험 동물에 대한 정보가 부족하다는 점이며, 이는 단순히 동물이 존재하지 않는다는 뜻이 아닙니다. 그러나 문맥상 '동물이 없는 곳'이라는 해석도 가능하므로 중대한 오류로 보기는 어렵지만, 정확성을 높이기 위해 'In areas where people lack knowledge of local wildlife' 등으로 수정할 여지가 있습니다.",
+            "suggested_fix": "In areas where there is no knowledge of local animals"
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:43:25+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "accuracy",
+      "severity": "minor",
+      "span": "local wildlife",
+      "explanation": "원문의 '동물'은 포유류, 조류, 파충류 등 모든 동물을 포함하는 광범위한 개념입니다. 번역문에서 이를 'wildlife(야생동물)'로 한정지었으나, 원문이 특정 야생동물을 언급한 것이 아니라 일반적인 동물 종에 대한 지식을 요구하므로, 'local animals' 또는 'local fauna'가 더 정확한 표현일 수 있습니다. 다만, 문맥상 큰 오역은 아니나 엄밀한 정확성에서는 약간의 불일치가 있습니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "accuracy 영역 수정 2회 실패"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[전략 1/2] fluency: 이전 'accuracy' 전략은 단어 선택의 미세한 차이 (wildlife vs local animals) 에 집중하여 문장의 자연스러움이나 어휘적 다양성을 개선하지 못했습니다. 원문은 '지식이 없는 지역'이라는 조건을 강조하며, 이를 더 자연스럽게 표현하기 위해 'familiarity with'나 'understanding of'와 같은 표현을 사용하여 문장 구조를 다듬는 전략이 필요합니다.",
+    "선택한 전략(fluency)에 해당하는 미해결 오류가 없어 건너뜀",
+    "[전략 2/2] human_review: 이미 정확성 (accuracy) 과 유창성 (fluency) 전략을 두 번 시도했으나, 'wildlife'라는 단어 선택에 대한 미세한 뉘앙스 차이만으로도 오류가 지속되고 있습니다. 원문의 '동물 종류'는 포유류, 조류, 파충류 등 모든 생물을 포괄하는 광범위한 개념이며, 번역문에서 이를 '야생동물 (wildlife)'로 한정지은 것은 문맥상 큰 오역이 아니지만 엄밀한 정확성에서는 불일치가 있습니다. AI 가 이 정도의 미세한 뉘앙스 차이를 스스로 판단하여 수정하기에는 한계가 있으며, 이전 전략들이 효과를 보지 못했으므로 더 깊은 분석이나 인간 전문가의 검토가 필요한 경우로 판단됩니다.",
+    "[OpenAI Agent - MOCK, 실제 API 미호출] 연동 인터페이스만 검증됨. 실제 구현 시 이 지점에서 OpenAI 모델이 전략을 재선택합니다."
+  ]
+}

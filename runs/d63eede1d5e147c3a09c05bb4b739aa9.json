@@ -1,0 +1,199 @@
+{
+  "run_id": "d63eede1d5e147c3a09c05bb4b739aa9",
+  "request": {
+    "source": "가스 회사 관계자는 이웃이 가스 누출로 연락하자 현장에 방문 중이었습니다.",
+    "target_language": "Italian",
+    "target_country": "Italy",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T01:33:04+09:00",
+  "updated_at": "2026-09-22T01:33:34+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Il rappresentante della società dei gas si trovava in viaggio sul posto quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+      "created_at": "2026-09-22T01:33:05+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "si trovava in viaggio sul posto",
+            "explanation": "원문에서 '현장에 방문 중이었습니다'는 현재 진행형으로, 사건 발생 직전이나 당시의 상황을 묘사하는 데 적합합니다. 번역문에서 'si trovava in viaggio' (여행 중이던)라는 표현은 문맥상 '현장을 방문하던 중'이라는 의미와 잘 맞지 않습니다. 'in viaggio'는 일반적으로 이동 중인 사람을 지칭하며, 특정 목적지인 '현장'을 명시적으로 언급하지 않으면 의미가 약해집니다. 또한 원문의 시간적 순서 (연락 받기 -> 현장 방문) 가 번역문에서 약간 뒤섞여 보일 수 있습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "quando ha ricevuto la chiamata dal vicino",
+            "explanation": "원문은 '이웃이 가스 누출로 연락하자 (연락 받기) 현장에 방문 중이었습니다'라고 하여, 연락을 받은 시점과 방문 중인 상태를 연결합니다. 번역문의 현재 완료형 ('ha ricevuto') 은 과거의 특정 순간을 강조하는 경향이 있어, 원문의 진행 상황이나 당시의 상황을 설명하는 데는 적절하지 않을 수 있습니다. 다만, 이는 문법적 오류라기보다는 스타일상의 미세한 차이입니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "fluency",
+      "attempt": 1,
+      "input_translation": "Il rappresentante della società dei gas si trovava in viaggio sul posto quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+      "candidate": "Il rappresentante della società dei gas stava visitando il luogo dell'incidente quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "si trovava in viaggio sul posto",
+          "explanation": "원문에서 '현장에 방문 중이었습니다'는 현재 진행형으로, 사건 발생 직전이나 당시의 상황을 묘사하는 데 적합합니다. 번역문에서 'si trovava in viaggio' (여행 중이던)라는 표현은 문맥상 '현장을 방문하던 중'이라는 의미와 잘 맞지 않습니다. 'in viaggio'는 일반적으로 이동 중인 사람을 지칭하며, 특정 목적지인 '현장'을 명시적으로 언급하지 않으면 의미가 약해집니다. 또한 원문의 시간적 순서 (연락 받기 -> 현장 방문) 가 번역문에서 약간 뒤섞여 보일 수 있습니다.",
+          "suggested_fix": null
+        },
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "quando ha ricevuto la chiamata dal vicino",
+          "explanation": "원문은 '이웃이 가스 누출로 연락하자 (연락 받기) 현장에 방문 중이었습니다'라고 하여, 연락을 받은 시점과 방문 중인 상태를 연결합니다. 번역문의 현재 완료형 ('ha ricevuto') 은 과거의 특정 순간을 강조하는 경향이 있어, 원문의 진행 상황이나 당시의 상황을 설명하는 데는 적절하지 않을 수 있습니다. 다만, 이는 문법적 오류라기보다는 스타일상의 미세한 차이입니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "si trovava in viaggio sul posto",
+            "explanation": "원문에서 '현장에 방문 중이었습니다'는 현재 진행형으로, 사건 발생 직전이나 당시의 상황을 묘사하는 데 적합합니다. 번역문에서 'si trovava in viaggio' (여행 중이던)라는 표현은 문맥상 '현장을 방문하던 중'이라는 의미와 잘 맞지 않습니다. 'in viaggio'는 일반적으로 이동 중인 사람을 지칭하며, 특정 목적지인 '현장'을 명시적으로 언급하지 않으면 의미가 약해집니다. 또한 원문의 시간적 순서 (연락 받기 -> 현장 방문) 가 번역문에서 약간 뒤섞여 보일 수 있습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "quando ha ricevuto la chiamata dal vicino",
+            "explanation": "원문은 '이웃이 가스 누출로 연락하자 (연락 받기) 현장에 방문 중이었습니다'라고 하여, 연락을 받은 시점과 방문 중인 상태를 연결합니다. 번역문의 현재 완료형 ('ha ricevuto') 은 과거의 특정 순간을 강조하는 경향이 있어, 원문의 진행 상황이나 당시의 상황을 설명하는 데는 적절하지 않을 수 있습니다. 다만, 이는 문법적 오류라기보다는 스타일상의 미세한 차이입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "stava visitando il luogo dell'incidente",
+            "explanation": "원문에서 '가스 누출로 연락하자'는 인과 관계나 시간적 순서를 나타내는 표현입니다. 번역문에서는 'when ha ricevuto la chiamata' (통화를 받다) 로만 처리되어, 원문의 '누출이 발생하여 연락을 주었다'라는 맥락이 약화되었습니다. 또한 'stava visitando... quando...' 구조는 영어식 시제 혼용 (tense mixing) 으로 보일 수 있어 자연스러운 이탈리아어 문법으로 다듬어야 합니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "della società dei gas",
+            "explanation": "이탈리아어에서 'gas'는 보통 명사형 'gas'를 쓰거나, 회사명을 지칭할 때 'società del gas' 또는 더 구체적인 'società di distribuzione del gas' 등으로 표현하는 것이 일반적입니다. 'società dei gas'는 다수격 ('dei') 을 사용하여 특정 한 개의 가스 회사의 느낌을 약화시킬 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T01:33:24+09:00"
+    },
+    {
+      "step": 2,
+      "category": "fluency",
+      "attempt": 2,
+      "input_translation": "Il rappresentante della società dei gas si trovava in viaggio sul posto quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+      "candidate": "Il rappresentante della società dei gas stava visitando il luogo dell'incidente quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "si trovava in viaggio sul posto",
+          "explanation": "원문에서 '현장에 방문 중이었습니다'는 현재 진행형으로, 사건 발생 직전이나 당시의 상황을 묘사하는 데 적합합니다. 번역문에서 'si trovava in viaggio' (여행 중이던)라는 표현은 문맥상 '현장을 방문하던 중'이라는 의미와 잘 맞지 않습니다. 'in viaggio'는 일반적으로 이동 중인 사람을 지칭하며, 특정 목적지인 '현장'을 명시적으로 언급하지 않으면 의미가 약해집니다. 또한 원문의 시간적 순서 (연락 받기 -> 현장 방문) 가 번역문에서 약간 뒤섞여 보일 수 있습니다.",
+          "suggested_fix": null
+        },
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "quando ha ricevuto la chiamata dal vicino",
+          "explanation": "원문은 '이웃이 가스 누출로 연락하자 (연락 받기) 현장에 방문 중이었습니다'라고 하여, 연락을 받은 시점과 방문 중인 상태를 연결합니다. 번역문의 현재 완료형 ('ha ricevuto') 은 과거의 특정 순간을 강조하는 경향이 있어, 원문의 진행 상황이나 당시의 상황을 설명하는 데는 적절하지 않을 수 있습니다. 다만, 이는 문법적 오류라기보다는 스타일상의 미세한 차이입니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "si trovava in viaggio sul posto",
+            "explanation": "원문에서 '현장에 방문 중이었습니다'는 현재 진행형으로, 사건 발생 직전이나 당시의 상황을 묘사하는 데 적합합니다. 번역문에서 'si trovava in viaggio' (여행 중이던)라는 표현은 문맥상 '현장을 방문하던 중'이라는 의미와 잘 맞지 않습니다. 'in viaggio'는 일반적으로 이동 중인 사람을 지칭하며, 특정 목적지인 '현장'을 명시적으로 언급하지 않으면 의미가 약해집니다. 또한 원문의 시간적 순서 (연락 받기 -> 현장 방문) 가 번역문에서 약간 뒤섞여 보일 수 있습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "quando ha ricevuto la chiamata dal vicino",
+            "explanation": "원문은 '이웃이 가스 누출로 연락하자 (연락 받기) 현장에 방문 중이었습니다'라고 하여, 연락을 받은 시점과 방문 중인 상태를 연결합니다. 번역문의 현재 완료형 ('ha ricevuto') 은 과거의 특정 순간을 강조하는 경향이 있어, 원문의 진행 상황이나 당시의 상황을 설명하는 데는 적절하지 않을 수 있습니다. 다만, 이는 문법적 오류라기보다는 스타일상의 미세한 차이입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "stava visitando il luogo dell'incidente",
+            "explanation": "원문에서 '가스 누출로 연락하자'는 인과 관계나 시간적 순서를 나타내는 표현입니다. 번역문에서는 'when ha ricevuto la chiamata' (통화를 받다) 로만 처리되어, 원문의 '누출이 발생하여 연락을 주었다'라는 맥락이 약화되었습니다. 또한 'stava visitando... quando...' 구조는 영어식 시제 혼용 (tense mixing) 으로 보일 수 있어 자연스러운 이탈리아어 문법으로 다듬어야 합니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "della società dei gas",
+            "explanation": "이탈리아어에서 'gas'는 보통 명사형 'gas'를 쓰거나, 회사명을 지칭할 때 'società del gas' 또는 더 구체적인 'società di distribuzione del gas' 등으로 표현하는 것이 일반적입니다. 'società dei gas'는 다수격 ('dei') 을 사용하여 특정 한 개의 가스 회사의 느낌을 약화시킬 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T01:33:34+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "si trovava in viaggio sul posto",
+      "explanation": "원문에서 '현장에 방문 중이었습니다'는 현재 진행형으로, 사건 발생 직전이나 당시의 상황을 묘사하는 데 적합합니다. 번역문에서 'si trovava in viaggio' (여행 중이던)라는 표현은 문맥상 '현장을 방문하던 중'이라는 의미와 잘 맞지 않습니다. 'in viaggio'는 일반적으로 이동 중인 사람을 지칭하며, 특정 목적지인 '현장'을 명시적으로 언급하지 않으면 의미가 약해집니다. 또한 원문의 시간적 순서 (연락 받기 -> 현장 방문) 가 번역문에서 약간 뒤섞여 보일 수 있습니다.",
+      "suggested_fix": null
+    },
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "quando ha ricevuto la chiamata dal vicino",
+      "explanation": "원문은 '이웃이 가스 누출로 연락하자 (연락 받기) 현장에 방문 중이었습니다'라고 하여, 연락을 받은 시점과 방문 중인 상태를 연결합니다. 번역문의 현재 완료형 ('ha ricevuto') 은 과거의 특정 순간을 강조하는 경향이 있어, 원문의 진행 상황이나 당시의 상황을 설명하는 데는 적절하지 않을 수 있습니다. 다만, 이는 문법적 오류라기보다는 스타일상의 미세한 차이입니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "fluency 영역 수정 2회 실패"
+  ]
+}

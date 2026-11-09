@@ -1,0 +1,57 @@
+[
+  {
+    "source_term": "침대와 아침 식사",
+    "target_term": "bed and breakfast",
+    "source_language": "Korean",
+    "target_language": "English",
+    "domain": "wikivoyage",
+    "topic": "travel, accomodation",
+    "context": "숙박 형태를 가리키는 여행 용어. 힌트 없이 chains.translate()를 직접 실행해보니 'luxury bedding and breakfast service'로 오역됨 - 실제로 필요한 항목.",
+    "evidence": "744",
+    "approval_status": "approved"
+  },
+  {
+    "source_term": "메트로플러스",
+    "target_term": "MetroPlus",
+    "source_language": "Korean",
+    "target_language": "English",
+    "domain": "wikivoyage",
+    "topic": "travel, commute",
+    "context": "실제 고유명사(provenance source_url이 Cape Town Wikimania 가이드북 - MetroPlus는 남아공 Metrorail Western Cape의 실제 프리미엄 등급 서비스명). 첫 번역이 우연히 맞았어도 이후 fluency/style 수정 단계에서 표기가 바뀔 위험이 있어 protected_terms로 고정.",
+    "evidence": "854",
+    "approval_status": "approved"
+  },
+  {
+    "source_term": "월트 디즈니 월드",
+    "target_term": "Walt Disney World",
+    "source_language": "Korean",
+    "target_language": "English",
+    "domain": "wikivoyage",
+    "topic": "travel, culture",
+    "context": "실제 브랜드명. 원문에 영문 병기가 있어 첫 번역은 맞지만, 수정 단계 드리프트 방지 목적으로 고정.",
+    "evidence": "664",
+    "approval_status": "approved"
+  },
+  {
+    "source_term": "항이",
+    "target_term": "Hangi",
+    "source_language": "Korean",
+    "target_language": "English",
+    "domain": "wikivoyage",
+    "topic": "travel, culture",
+    "context": "마오리족 전통 조리법을 가리키는 실제 고유명사. 원문에 영문 병기가 있어 첫 번역은 맞지만, 수정 단계 드리프트 방지 목적으로 고정.",
+    "evidence": "849",
+    "approval_status": "approved"
+  },
+  {
+    "source_term": "에스키모",
+    "target_term": "Eskimo",
+    "source_language": "Korean",
+    "target_language": "English",
+    "domain": "wikivoyage",
+    "topic": "travel, culture",
+    "context": "직역 대응은 확인되나, 원문 자체가 '캐나다 등에서는 모욕적으로 받아들여질 수 있음'을 명시하고 있어 문맥 의존성이 높음 - 자동 승인하지 않고 candidate로 남김",
+    "evidence": "651",
+    "approval_status": "candidate"
+  }
+]

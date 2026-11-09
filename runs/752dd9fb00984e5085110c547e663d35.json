@@ -1,0 +1,41 @@
+{
+  "run_id": "752dd9fb00984e5085110c547e663d35",
+  "request": {
+    "source": "따라서, 이 같은 최고급 시설에선 가장 고급스러운 수제 이불이나, 골동품 침대 같은 고급의 물건들을 쉽게 찾을 수 있습니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "AWAITING_HUMAN_APPROVAL",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:45:50+09:00",
+  "updated_at": "2026-09-22T12:45:52+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Therefore, in such top-tier facilities, you can easily find luxurious items like handcrafted duvets and antique beds.",
+      "created_at": "2026-09-22T12:45:51+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": []
+      }
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [],
+  "failure_reasons": [],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": []
+}

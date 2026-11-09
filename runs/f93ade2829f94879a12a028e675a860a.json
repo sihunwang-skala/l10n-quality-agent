@@ -1,0 +1,156 @@
+{
+  "run_id": "f93ade2829f94879a12a028e675a860a",
+  "request": {
+    "source": "이 회사는 미국 California주 San Jose에 있는 데이터센터에 약 2.5PB의 데이터를 저장하고 있으며, 매일 새벽 02:00 UTC에 증분 백업을 수행한다.",
+    "target_language": "Japanese",
+    "target_country": "Japan",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T17:30:50+09:00",
+  "updated_at": "2026-09-22T17:31:21+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "この会社は、米国カリフォルニア州サンホセにあるデータセンターに約 2.5PB のデータを保存し、毎日 UTC 02:00 に増分バックアップを実行しています。",
+      "created_at": "2026-09-22T17:30:52+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": null
+    },
+    {
+      "version": 2,
+      "translation": "この会社は、米国カリフォルニア州サンノゼにあるデータセンターに約 2.5PB のデータを保存し、毎日 UTC 02:00 に増分バックアップを実行しています。",
+      "created_at": "2026-09-22T17:31:06+09:00",
+      "based_on_version": 1,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "毎日 UTC 02:00 に",
+            "explanation": "원문에서 '매일 새벽 02:00 UTC'라는 표현이 있습니다. 일본어 번역문에서는 '새벽 (早朝)'이라는 시간적 뉘앙스를 명시하지 않고 단순히 '매일 (毎日)'라고만 번역했습니다. 이는 문법적으로 틀린 것이 아니라, 원문의 세부 정보 ('새벽') 를 누락한 것으로 볼 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "spelling",
+      "attempt": 1,
+      "input_translation": "この会社は、米国カリフォルニア州サンホセにあるデータセンターに約 2.5PB のデータを保存し、毎日 UTC 02:00 に増分バックアップを実行しています。",
+      "candidate": "この会社は、米国カリフォルニア州サンノゼにあるデータセンターに約 2.5PB のデータを保存し、毎日 UTC 02:00 に増分バックアップを実行しています。",
+      "selected_errors": [
+        {
+          "category": "spelling",
+          "severity": "minor",
+          "span": "San Jose",
+          "explanation": "번역문에서 'San Jose'를 'サンホセ'로 번역했으나, 일본어 공식 명칭은 'サンノゼ'(San-no-ze)입니다. '호세'(hose)는 발음 및 의미상 오류에 해당합니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": true,
+      "failure_reasons": [],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "spelling",
+            "severity": "minor",
+            "span": "San Jose",
+            "explanation": "번역문에서 'San Jose'를 'サンホセ'로 번역했으나, 일본어 공식 명칭은 'サンノゼ'(San-no-ze)입니다. '호세'(hose)는 발음 및 의미상 오류에 해당합니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "毎日 UTC 02:00 に",
+            "explanation": "원문에서 '매일 새벽 02:00 UTC'라는 표현이 있습니다. 일본어 번역문에서는 '새벽 (早朝)'이라는 시간적 뉘앙스를 명시하지 않고 단순히 '매일 (毎日)'라고만 번역했습니다. 이는 문법적으로 틀린 것이 아니라, 원문의 세부 정보 ('새벽') 를 누락한 것으로 볼 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T17:31:06+09:00"
+    },
+    {
+      "step": 2,
+      "category": "fluency",
+      "attempt": 1,
+      "input_translation": "この会社は、米国カリフォルニア州サンノゼにあるデータセンターに約 2.5PB のデータを保存し、毎日 UTC 02:00 に増分バックアップを実行しています。",
+      "candidate": "この会社は、米国カリフォルニア州サンノゼにあるデータセンターに約 2.5PB のデータを保存し、毎日早朝 UTC 02:00 に増分バックアップを実行しています。",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "毎日 UTC 02:00 に",
+          "explanation": "원문에서 '매일 새벽 02:00 UTC'라는 표현이 있습니다. 일본어 번역문에서는 '새벽 (早朝)'이라는 시간적 뉘앙스를 명시하지 않고 단순히 '매일 (毎日)'라고만 번역했습니다. 이는 문법적으로 틀린 것이 아니라, 원문의 세부 정보 ('새벽') 를 누락한 것으로 볼 수 있습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "毎日 UTC 02:00 に",
+            "explanation": "원문에서 '매일 새벽 02:00 UTC'라는 표현이 있습니다. 일본어 번역문에서는 '새벽 (早朝)'이라는 시간적 뉘앙스를 명시하지 않고 단순히 '매일 (毎日)'라고만 번역했습니다. 이는 문법적으로 틀린 것이 아니라, 원문의 세부 정보 ('새벽') 를 누락한 것으로 볼 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "早朝 UTC 02:00",
+            "explanation": "표준 시간대 표기법 (UTC) 과 구체적인 시간 (02:00) 을 함께 사용할 때, '早朝' (아침/새벽) 은 불필요한 설명이 될 수 있습니다. 원문의 '매일 새벽 02:00 UTC'는 정확한 시간을 강조하는 문맥이며, 번역문에서 이를 '毎日早朝 UTC 02:00'으로 번역하여 시간의 정확성을 해치지 않으면서도 자연스러운 표현이 됩니다. 다만, 엄밀히 말하면 '早朝'은 02:00 보다 더 이른 시간 (예: 01:00-03:00 사이의 일반적인 아침) 을 지칭하는 경우가 많으므로, 원문의 '새벽'이라는 뉘앙스를 완벽하게 전달하기보다는 '毎日 UTC 02:00'이 더 명확할 수 있습니다. 하지만 문맥상 '새벽'을 강조하지 않고 시간을 명시한 것은 허용 가능한 변형입니다.",
+            "suggested_fix": "毎日 UTC 02:00"
+          }
+        ]
+      },
+      "created_at": "2026-09-22T17:31:21+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "毎日 UTC 02:00 に",
+      "explanation": "원문에서 '매일 새벽 02:00 UTC'라는 표현이 있습니다. 일본어 번역문에서는 '새벽 (早朝)'이라는 시간적 뉘앙스를 명시하지 않고 단순히 '매일 (毎日)'라고만 번역했습니다. 이는 문법적으로 틀린 것이 아니라, 원문의 세부 정보 ('새벽') 를 누락한 것으로 볼 수 있습니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[조사] 원인 파악을 위해 MQM 재평가 실행 (원래 실패 사유: 알 수 없음) -> 오류 1개 발견\n1. [spelling · minor] 번역문에서 'San Jose'를 'サンホセ'로 번역했으나, 일본어 공식 명칭은 'サンノゼ'(San-no-ze)입니다. '호세'(hose)는 발음 및 의미상 오류에 해당합니다.",
+    "[전략 1/2] spelling: 이전 번역에서 'San Jose'를 'サンホセ'(San-hose)로 잘못 표기했습니다. 일본어 공식 명칭은 발음에 따라 'サンノゼ'(San-no-ze)입니다. 이는 단순한 발음 오류가 아니라 지역명 자체의 잘못된 표기로, 일본어 문서에서는 반드시 수정해야 할 명백한 오타입니다.",
+    "[spelling] 수정 Tool 호출",
+    "[전략 2/2] fluency: 이전 'spelling' 전략은 표기 오류를 수정하는 데만 초점을 맞췄으나, 현재 핵심 문제는 원문의 시간적 뉘앙스 ('새벽') 를 번역문에서 누락한 문체적 불일치입니다. 일본어에서는 '02:00 UTC'라는 구체적인 시간을 언급할 때 자연스럽게 '早朝 (아사차)' 또는 '夜更け (야노게)' 같은 표현을 사용하여 시간의早晚을 강조하는 것이 일반적입니다. 단순히 '毎日'라고만 번역하면 원문의 의도된 세부 정보가 손실되어 불유연해집니다. 따라서 문맥에 맞는 적절한 시간 표현을 추가하여 원문의 뉘앙스를 정확히 전달할 수 있는 fluency 전략을 선택합니다.",
+    "[fluency] 수정 Tool 호출"
+  ]
+}

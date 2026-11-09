@@ -1,0 +1,228 @@
+{
+  "run_id": "530604c5b9ca411cac1c53ffb583b8fb",
+  "request": {
+    "source": "특히 처음에 여행할 때는 여행에 쉽게 적응할 수 있도록 서양식 스타일과 품질의 호텔, 음식, 서비스를 이용하실 것을 고려해 보세요.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:45:13+09:00",
+  "updated_at": "2026-09-22T12:45:50+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Especially when you first travel, consider staying at a Western-style hotel with quality food and service to help you adapt easily to your trip.",
+      "created_at": "2026-09-22T12:45:15+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "style",
+            "severity": "minor",
+            "span": "Western-style hotel",
+            "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "adapt easily to your trip",
+            "explanation": "'adapt to your trip'은 문법적으로 틀리지 않았으나, 영어의 관용적 표현으로는 'adapt to the environment of your trip'이나 'get used to traveling'이 더 자연스럽습니다. 여행 자체에 적응하기보다는 여행지의 환경이나 생활 방식에 적응한다는 뉘앙스를 원문에서 더 잘 전달할 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "style",
+      "attempt": 1,
+      "input_translation": "Especially when you first travel, consider staying at a Western-style hotel with quality food and service to help you adapt easily to your trip.",
+      "candidate": "Especially when you first travel, consider staying at a European-style hotel with quality food and service to help you adapt easily to your trip.",
+      "selected_errors": [
+        {
+          "category": "style",
+          "severity": "minor",
+          "span": "Western-style hotel",
+          "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 style 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "style",
+            "severity": "minor",
+            "span": "Western-style hotel",
+            "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "adapt easily to your trip",
+            "explanation": "'adapt to your trip'은 문법적으로 틀리지 않았으나, 영어의 관용적 표현으로는 'adapt to the environment of your trip'이나 'get used to traveling'이 더 자연스럽습니다. 여행 자체에 적응하기보다는 여행지의 환경이나 생활 방식에 적응한다는 뉘앙스를 원문에서 더 잘 전달할 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "style",
+            "severity": "minor",
+            "span": "European-style hotel",
+            "explanation": "원문의 '서양식'은 문화적 범위를 포괄하는 표현으로, 특정 국가 (유럽) 에만 국한되지 않습니다. 미국 독자에게 'European-style'는 지나치게 구체적이고 제한적으로 들릴 수 있으며, 원문의 의도를 충실히 전달하지 못했습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:45:27+09:00"
+    },
+    {
+      "step": 2,
+      "category": "style",
+      "attempt": 2,
+      "input_translation": "Especially when you first travel, consider staying at a Western-style hotel with quality food and service to help you adapt easily to your trip.",
+      "candidate": "Especially when you first travel, consider staying at a European-style hotel with quality food and service to help you adapt easily to your trip.",
+      "selected_errors": [
+        {
+          "category": "style",
+          "severity": "minor",
+          "span": "Western-style hotel",
+          "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 style 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "style",
+            "severity": "minor",
+            "span": "Western-style hotel",
+            "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "adapt easily to your trip",
+            "explanation": "'adapt to your trip'은 문법적으로 틀리지 않았으나, 영어의 관용적 표현으로는 'adapt to the environment of your trip'이나 'get used to traveling'이 더 자연스럽습니다. 여행 자체에 적응하기보다는 여행지의 환경이나 생활 방식에 적응한다는 뉘앙스를 원문에서 더 잘 전달할 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "style",
+            "severity": "minor",
+            "span": "European-style hotel",
+            "explanation": "원문의 '서양식'은 문화적 범위를 포괄하는 표현으로, 특정 국가 (유럽) 에만 국한되지 않습니다. 미국 독자에게 'European-style'는 지나치게 구체적이고 제한적으로 들릴 수 있으며, 원문의 의도를 충실히 전달하지 못했습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:45:32+09:00"
+    },
+    {
+      "step": 3,
+      "category": "fluency",
+      "attempt": 1,
+      "input_translation": "Especially when you first travel, consider staying at a Western-style hotel with quality food and service to help you adapt easily to your trip.",
+      "candidate": "Especially when you first travel, consider staying at a Western-style hotel with quality food and service to help you get used to traveling.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "adapt easily to your trip",
+          "explanation": "'adapt to your trip'은 문법적으로 틀리지 않았으나, 영어의 관용적 표현으로는 'adapt to the environment of your trip'이나 'get used to traveling'이 더 자연스럽습니다. 여행 자체에 적응하기보다는 여행지의 환경이나 생활 방식에 적응한다는 뉘앙스를 원문에서 더 잘 전달할 수 있습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "style",
+            "severity": "minor",
+            "span": "Western-style hotel",
+            "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "adapt easily to your trip",
+            "explanation": "'adapt to your trip'은 문법적으로 틀리지 않았으나, 영어의 관용적 표현으로는 'adapt to the environment of your trip'이나 'get used to traveling'이 더 자연스럽습니다. 여행 자체에 적응하기보다는 여행지의 환경이나 생활 방식에 적응한다는 뉘앙스를 원문에서 더 잘 전달할 수 있습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "get used to traveling",
+            "explanation": "원문에서 '여행에 쉽게 적응할 수 있도록'은 여행 자체의 환경 (식단, 서비스 등) 에 익숙해지는 것을 의미하며, 단순히 '여행하는 행위'에 적응하는 것과는 뉘앙스가 다릅니다. 번역문 'get used to traveling' 은 영어권 독자에게 다소 어색한 표현으로 들릴 수 있으며, 원문의 의도인 '여행 생활의 편의를 위해'라는 맥락을 더 잘 전달할 수 있는 'getting accustomed to travel life' 또는 문맥에 따라 'getting comfortable with the lifestyle' 등이 더 자연스러울 수 있습니다. 다만, 이는 엄격한 오역이 아닌 스타일상의 미세한 차이입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:45:44+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "style",
+      "severity": "minor",
+      "span": "Western-style hotel",
+      "explanation": "원문의 '서양식 스타일'은 문화적 배경을 강조하는 표현입니다. 미국 영어에서는 'Western-style'가 주로 서부 지역 (미국/캐나다) 의 건축 양식을 지칭하며, 유럽이나 아시아의 문화를 의미하지 않습니다. 이 문맥에서 '서양'을 의미하려면 'European-style' 또는 단순히 'a hotel with Western amenities'와 같이 더 명확하게 표현하는 것이 자연스럽습니다.",
+      "suggested_fix": null
+    },
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "adapt easily to your trip",
+      "explanation": "'adapt to your trip'은 문법적으로 틀리지 않았으나, 영어의 관용적 표현으로는 'adapt to the environment of your trip'이나 'get used to traveling'이 더 자연스럽습니다. 여행 자체에 적응하기보다는 여행지의 환경이나 생활 방식에 적응한다는 뉘앙스를 원문에서 더 잘 전달할 수 있습니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "style 영역 수정 2회 실패"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[전략 1/2] fluency: 이전 'style' 전략은 문맥적 뉘앙스 (서양 vs 서부) 를 해결하지 못했습니다. 현재 남은 오류 중 'adapt to your trip'는 문법적으로 정확하지만, 미국 영어의 관용적 표현으로는 다소 어색합니다. 여행 자체에 적응하기보다는 여행지의 생활 환경이나 문화에 자연스럽게融入하는 것을 의미하므로, 'get used to traveling'이나 'ease into the local lifestyle'와 같이 더 자연스러운 동사 및 명사 구조로 교체하여 문장의 흐름을 개선해야 합니다.",
+    "[전략 2/2] human_review: 이미 'style'와 'fluency' 전략을 두 번 반복 시도했으나, 원문의 핵심 의미인 '서양식 (European/Western culture context)'과 '여행 자체에 적응하는 것'이라는 뉘앙스를 정확히 전달하지 못한 번역문입니다. 특히 미국 영어에서 'Western-style hotel'이 서부 지역 건축을 지칭한다는 점과 'adapt to your trip'의 어색함을 해결할 수 있는 더 정교한 문법적 또는 문화적 수정 전략은 모델 자체로는 찾기 어렵습니다. 이는 원문의 뉘앙스 (유럽/서양 문화적 배경) 와 영어의 관용적 표현 (여행 환경에 적응) 을 동시에 만족시키는 최적의 문장 구조를 찾는 것이 필요하므로, 인간 전문가의 판단이 필요한 경우로 분류합니다.",
+    "[OpenAI Agent - MOCK, 실제 API 미호출] 연동 인터페이스만 검증됨. 실제 구현 시 이 지점에서 OpenAI 모델이 전략을 재선택합니다."
+  ]
+}

@@ -1,0 +1,326 @@
+{
+  "summary": {
+    "Japanese": {
+      "n": 3,
+      "mean_chrf_a": 22.12,
+      "mean_chrf_b": 22.12,
+      "mean_seconds_a": 2.58,
+      "mean_seconds_b": 18.65,
+      "mean_attempts_b": 2.0,
+      "status_counts_b": {
+        "HUMAN_REVIEW_REQUIRED": 3
+      }
+    },
+    "Italian": {
+      "n": 3,
+      "mean_chrf_a": 37.66,
+      "mean_chrf_b": 37.66,
+      "mean_seconds_a": 1.29,
+      "mean_seconds_b": 25.43,
+      "mean_attempts_b": 2.0,
+      "status_counts_b": {
+        "HUMAN_REVIEW_REQUIRED": 3
+      }
+    },
+    "French": {
+      "n": 3,
+      "mean_chrf_a": 42.9,
+      "mean_chrf_b": 37.26,
+      "mean_seconds_a": 1.34,
+      "mean_seconds_b": 28.43,
+      "mean_attempts_b": 2.67,
+      "status_counts_b": {
+        "HUMAN_REVIEW_REQUIRED": 3
+      }
+    },
+    "German": {
+      "n": 3,
+      "mean_chrf_a": 44.36,
+      "mean_chrf_b": 45.96,
+      "mean_seconds_a": 1.35,
+      "mean_seconds_b": 21.46,
+      "mean_attempts_b": 2.33,
+      "status_counts_b": {
+        "HUMAN_REVIEW_REQUIRED": 3
+      }
+    }
+  },
+  "results": [
+    {
+      "split": "dev",
+      "id": 209,
+      "target_language": "Japanese",
+      "source": "가스 회사 관계자는 이웃이 가스 누출로 연락하자 현장에 방문 중이었습니다.",
+      "reference": "近所の人からガス漏れの通報を受けて、ガス会社の職員が現場に駆けつけました。",
+      "baseline_a": {
+        "translation": "ガス会社の担当者は、隣人がガス漏れを連絡したため、現場に訪ねていました。",
+        "chrf": 21.409398748024028,
+        "seconds": 5.28
+      },
+      "baseline_b": {
+        "translation": "ガス会社の担当者は、隣人がガス漏れを連絡したため、現場に訪ねていました。",
+        "chrf": 21.409398748024028,
+        "seconds": 19.98,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "fc20db98666f4f1190ddbbcc94cef495"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 453,
+      "target_language": "Japanese",
+      "source": "대화식 디자인은 프로젝트의 구성 요소가 서로 연결되어야 하지만, 별도의 개체로도 말이 되어야 합니다.",
+      "reference": "インタラクティブデザインでは、プロジェクトのコンポーネントが互いにつながるだけでなく、別個のエンティティとして意味をなすことが要求されます。",
+      "baseline_a": {
+        "translation": "対話型デザインは、プロジェクトの構成要素が互いに接続されつつも、個別の主体として機能する必要があるものです。",
+        "chrf": 20.624431011608507,
+        "seconds": 1.2
+      },
+      "baseline_b": {
+        "translation": "対話型デザインは、プロジェクトの構成要素が互いに接続されつつも、個別の主体として機能する必要があるものです。",
+        "chrf": 20.624431011608507,
+        "seconds": 18.34,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "49d1486a3c32480b8d52a703dee286bb"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 792,
+      "target_language": "Japanese",
+      "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+      "reference": "スーパーマーケットでは、調理済み食品の種類が増えてきています。店によっては、温められように電子レンジを用意するなどのサービスをしています。",
+      "baseline_a": {
+        "translation": "スーパーマーケットの即席食品品目はますます多様化しており、一部の店舗では電子レンジや他の調理器具を提供しています。",
+        "chrf": 24.32177401410143,
+        "seconds": 1.25
+      },
+      "baseline_b": {
+        "translation": "スーパーマーケットの即席食品品目はますます多様化しており、一部の店舗では電子レンジや他の調理器具を提供しています。",
+        "chrf": 24.32177401410143,
+        "seconds": 17.64,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "ba9c1594e42b4006876f10c4da6a3ab0"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 209,
+      "target_language": "Italian",
+      "source": "가스 회사 관계자는 이웃이 가스 누출로 연락하자 현장에 방문 중이었습니다.",
+      "reference": "Un funzionario della compagnia del gas si era recato sul posto a seguito di una chiamata da parte di un vicino per una fuga di gas.",
+      "baseline_a": {
+        "translation": "Il rappresentante della società dei gas si trovava in viaggio sul posto quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+        "chrf": 41.06976623896287,
+        "seconds": 1.3
+      },
+      "baseline_b": {
+        "translation": "Il rappresentante della società dei gas si trovava in viaggio sul posto quando ha ricevuto la chiamata dal vicino a causa di una fuoriuscita di gas.",
+        "chrf": 41.06976623896287,
+        "seconds": 30.06,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "5b1915e9f2c745a7b4b46fb454d95291"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 453,
+      "target_language": "Italian",
+      "source": "대화식 디자인은 프로젝트의 구성 요소가 서로 연결되어야 하지만, 별도의 개체로도 말이 되어야 합니다.",
+      "reference": "La progettazione interattiva richiede che le parti di un progetto interagiscano tra loro, ma che agiscano anche come entità separata.",
+      "baseline_a": {
+        "translation": "Il design dialogico prevede che i componenti del progetto siano interconnessi ma possano anche esistere come entità indipendenti.",
+        "chrf": 34.78646281605353,
+        "seconds": 1.18
+      },
+      "baseline_b": {
+        "translation": "Il design dialogico prevede che i componenti del progetto siano interconnessi ma possano anche esistere come entità indipendenti.",
+        "chrf": 34.78646281605353,
+        "seconds": 17.48,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "4ff7cea19b664613a574cf82e8be8174"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 792,
+      "target_language": "Italian",
+      "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+      "reference": "Sempre più supermercati propongono un reparto con una maggiore scelta di cibi pronti. Alcuni offrono addirittura forni a microonde o altri mezzi per riscaldare il cibo.",
+      "baseline_a": {
+        "translation": "I prodotti pronti per il consumo nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche fornelli o altri dispositivi per cucinare.",
+        "chrf": 37.13389268972842,
+        "seconds": 1.4
+      },
+      "baseline_b": {
+        "translation": "I prodotti pronti per il consumo nei supermercati stanno diventando sempre più diversificati e alcuni negozi offrono anche fornelli o altri dispositivi per cucinare.",
+        "chrf": 37.13389268972842,
+        "seconds": 28.74,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "483161235f554c6aa7d62e5951a8d0f6"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 209,
+      "target_language": "French",
+      "source": "가스 회사 관계자는 이웃이 가스 누출로 연락하자 현장에 방문 중이었습니다.",
+      "reference": "Un agent de la compagnie de gaz s'est rendu sur les lieux après qu'un voisin ait appelé au sujet d'une fuite de gaz.",
+      "baseline_a": {
+        "translation": "Le représentant de la société du gaz se trouvait sur place lorsque les voisins l'ont appelé en raison d'une fuite de gaz.",
+        "chrf": 40.2221398348537,
+        "seconds": 1.19
+      },
+      "baseline_b": {
+        "translation": "Le représentant de la société du gaz se trouvait sur place lorsque ses voisins lui ont téléphoné.",
+        "chrf": 22.472111537461732,
+        "seconds": 33.78,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 2,
+        "attempts": 3,
+        "accepted_attempts": 1,
+        "rejected_attempts": 2,
+        "run_id": "b2b087fdfb98405a85e62b57317d8ac6"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 453,
+      "target_language": "French",
+      "source": "대화식 디자인은 프로젝트의 구성 요소가 서로 연결되어야 하지만, 별도의 개체로도 말이 되어야 합니다.",
+      "reference": "Le design interactif exige que les éléments d'un projet soient reliés entre eux, mais également qu'ils aient un sens en tant qu'entité indépendante.",
+      "baseline_a": {
+        "translation": "La conception conversationnelle exige que les éléments d'un projet soient interconnectés tout en restant des entités autonomes capables de s'exprimer.",
+        "chrf": 42.45614306002018,
+        "seconds": 1.33
+      },
+      "baseline_b": {
+        "translation": "La conception dialogale exige que les éléments d'un projet soient interconnectés tout en restant des entités autonomes capables de s'exprimer.",
+        "chrf": 43.28123997677537,
+        "seconds": 18.34,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 2,
+        "attempts": 3,
+        "accepted_attempts": 1,
+        "rejected_attempts": 2,
+        "run_id": "c4c5a18af4f04615bf8835b15df8c7cc"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 792,
+      "target_language": "French",
+      "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+      "reference": "Les supermarchés proposent de manière croissante une gamme plus variée de plats cuisinés. Certains fournissent même un four à micro-ondes ou d'autres moyens pour réchauffer la nourriture.",
+      "baseline_a": {
+        "translation": "Les catégories de produits frais du supermarché deviennent de plus en plus variées, et certains établissements proposent également des fours à micro-ondes ou d'autres équipements pour cuisiner.",
+        "chrf": 46.01718152219652,
+        "seconds": 1.51
+      },
+      "baseline_b": {
+        "translation": "Les catégories de produits frais du supermarché deviennent de plus en plus variées, et certains établissements proposent également des fours à micro-ondes ou d'autres équipements pour cuisiner.",
+        "chrf": 46.01718152219652,
+        "seconds": 33.16,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "5f49c757566e4859a0e6b87da6631d80"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 209,
+      "target_language": "German",
+      "source": "가스 회사 관계자는 이웃이 가스 누출로 연락하자 현장에 방문 중이었습니다.",
+      "reference": "Ein Mitarbeiter des Gasunternehmns meldete sich am Ort des Geschehens, nachdem ein Nachbar wegen eines Gaslecks angerufen hatte.x",
+      "baseline_a": {
+        "translation": "Der Gasbetreiber war gerade auf dem Weg zum Vorfallort, als ihm ein Nachbar meldete, dass es zu einem Gasleck gekommen ist.",
+        "chrf": 29.084329458474084,
+        "seconds": 1.29
+      },
+      "baseline_b": {
+        "translation": "Der Gasbetreiber war gerade auf dem Weg zum Vorfallort, als ihm ein Nachbar meldete, dass es zu einem Gasleck gekommen ist.",
+        "chrf": 29.084329458474084,
+        "seconds": 10.67,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 1,
+        "attempts": 2,
+        "accepted_attempts": 0,
+        "rejected_attempts": 2,
+        "run_id": "81200d6405a14c2288da854329377d73"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 453,
+      "target_language": "German",
+      "source": "대화식 디자인은 프로젝트의 구성 요소가 서로 연결되어야 하지만, 별도의 개체로도 말이 되어야 합니다.",
+      "reference": "Ein interaktives Design erfordert, dass sich die Komponenten eines Projektes miteinander verbinden, dass sie aber auch als eigenständige Einheiten Sinn ergeben.",
+      "baseline_a": {
+        "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Entitäten fungieren können.",
+        "chrf": 58.76129078833717,
+        "seconds": 1.19
+      },
+      "baseline_b": {
+        "translation": "Dialogisches Design bedeutet, dass die Komponenten eines Projekts miteinander verbunden sein müssen, aber auch als eigenständige Einheiten fungieren können.",
+        "chrf": 62.91814607627108,
+        "seconds": 27.28,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 3,
+        "attempts": 3,
+        "accepted_attempts": 2,
+        "rejected_attempts": 1,
+        "run_id": "0b67226f2cff4cd28e9de4c862ae98e6"
+      }
+    },
+    {
+      "split": "dev",
+      "id": 792,
+      "target_language": "German",
+      "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+      "reference": "Supermärkte erhalten eine zunehmende Vielfalt an Fertiggerichten. Einige bieten sogar Mikrowellen und andere Methoden zum Aufwärmen des Essens.",
+      "baseline_a": {
+        "translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Ladungen auch Geräte wie Mikrowellenherde oder alternative Zubereitungsmöglichkeiten anbieten.",
+        "chrf": 45.22730024252041,
+        "seconds": 1.57
+      },
+      "baseline_b": {
+        "translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Supermärkte auch Geräte wie Mikrowellenherde oder andere Zubereitungsmöglichkeiten anbieten.",
+        "chrf": 45.88899352014875,
+        "seconds": 26.44,
+        "status": "HUMAN_REVIEW_REQUIRED",
+        "versions": 2,
+        "attempts": 2,
+        "accepted_attempts": 1,
+        "rejected_attempts": 1,
+        "run_id": "26588b3cff9a490192e172139bae212d"
+      }
+    }
+  ]
+}

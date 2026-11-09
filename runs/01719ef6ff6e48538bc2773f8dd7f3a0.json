@@ -1,0 +1,50 @@
+{
+  "run_id": "01719ef6ff6e48538bc2773f8dd7f3a0",
+  "request": {
+    "source": "이러한 지역에서 구할 수 있는 고급 브랜드 안경테는 두 가지 문제가 있을 수 있습니다. 일부는 모조품일 수 있고, 실제 수입된 진품은 모국의 가격보다 비쌀 수 있습니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T13:28:04+09:00",
+  "updated_at": "2026-09-22T13:28:14+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "High-end eyewear frames available in these regions may present two issues: they could be counterfeit, or genuine imported models might cost more than their country of origin.",
+      "created_at": "2026-09-22T13:28:06+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": null
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "country of origin",
+      "explanation": "원문에서 '모국'은 해당 브랜드가 생산된 국가를 의미하며, 안경 프레임의 경우 일반적으로 제조국 (Country of Origin) 을 지칭합니다. 번역문에서 'their country of origin'는 문법적으로 통하지만, 맥락상 '제조국' 또는 '출처국'을 명시하는 것이 더 자연스럽습니다. 다만, 엄밀한 오류라기보다는 표현의 미세한 차이입니다.",
+      "suggested_fix": "manufacturing country"
+    }
+  ],
+  "failure_reasons": [],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[조사] 원인 파악을 위해 MQM 재평가 실행 (원래 실패 사유: 알 수 없음) -> 오류 1개 발견",
+    "[전략 1/2] human_review: 원문의 '모국'은 해당 브랜드가 생산된 국가를 의미하며, 번역문에서 'their country of origin'는 문법적으로 통하지만 맥락상 '제조국' 또는 '출처국'을 명시하는 것이 더 자연스럽습니다. 다만, 엄밀한 오류라기보다는 표현의 미세한 차이입니다."
+  ]
+}

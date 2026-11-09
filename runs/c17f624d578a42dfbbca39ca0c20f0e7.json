@@ -1,0 +1,41 @@
+{
+  "run_id": "c17f624d578a42dfbbca39ca0c20f0e7",
+  "request": {
+    "source": "도미니카 공화국(스페인어 명: República Dominicana)은 히스파니올라 섬의 동부 지역을 차지하고 있는데, 이 땅을 아이티와 공유하고 있습니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "AWAITING_HUMAN_APPROVAL",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:44:38+09:00",
+  "updated_at": "2026-09-22T12:44:40+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "The Dominican Republic (Spanish name: República Dominicana) occupies the eastern portion of Hispaniola, a territory it shares with Haiti.",
+      "created_at": "2026-09-22T12:44:39+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": []
+      }
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [],
+  "failure_reasons": [],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": []
+}

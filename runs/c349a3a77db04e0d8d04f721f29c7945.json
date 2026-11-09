@@ -1,0 +1,90 @@
+{
+  "run_id": "c349a3a77db04e0d8d04f721f29c7945",
+  "request": {
+    "source": "이 회사는 미국 California주 San Jose에 있는 데이터센터에 약 2.5PB의 데이터를 저장하고 있으며, 매일 새벽 02:00 UTC에 증분 백업을 수행한다.",
+    "target_language": "French",
+    "target_country": "France",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T17:31:21+09:00",
+  "updated_at": "2026-09-22T17:31:40+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Cette entreprise stocke environ 2,5 PB de données dans son centre de données situé à San Jose en Californie (États-Unis) et effectue des sauvegardes incrémentales quotidiennes à 02:00 UTC.",
+      "created_at": "2026-09-22T17:31:23+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": null
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "accuracy",
+      "attempt": 1,
+      "input_translation": "Cette entreprise stocke environ 2,5 PB de données dans son centre de données situé à San Jose en Californie (États-Unis) et effectue des sauvegardes incrémentales quotidiennes à 02:00 UTC.",
+      "candidate": "Cette entreprise stocke environ 2,5 PB de données dans son centre de données situé à San Jose en Californie (États-Unis) et effectue des sauvegardes incrémentales quotidiennes à 02:00 UTC.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "minor",
+          "span": "San Jose en Californie",
+          "explanation": "원문은 'California 주 San Jose'라고 명시하여 행정 구역 (주) 과 도시를 구분하고 있습니다. 번역문은 'Californie (États-Unis)'로 국가만 괄호 안에 추가했지만, '주'라는 중첩된 행정 단위를 명시하지 않아 원문의 지리적 구체성이 약간 약화되었습니다. 이는 사실적 오류라기보다 정보 전달의 불완전성에 가깝습니다.",
+          "suggested_fix": "San Jose en Californie (États-Unis)"
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 후보가 현재 번역과 동일함",
+        "원문과 후보의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['2.5', '02', '00'], 후보 ['2', '5', '02', '00']"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "San Jose en Californie",
+            "explanation": "원문은 'California 주 San Jose'라고 명시하여 행정 구역 (주) 과 도시를 구분하고 있습니다. 번역문은 'Californie (États-Unis)'로 국가만 괄호 안에 추가했지만, '주'라는 중첩된 행정 단위를 명시하지 않아 원문의 지리적 구체성이 약간 약화되었습니다. 이는 사실적 오류라기보다 정보 전달의 불완전성에 가깝습니다.",
+            "suggested_fix": "San Jose en Californie (États-Unis)"
+          }
+        ]
+      },
+      "mqm_after": null,
+      "created_at": "2026-09-22T17:31:40+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "accuracy",
+      "severity": "minor",
+      "span": "San Jose en Californie",
+      "explanation": "원문은 'California 주 San Jose'라고 명시하여 행정 구역 (주) 과 도시를 구분하고 있습니다. 번역문은 'Californie (États-Unis)'로 국가만 괄호 안에 추가했지만, '주'라는 중첩된 행정 단위를 명시하지 않아 원문의 지리적 구체성이 약간 약화되었습니다. 이는 사실적 오류라기보다 정보 전달의 불완전성에 가깝습니다.",
+      "suggested_fix": "San Jose en Californie (États-Unis)"
+    }
+  ],
+  "failure_reasons": [
+    "원문과 번역의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['2.5', '02', '00'], 번역 ['2', '5', '02', '00']"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[조사] 원인 파악을 위해 MQM 재평가 실행 (원래 실패 사유: 원문과 번역의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['2.5', '02', '00'], 번역 ['2', '5', '02', '00']) -> 오류 1개 발견\n1. [accuracy · minor] 원문은 'California 주 San Jose'라고 명시하여 행정 구역 (주) 과 도시를 구분하고 있습니다. 번역문은 'Californie (États-Unis)'로 국가만 괄호 안에 추가했지만, '주'라는 중첩된 행정 단위를 명시하지 않아 원문의 지리적 구체성이 약간 약화되었습니다. 이는 사실적 오류라기보다 정보 전달의 불완전성에 가깝습니다.",
+    "[전략 1/2] fluency: 현재 번역문은 문법적으로 완벽하고 자연스럽지만, 원문의 지리적 구체성 (California 주라는 중첩된 행정 단위를 명시함) 을 누락했습니다. 'France'를 목표로 하는 경우, 독자가 California의 위치를 직관적으로 이해할 수 있도록 'Californie (États-Unis)'로만 표현하는 것은 다소 간략해 보일 수 있습니다. 따라서 문장 구조를 조정하여 'California 주에 위치한 San Jose'라는 지리적 계층 구조를 더 명확하고 자연스럽게 강조하는 전략을 선택합니다. 이는 사실적 오류가 아닌 정보 전달의 불완전성을 보완하기 위한 것입니다.",
+    "[fluency] 호출 안 함 - 해당 카테고리에 미해결 오류 없어 건너뜀",
+    "[전략 2/2] accuracy: 이전 'fluency' 전략은 문법적 매끄러움에만 초점을 맞췄기 때문에, 원문의 핵심 정보인 'California 주 (State)'라는 중첩된 행정 단위를 누락하거나 약화시킨 오류를 수정하지 못했습니다. 현재 남은 오류는 사실적 정확성 (accuracy) 문제이므로, 해당 전략을 다시 적용하여 'Californie' 다음에 '(État de San Jose)' 또는 '(dans l'État de Californie)'와 같이 주라는 행정 단위를 명확히 추가해야 합니다.",
+    "[accuracy] 수정 Tool 호출"
+  ]
+}

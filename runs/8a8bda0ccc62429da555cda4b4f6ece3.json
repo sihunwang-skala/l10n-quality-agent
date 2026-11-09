@@ -1,0 +1,215 @@
+{
+  "run_id": "8a8bda0ccc62429da555cda4b4f6ece3",
+  "request": {
+    "source": "슈퍼마켓의 즉석식품 품목이 점점 더 다양해지고 있습니다. 일부 슈퍼마켓은 음식을 데울 수 있는 전자레인지나 다른 수단을 제공하기도 합니다.",
+    "target_language": "German",
+    "target_country": "Germany",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T01:30:53+09:00",
+  "updated_at": "2026-09-22T01:31:19+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Ladungen auch Geräte wie Mikrowellenherde oder alternative Zubereitungsmöglichkeiten anbieten.",
+      "created_at": "2026-09-22T01:30:54+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "einige Ladungen",
+            "explanation": "원문의 '일부 슈퍼마켓' (einige Supermärkte) 을 번역문에서 '일부 화물/차량' (einige Ladungen) 으로 잘못 번역되었습니다. 맥락상 식품을 데울 수 있는 장비를 제공하는 주체는 매장이 아니라, 이는 명백한 오역입니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "oder alternative Zubereitungsmöglichkeiten",
+            "explanation": "원문의 '다른 수단' (andere Mittel) 은 구체적인 조리 방법이나 장비를 포괄하는 일반적인 표현입니다. 번역문에서 이를 '대체 조리 옵션' (alternative Zubereitungsmöglichkeiten) 으로 구체화하여 해석한 것은 원문의 범위를 좁히는 오류로 볼 수 있습니다. 또한, 전자레인지와 함께 제시된 '다른 수단'은 주로 별도의 조리용 기기를 의미하므로, 'Zubereitungsmöglichkeiten'보다는 'Kochgeräte'나 'Backöfen' 등 구체적인 기기 명칭이 더 적절했을 것입니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    },
+    {
+      "version": 2,
+      "translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Supermärkte auch Geräte wie Mikrowellenherde oder andere Zubereitungsmöglichkeiten anbieten.",
+      "created_at": "2026-09-22T01:31:11+09:00",
+      "based_on_version": 1,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "Fertiggerichten",
+            "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'Fertiggerichte'(조리된 요리)로 번역했습니다. 즉석식품에는 반찬 (Vorratsvorschuss), 과자, 음료 등 요리가 아닌 제품도 포함되므로, 원문의 범위를 정확히 반영하지 못했습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "spelling",
+            "severity": "minor",
+            "span": "Mikrowellenherde",
+            "explanation": "독일어에서 '마이크로웨이브 오븐'을 지칭하는 표준 용어는 'Mikrowelle' 또는 'Mikrowellengerät'입니다. 'Herde'는 일반적으로 가스레인지나 전기레인지 (Kochherd) 를 의미하며, 마이크로웨이브 오븐과 혼동된 것으로 보입니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "accuracy",
+      "attempt": 1,
+      "input_translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Ladungen auch Geräte wie Mikrowellenherde oder alternative Zubereitungsmöglichkeiten anbieten.",
+      "candidate": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Supermärkte auch Geräte wie Mikrowellenherde oder andere Zubereitungsmöglichkeiten anbieten.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "major",
+          "span": "einige Ladungen",
+          "explanation": "원문의 '일부 슈퍼마켓' (einige Supermärkte) 을 번역문에서 '일부 화물/차량' (einige Ladungen) 으로 잘못 번역되었습니다. 맥락상 식품을 데울 수 있는 장비를 제공하는 주체는 매장이 아니라, 이는 명백한 오역입니다.",
+          "suggested_fix": null
+        },
+        {
+          "category": "accuracy",
+          "severity": "major",
+          "span": "oder alternative Zubereitungsmöglichkeiten",
+          "explanation": "원문의 '다른 수단' (andere Mittel) 은 구체적인 조리 방법이나 장비를 포괄하는 일반적인 표현입니다. 번역문에서 이를 '대체 조리 옵션' (alternative Zubereitungsmöglichkeiten) 으로 구체화하여 해석한 것은 원문의 범위를 좁히는 오류로 볼 수 있습니다. 또한, 전자레인지와 함께 제시된 '다른 수단'은 주로 별도의 조리용 기기를 의미하므로, 'Zubereitungsmöglichkeiten'보다는 'Kochgeräte'나 'Backöfen' 등 구체적인 기기 명칭이 더 적절했을 것입니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": true,
+      "failure_reasons": [],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "einige Ladungen",
+            "explanation": "원문의 '일부 슈퍼마켓' (einige Supermärkte) 을 번역문에서 '일부 화물/차량' (einige Ladungen) 으로 잘못 번역되었습니다. 맥락상 식품을 데울 수 있는 장비를 제공하는 주체는 매장이 아니라, 이는 명백한 오역입니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "accuracy",
+            "severity": "major",
+            "span": "oder alternative Zubereitungsmöglichkeiten",
+            "explanation": "원문의 '다른 수단' (andere Mittel) 은 구체적인 조리 방법이나 장비를 포괄하는 일반적인 표현입니다. 번역문에서 이를 '대체 조리 옵션' (alternative Zubereitungsmöglichkeiten) 으로 구체화하여 해석한 것은 원문의 범위를 좁히는 오류로 볼 수 있습니다. 또한, 전자레인지와 함께 제시된 '다른 수단'은 주로 별도의 조리용 기기를 의미하므로, 'Zubereitungsmöglichkeiten'보다는 'Kochgeräte'나 'Backöfen' 등 구체적인 기기 명칭이 더 적절했을 것입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "Fertiggerichten",
+            "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'Fertiggerichte'(조리된 요리)로 번역했습니다. 즉석식품에는 반찬 (Vorratsvorschuss), 과자, 음료 등 요리가 아닌 제품도 포함되므로, 원문의 범위를 정확히 반영하지 못했습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "spelling",
+            "severity": "minor",
+            "span": "Mikrowellenherde",
+            "explanation": "독일어에서 '마이크로웨이브 오븐'을 지칭하는 표준 용어는 'Mikrowelle' 또는 'Mikrowellengerät'입니다. 'Herde'는 일반적으로 가스레인지나 전기레인지 (Kochherd) 를 의미하며, 마이크로웨이브 오븐과 혼동된 것으로 보입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T01:31:11+09:00"
+    },
+    {
+      "step": 2,
+      "category": "accuracy",
+      "attempt": 2,
+      "input_translation": "Die Sortenvielfalt an Fertiggerichten in Supermärkten nimmt stetig zu, wobei einige Supermärkte auch Geräte wie Mikrowellenherde oder andere Zubereitungsmöglichkeiten anbieten.",
+      "candidate": "Die Vielfalt an Lebensmitteln für den Sofortkonsum in Supermärkten nimmt stetig zu, wobei einige Supermärkte auch Geräte wie Mikrowellenherde oder andere Zubereitungsmöglichkeiten anbieten.",
+      "selected_errors": [
+        {
+          "category": "accuracy",
+          "severity": "minor",
+          "span": "Fertiggerichten",
+          "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'Fertiggerichte'(조리된 요리)로 번역했습니다. 즉석식품에는 반찬 (Vorratsvorschuss), 과자, 음료 등 요리가 아닌 제품도 포함되므로, 원문의 범위를 정확히 반영하지 못했습니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "MQM span이 번역문에 없음: fluency / 'Lebensmittel für den Sofortkonsum'"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "accuracy",
+            "severity": "minor",
+            "span": "Fertiggerichten",
+            "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'Fertiggerichte'(조리된 요리)로 번역했습니다. 즉석식품에는 반찬 (Vorratsvorschuss), 과자, 음료 등 요리가 아닌 제품도 포함되므로, 원문의 범위를 정확히 반영하지 못했습니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "spelling",
+            "severity": "minor",
+            "span": "Mikrowellenherde",
+            "explanation": "독일어에서 '마이크로웨이브 오븐'을 지칭하는 표준 용어는 'Mikrowelle' 또는 'Mikrowellengerät'입니다. 'Herde'는 일반적으로 가스레인지나 전기레인지 (Kochherd) 를 의미하며, 마이크로웨이브 오븐과 혼동된 것으로 보입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Lebensmittel für den Sofortkonsum",
+            "explanation": "표준 독일어에서는 'Sofortverbraucher' 또는 'Frischekassen' (즉석식품) 을 더 자주 사용합니다. 'Sofortkonsum' 은 문법적으로 이해가 가능하지만, 이 맥락에서 다소 어색한 표현입니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "Zubereitungsmöglichkeiten",
+            "explanation": "'Zubereitung' 은 주로 '요리 (kochen)' 를 의미합니다. 전자레인지나 다른 기기를 통해 음식을 '가열하거나 조리하는 것'을 의미하므로, 'Erhitzungsmöglichkeiten' 또는 'Kochmöglichkeiten' 이 더 자연스럽습니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T01:31:19+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "accuracy",
+      "severity": "minor",
+      "span": "Fertiggerichten",
+      "explanation": "원문의 '즉석식품'은 조리 없이 바로 먹을 수 있는 식품을 의미하지만, 번역문에서 이를 'Fertiggerichte'(조리된 요리)로 번역했습니다. 즉석식품에는 반찬 (Vorratsvorschuss), 과자, 음료 등 요리가 아닌 제품도 포함되므로, 원문의 범위를 정확히 반영하지 못했습니다.",
+      "suggested_fix": null
+    },
+    {
+      "category": "spelling",
+      "severity": "minor",
+      "span": "Mikrowellenherde",
+      "explanation": "독일어에서 '마이크로웨이브 오븐'을 지칭하는 표준 용어는 'Mikrowelle' 또는 'Mikrowellengerät'입니다. 'Herde'는 일반적으로 가스레인지나 전기레인지 (Kochherd) 를 의미하며, 마이크로웨이브 오븐과 혼동된 것으로 보입니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "accuracy 영역 수정 2회 실패"
+  ]
+}

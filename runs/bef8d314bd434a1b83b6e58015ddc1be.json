@@ -1,0 +1,149 @@
+{
+  "run_id": "bef8d314bd434a1b83b6e58015ddc1be",
+  "request": {
+    "source": "모든 열차에는 MetroPlus와 Metro 객차가 모두 있습니다. MetroPlus 객차는 항상 케이프타운과 가까운 쪽의 열차 끝부분에 있습니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:46:05+09:00",
+  "updated_at": "2026-09-22T12:46:28+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Every train is equipped with both a MetroPlus and a Metro carriage, with the MetroPlus carriage always located at the rear of the train closest to Cape Town.",
+      "created_at": "2026-09-22T12:46:06+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "closest to Cape Town",
+            "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'은 지리적 위치 (케이프타운 방향) 에 따른 상대적 위치를 의미합니다. 번역문에서는 '열차 끝부분이 케이프타운에 가장 가까운 쪽'이라는 문법적으로 어색한 구조로 표현되어 있습니다. 영어 관용적으로 'rear of the train facing Cape Town' 또는 'the end of the train closest to Cape Town' (단, 앞뒤 방향을 명확히 하는 것이 필요할 수 있음) 이 더 자연스럽습니다. 현재 번역은 'closest to Cape Town'이라는 형식적 표현 뒤에 'rear of the train'을 붙여 문법적 연결이 다소 불분명해 보입니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "fluency",
+      "attempt": 1,
+      "input_translation": "Every train is equipped with both a MetroPlus and a Metro carriage, with the MetroPlus carriage always located at the rear of the train closest to Cape Town.",
+      "candidate": "Every train is equipped with both a MetroPlus and a Metro carriage, with the MetroPlus carriage always located at the rear of the train facing Cape Town.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "closest to Cape Town",
+          "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'은 지리적 위치 (케이프타운 방향) 에 따른 상대적 위치를 의미합니다. 번역문에서는 '열차 끝부분이 케이프타운에 가장 가까운 쪽'이라는 문법적으로 어색한 구조로 표현되어 있습니다. 영어 관용적으로 'rear of the train facing Cape Town' 또는 'the end of the train closest to Cape Town' (단, 앞뒤 방향을 명확히 하는 것이 필요할 수 있음) 이 더 자연스럽습니다. 현재 번역은 'closest to Cape Town'이라는 형식적 표현 뒤에 'rear of the train'을 붙여 문법적 연결이 다소 불분명해 보입니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "closest to Cape Town",
+            "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'은 지리적 위치 (케이프타운 방향) 에 따른 상대적 위치를 의미합니다. 번역문에서는 '열차 끝부분이 케이프타운에 가장 가까운 쪽'이라는 문법적으로 어색한 구조로 표현되어 있습니다. 영어 관용적으로 'rear of the train facing Cape Town' 또는 'the end of the train closest to Cape Town' (단, 앞뒤 방향을 명확히 하는 것이 필요할 수 있음) 이 더 자연스럽습니다. 현재 번역은 'closest to Cape Town'이라는 형식적 표현 뒤에 'rear of the train'을 붙여 문법적 연결이 다소 불분명해 보입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "facing Cape Town",
+            "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'이라는 지리적 방향성을 명확히 표현한 반면, 번역문은 단순히 '케이프타운을 향하는 열차의 뒤쪽'으로만 해석되어 원문의 공간적 관계 (케이프타운이 있는 쪽의 앞뒤) 가 약간 모호해졌습니다. 다만, 맥락상 이해 가능한 수준이며 심각한 오역은 아닙니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:46:18+09:00"
+    },
+    {
+      "step": 2,
+      "category": "fluency",
+      "attempt": 2,
+      "input_translation": "Every train is equipped with both a MetroPlus and a Metro carriage, with the MetroPlus carriage always located at the rear of the train closest to Cape Town.",
+      "candidate": "Every train is equipped with both a MetroPlus and a Metro carriage, with the MetroPlus carriage always located at the rear of the train facing Cape Town.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "closest to Cape Town",
+          "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'은 지리적 위치 (케이프타운 방향) 에 따른 상대적 위치를 의미합니다. 번역문에서는 '열차 끝부분이 케이프타운에 가장 가까운 쪽'이라는 문법적으로 어색한 구조로 표현되어 있습니다. 영어 관용적으로 'rear of the train facing Cape Town' 또는 'the end of the train closest to Cape Town' (단, 앞뒤 방향을 명확히 하는 것이 필요할 수 있음) 이 더 자연스럽습니다. 현재 번역은 'closest to Cape Town'이라는 형식적 표현 뒤에 'rear of the train'을 붙여 문법적 연결이 다소 불분명해 보입니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "closest to Cape Town",
+            "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'은 지리적 위치 (케이프타운 방향) 에 따른 상대적 위치를 의미합니다. 번역문에서는 '열차 끝부분이 케이프타운에 가장 가까운 쪽'이라는 문법적으로 어색한 구조로 표현되어 있습니다. 영어 관용적으로 'rear of the train facing Cape Town' 또는 'the end of the train closest to Cape Town' (단, 앞뒤 방향을 명확히 하는 것이 필요할 수 있음) 이 더 자연스럽습니다. 현재 번역은 'closest to Cape Town'이라는 형식적 표현 뒤에 'rear of the train'을 붙여 문법적 연결이 다소 불분명해 보입니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "facing Cape Town",
+            "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'이라는 지리적 방향성을 명확히 표현한 반면, 번역문은 단순히 '케이프타운을 향하는 열차의 뒤쪽'으로만 해석되어 원문의 공간적 관계 (케이프타운이 있는 쪽의 앞뒤) 가 약간 모호해졌습니다. 다만, 맥락상 이해 가능한 수준이며 심각한 오역은 아닙니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T12:46:24+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "closest to Cape Town",
+      "explanation": "원문에서 '케이프타운과 가까운 쪽의 열차 끝부분'은 지리적 위치 (케이프타운 방향) 에 따른 상대적 위치를 의미합니다. 번역문에서는 '열차 끝부분이 케이프타운에 가장 가까운 쪽'이라는 문법적으로 어색한 구조로 표현되어 있습니다. 영어 관용적으로 'rear of the train facing Cape Town' 또는 'the end of the train closest to Cape Town' (단, 앞뒤 방향을 명확히 하는 것이 필요할 수 있음) 이 더 자연스럽습니다. 현재 번역은 'closest to Cape Town'이라는 형식적 표현 뒤에 'rear of the train'을 붙여 문법적 연결이 다소 불분명해 보입니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "fluency 영역 수정 2회 실패"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[전략 1/2] human_review: 이미 'fluency' 전략을 두 번 시도했으나, 번역문의 핵심적인 지리적 방향성 (케이프타운과 가까운 쪽의 열차 끝부분) 을 명확히 전달하지 못했습니다. 현재 번역은 문법적으로 어색하고 의미가 모호하여 단순한 유창성 수정으로는 해결이 어렵습니다. 번역의 정확성과 논리성을 보장하기 위해 인간 검토자가 직접 문맥을 파악하고 수정해야 합니다.",
+    "[OpenAI Agent - MOCK, 실제 API 미호출] 연동 인터페이스만 검증됨. 실제 구현 시 이 지점에서 OpenAI 모델이 전략을 재선택합니다."
+  ]
+}

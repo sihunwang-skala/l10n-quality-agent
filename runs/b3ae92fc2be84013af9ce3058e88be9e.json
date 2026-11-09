@@ -1,0 +1,43 @@
+{
+  "run_id": "b3ae92fc2be84013af9ce3058e88be9e",
+  "request": {
+    "source": "어떤 나라들은 심지어 첫 번째 범죄에도 매우 엄격한 처벌이 있다. 10년 이상의 징역형이나 사망형을 포함할 수 있다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T12:47:33+09:00",
+  "updated_at": "2026-09-22T12:47:34+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Some countries impose extremely harsh penalties for even the first offense, which may include a prison term of over ten years or the death penalty.",
+      "created_at": "2026-09-22T12:47:34+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": null
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [],
+  "failure_reasons": [
+    "원문과 번역의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['10'], 번역 []"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[OpenAI Agent - MOCK, 실제 API 미호출] 연동 인터페이스만 검증됨. 실제 구현 시 이 지점에서 OpenAI 모델이 전략을 재선택합니다."
+  ]
+}

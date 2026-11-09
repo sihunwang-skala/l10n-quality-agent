@@ -1,0 +1,66 @@
+{
+  "run_id": "b1658716c9f44ac59d73198873574c6e",
+  "request": {
+    "source": "스타트업 BlueBridge Labs는 기존 서비스보다 서버 비용을 약 18.7% 절감하면서도 평균 응답 시간을 1.24초에서 0.83초로 줄였다고 발표했다.",
+    "target_language": "Italian",
+    "target_country": "Italy",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T17:29:38+09:00",
+  "updated_at": "2026-09-22T17:29:58+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "La startup BlueBridge Labs ha annunciato di aver ridotto i costi del server del circa 18,7% rispetto ai servizi esistenti, riducendo al contempo il tempo medio di risposta da 1,24 secondi a 0,83 secondi.",
+      "created_at": "2026-09-22T17:29:40+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": null
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [
+    {
+      "category": "accuracy",
+      "severity": "minor",
+      "span": "costi del server",
+      "explanation": "원문에서 '서버 비용'은 IT 인프라 전체의 운영 비용을 의미할 가능성이 높으나, 번역문에서는 특정 하드웨어 ('server') 의 비용으로 해석되어 표현이 다소 좁아졌습니다. 다만, 문맥상 큰 오역은 아니나 정확성을 위해 주의가 필요합니다.",
+      "suggested_fix": null
+    },
+    {
+      "category": "spelling",
+      "severity": "minor",
+      "span": "circa 18,7%",
+      "explanation": "이탈리아어에서 소수점 앞의 자리수를 구분할 때 일반적으로 쉐프 ('.') 를 사용하며, 천 분기 ('/') 는 사용하지 않습니다. '18,7%'는 영어식 표기법으로 보이며, 이탈리아어 표준은 '18,7%'가 아니라 '18,7%' (쉼표 대신 점) 또는 '18,7%' (천 분기 없이) 가 더 적절할 수 있으나, 실제로 이탈리아어에서는 소수점 앞의 자리수를 구분하기 위해 쉐프를 사용하는 경우가 많습니다. 따라서 '18,7%'는 옳은 표현입니다.",
+      "suggested_fix": null
+    },
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "del circa 18,7%",
+      "explanation": "'circa'는 명사 앞에 직접 오는 것이 아니라 'di circa' 또는 'circa il...' 형태로 사용되며, 'del circa'는 문법적으로 어색합니다. 올바른 표현은 'di circa il 18,7%' 또는 'del circa 18,7%' (비록 약간 어색하지만 수용 가능) 입니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "원문과 번역의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['18.7%', '1.24', '0.83'], 번역 ['18', '7%', '1', '24', '0', '83']"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[조사] 원인 파악을 위해 MQM 재평가 실행 (원래 실패 사유: 원문과 번역의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['18.7%', '1.24', '0.83'], 번역 ['18', '7%', '1', '24', '0', '83']) -> 오류 3개 발견\n1. [accuracy · minor] 원문에서 '서버 비용'은 IT 인프라 전체의 운영 비용을 의미할 가능성이 높으나, 번역문에서는 특정 하드웨어 ('server') 의 비용으로 해석되어 표현이 다소 좁아졌습니다. 다만, 문맥상 큰 오역은 아니나 정확성을 위해 주의가 필요합니다.\n2. [spelling · minor] 이탈리아어에서 소수점 앞의 자리수를 구분할 때 일반적으로 쉐프 ('.') 를 사용하며, 천 분기 ('/') 는 사용하지 않습니다. '18,7%'는 영어식 표기법으로 보이며, 이탈리아어 표준은 '18,7%'가 아니라 '18,7%' (쉼표 대신 점) 또는 '18,7%' (천 분기 없이) 가 더 적절할 수 있으나, 실제로 이탈리아어에서는 소수점 앞의 자리수를 구분하기 위해 쉐프를 사용하는 경우가 많습니다. 따라서 '18,7%'는 옳은 표현입니다.\n3. [fluency · minor] 'circa'는 명사 앞에 직접 오는 것이 아니라 'di circa' 또는 'circa il...' 형태로 사용되며, 'del circa'는 문법적으로 어색합니다. 올바른 표현은 'di circa il 18,7%' 또는 'del circa 18,7%' (비록 약간 어색하지만 수용 가능) 입니다.",
+    "[전략 1/2] human_review: 현재 번역문은 문법적 오류 ('del circa' 대신 'di circa') 와 표기법 혼동 (천 분기 사용 여부) 을 포함하고 있으나, 이는 이탈리아어 표준에 따라 해석이 달라질 수 있는 미묘한 문제입니다. 특히 '서버 비용'의 범위를 IT 인프라 전체로 확장하는 것은 번역자의 판단 영역이며, AI 가 직접 수정할 경우 오히려 원문의 뉘앙스를 왜곡할 위험이 있습니다. 또한 소수점 표기법 ('18,7%' vs '18,7%') 은 이탈리아어 지역별 관례에 따라 다를 수 있어 절대적인 정답을 내리기 어렵습니다. 따라서 더 정확한 문맥 분석과 언어적 조정을 위해 human_review를 선택합니다."
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "run_id": "16807637b42e4b099f58f61f66ad2ab2",
+  "request": {
+    "source": "추운 기후에서의 호흡기 문제와 같이, 뜨거운 기후에서의 내장 질환은 상당히 흔하며, 대부분의 경우 매우 짜증나기는 하지만 정말 위험하지는 않습니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T11:47:01+09:00",
+  "updated_at": "2026-09-22T11:47:34+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+      "created_at": "2026-09-22T11:47:01+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+            "explanation": "문장 구조가 원문의 논리적 흐름을 다소 왜곡했습니다. 원문은 '추운 기후에서의 호흡기 문제와 같이 (비유)'라는 형식적 연결을 통해 '뜨거운 기후에서의 내장 질환'에 대한 설명을 이어갔으나, 번역문에서는 'As with...' 이후 직접적인 주어가 등장하여 비유의 연결감이 약해졌습니다. 또한 'in most cases are distinctly annoying' 부분에서 'most cases'가 주어와 동사 사이에 불필요하게 배치되어 문장이 다소 어색합니다.",
+            "suggested_fix": null
+          }
+        ]
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "step": 1,
+      "category": "fluency",
+      "attempt": 1,
+      "input_translation": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+      "candidate": "Just as respiratory problems in colder climates, intestinal issues in hot climates are fairly common and, while often quite annoying, generally not dangerous.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+          "explanation": "문장 구조가 원문의 논리적 흐름을 다소 왜곡했습니다. 원문은 '추운 기후에서의 호흡기 문제와 같이 (비유)'라는 형식적 연결을 통해 '뜨거운 기후에서의 내장 질환'에 대한 설명을 이어갔으나, 번역문에서는 'As with...' 이후 직접적인 주어가 등장하여 비유의 연결감이 약해졌습니다. 또한 'in most cases are distinctly annoying' 부분에서 'most cases'가 주어와 동사 사이에 불필요하게 배치되어 문장이 다소 어색합니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "MQM span이 번역문에 없음: grammar / 'Just as respiratory problems in colder climates, intestinal issues in hot climates...'",
+        "MQM span이 번역문에 없음: fluency / '...generally not dangerous.'",
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+            "explanation": "문장 구조가 원문의 논리적 흐름을 다소 왜곡했습니다. 원문은 '추운 기후에서의 호흡기 문제와 같이 (비유)'라는 형식적 연결을 통해 '뜨거운 기후에서의 내장 질환'에 대한 설명을 이어갔으나, 번역문에서는 'As with...' 이후 직접적인 주어가 등장하여 비유의 연결감이 약해졌습니다. 또한 'in most cases are distinctly annoying' 부분에서 'most cases'가 주어와 동사 사이에 불필요하게 배치되어 문장이 다소 어색합니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "grammar",
+            "severity": "major",
+            "span": "Just as respiratory problems in colder climates, intestinal issues in hot climates...",
+            "explanation": "문법적 오류: 'Just as' 이후에 명사구 ('respiratory problems...') 가 주어와 동사가 분리되어 연결되지 않았습니다. 원문의 '~과 같이'는 비교 구조를 나타내므로, 두 명사구가 동시적으로 주어가 되어 동사를 받거나, 'Just as' 다음에 문장 (주어 + 동사) 이 이어져야 합니다. 현재 번역문은 'Just as [명사구], [명사구] are...'로 되어 있어 문법적으로 타당하지 않습니다.",
+            "suggested_fix": "Just as respiratory problems in colder climates are common, intestinal issues in hot climates..."
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "...generally not dangerous.",
+            "explanation": "문장 끝부분이 불완전합니다. 원문의 '아닙니다'는 완전한 명사절이나 문장을 맺어야 하지만, 현재 번역문은 'are... generally not dangerous' 구조에서 동사가 생략되어 마치며, 전체적으로 문장이 끊긴 느낌을 줍니다.",
+            "suggested_fix": "...generally not dangerous."
+          }
+        ]
+      },
+      "created_at": "2026-09-22T11:47:21+09:00"
+    },
+    {
+      "step": 2,
+      "category": "fluency",
+      "attempt": 2,
+      "input_translation": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+      "candidate": "Just as respiratory problems are common in cold climates, gastrointestinal issues in hot climates are quite frequent; while often irritating, they are generally not dangerous.",
+      "selected_errors": [
+        {
+          "category": "fluency",
+          "severity": "minor",
+          "span": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+          "explanation": "문장 구조가 원문의 논리적 흐름을 다소 왜곡했습니다. 원문은 '추운 기후에서의 호흡기 문제와 같이 (비유)'라는 형식적 연결을 통해 '뜨거운 기후에서의 내장 질환'에 대한 설명을 이어갔으나, 번역문에서는 'As with...' 이후 직접적인 주어가 등장하여 비유의 연결감이 약해졌습니다. 또한 'in most cases are distinctly annoying' 부분에서 'most cases'가 주어와 동사 사이에 불필요하게 배치되어 문장이 다소 어색합니다.",
+          "suggested_fix": null
+        }
+      ],
+      "accepted": false,
+      "failure_reasons": [
+        "수정 대상 fluency 오류가 감소하지 않음"
+      ],
+      "mqm_before": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+            "explanation": "문장 구조가 원문의 논리적 흐름을 다소 왜곡했습니다. 원문은 '추운 기후에서의 호흡기 문제와 같이 (비유)'라는 형식적 연결을 통해 '뜨거운 기후에서의 내장 질환'에 대한 설명을 이어갔으나, 번역문에서는 'As with...' 이후 직접적인 주어가 등장하여 비유의 연결감이 약해졌습니다. 또한 'in most cases are distinctly annoying' 부분에서 'most cases'가 주어와 동사 사이에 불필요하게 배치되어 문장이 다소 어색합니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "mqm_after": {
+        "errors": [
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "gastrointestinal issues",
+            "explanation": "원문의 '내장 질환'은 소화기 계통의 질병을 의미하지만, 번역문에서 'gastrointestinal issues'는 일반적으로 위장관 문제 (위염, 장염 등) 를 지칭하는 표현입니다. 원문이 포괄적인 '내장'을 언급했음에도 불구하고, 미국 영어에서는 'gastrointestinal problems/issues'가 가장 자연스럽고 정확한 표현입니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "quite frequent",
+            "explanation": "원문의 '相當히 흔하며'는 'quite common' 또는 'very common'이 더 자연스러운 표현입니다. 'frequent'는 빈도가 높은 것을 의미하지만, 질병의 발생률을 논할 때는 'common'이 더 적절합니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "while often irritating",
+            "explanation": "원문의 '매우 짜증나기는 하지만'은 문맥상 'irritating'보다는 'annoying' 또는 'bothersome'가 더 자연스러운 표현입니다. 'Irritating'은 자극적인 것을 의미할 수 있어, 원문의 뉘앙스를 완전히 전달하지 못합니다.",
+            "suggested_fix": null
+          },
+          {
+            "category": "fluency",
+            "severity": "minor",
+            "span": "generally not dangerous",
+            "explanation": "원문의 '정말 위험하지는 않습니다'는 'not really dangerous' 또는 'generally harmless'가 더 자연스러운 표현입니다. 'Dangerous'보다는 'harmful'이 의학 문맥에서 더 적절합니다.",
+            "suggested_fix": null
+          }
+        ]
+      },
+      "created_at": "2026-09-22T11:47:34+09:00"
+    }
+  ],
+  "unresolved_errors": [
+    {
+      "category": "fluency",
+      "severity": "minor",
+      "span": "As with respiratory problems in colder climates, intestinal problems in hot climates are fairly common and in most cases are distinctly annoying but not really dangerous.",
+      "explanation": "문장 구조가 원문의 논리적 흐름을 다소 왜곡했습니다. 원문은 '추운 기후에서의 호흡기 문제와 같이 (비유)'라는 형식적 연결을 통해 '뜨거운 기후에서의 내장 질환'에 대한 설명을 이어갔으나, 번역문에서는 'As with...' 이후 직접적인 주어가 등장하여 비유의 연결감이 약해졌습니다. 또한 'in most cases are distinctly annoying' 부분에서 'most cases'가 주어와 동사 사이에 불필요하게 배치되어 문장이 다소 어색합니다.",
+      "suggested_fix": null
+    }
+  ],
+  "failure_reasons": [
+    "fluency 영역 수정 2회 실패"
+  ],
+  "tm_hit": true,
+  "tm_source_id": "865",
+  "agent_decisions": []
+}

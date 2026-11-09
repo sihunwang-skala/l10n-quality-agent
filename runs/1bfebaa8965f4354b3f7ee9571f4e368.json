@@ -1,0 +1,41 @@
+{
+  "run_id": "1bfebaa8965f4354b3f7ee9571f4e368",
+  "request": {
+    "source": "지난 20년 동안 Uptown Charlotte의 어린이 친화적인 옵션의 양이 기하급수적으로 증가했습니다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "HUMAN_REVIEW_REQUIRED",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T13:38:53+09:00",
+  "updated_at": "2026-09-22T13:38:53+09:00",
+  "parent_run_id": "8e0b835d592a4ee3aa887b9da27b540a",
+  "parent_version": 3,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "Over the past two decades, the quantity of child-friendly options in Uptown Charlotte has increased exponentially.",
+      "created_at": "2026-09-22T13:38:53+09:00",
+      "based_on_version": 3,
+      "instruction": "",
+      "mqm": null
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [],
+  "failure_reasons": [
+    "원문과 번역의 숫자/단위 대응을 자동 확정할 수 없음: 원문 ['20'], 번역 []"
+  ],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": []
+}

@@ -1,0 +1,42 @@
+{
+  "run_id": "f118626f434f4382a6c6416e3b5ba73e",
+  "request": {
+    "source": "이 회사는 미국 California주 San Jose에 있는 데이터센터에 약 2.5PB의 데이터를 저장하고 있으며, 매일 새벽 02:00 UTC에 증분 백업을 수행한다.",
+    "target_language": "English",
+    "target_country": "United States",
+    "additional_instruction": "",
+    "protected_terms": []
+  },
+  "status": "AWAITING_HUMAN_APPROVAL",
+  "model_name": "qwen3.5:4b",
+  "temperature": 0.0,
+  "seed": 42,
+  "prompt_versions": {
+    "translation": "translation-v1",
+    "mqm": "mqm-v1",
+    "revision": "revision-v1"
+  },
+  "created_at": "2026-09-22T17:30:48+09:00",
+  "updated_at": "2026-09-22T17:30:50+09:00",
+  "parent_run_id": null,
+  "parent_version": null,
+  "versions": [
+    {
+      "version": 1,
+      "translation": "This company stores approximately 2.5PB of data in its data center located in San Jose, California, and performs incremental backups daily at 02:00 UTC.",
+      "created_at": "2026-09-22T17:30:50+09:00",
+      "based_on_version": null,
+      "instruction": "",
+      "mqm": null
+    }
+  ],
+  "attempts": [],
+  "unresolved_errors": [],
+  "failure_reasons": [],
+  "tm_hit": false,
+  "tm_source_id": null,
+  "agent_decisions": [
+    "[조사] 원인 파악을 위해 MQM 재평가 실행 (원래 실패 사유: 알 수 없음) -> 오류 0개 발견",
+    "[조사 결론] MQM 재평가에서 추가 오류를 찾지 못함 - 원래는 결정적 검증(숫자/단위·보호 용어 등) 실패였음에 유의하고 승인 대기로 전환"
+  ]
+}
