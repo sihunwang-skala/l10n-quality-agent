@@ -20,7 +20,7 @@ import pandas as pd
 from .agent import OpenAIAgentMock, QwenAgent
 from .config import COUNTRY_LANGUAGE, FLORES_PROCESSED_DIR
 from .dne import DoNotEditList, default_dne_path
-from .openai_agent import OpenAIAgent, is_openai_configured, openai_user_revise
+from .openai_agent import OPENAI_MODEL_NAME, OpenAIAgent, is_openai_configured, openai_user_revise
 from .presentation import format_record
 from .resources import apply_resources
 from .results_csv import FIELDS, RESULTS_CSV, SOURCE_CSV, save_result
@@ -44,6 +44,16 @@ from .ui_render import (
 from .workflow import QualityWorkflow
 
 COUNTRIES = list(COUNTRY_LANGUAGE)
+
+# 화면의 모델 이름은 모두 '모델명 (실행 위치[, 상태])' 한 규칙으로 쓴다.
+# 키가 없으면 OpenAI는 실제 호출 없이 모의(Mock) 응답으로 대체된다.
+QWEN_LABEL = "Qwen3.5 4B (로컬)"
+
+
+def openai_label() -> str:
+    state = "키 있음" if is_openai_configured() else "키 없음 → Mock"
+    return f"OpenAI {OPENAI_MODEL_NAME} (API, {state})"
+
 SAMPLE_SENTENCES_FILE = FLORES_PROCESSED_DIR / "evaluation_30.csv"
 
 
@@ -259,8 +269,7 @@ def run_translation(
 
         if record.status == AgentStatus.HUMAN_REVIEW_REQUIRED and use_openai:
             escalation = OpenAIAgent(workflow.chains) if is_openai_configured() else OpenAIAgentMock()
-            openai_tag = "실제 실행" if is_openai_configured() else "Mock, 키 없음"
-            country_steps.append(tag(f"--- Qwen Agent도 실패 → OpenAI Agent 개입 ({openai_tag}) ---"))
+            country_steps.append(tag(f"--- {QWEN_LABEL} 실패 → {openai_label()}로 재시도 ---"))
             record = escalation.run(record, progress_callback=lambda msg: country_steps.append(tag(msg)))
             workflow.store.save(record)
 
@@ -585,9 +594,8 @@ def _resource_badges() -> list[str]:
 
 
 def build_app() -> gr.Blocks:
-    openai_tag = "실제 실행" if is_openai_configured() else "Mock, 키 없음"
     with gr.Blocks(title="L10n Quality Agent") as app:
-        gr.HTML(render_hero(openai_tag, _resource_badges()))
+        gr.HTML(render_hero(QWEN_LABEL, openai_label(), _resource_badges()))
         run_map = gr.State({})
 
         with gr.Row(equal_height=False):
@@ -641,7 +649,9 @@ def build_app() -> gr.Blocks:
                 )
                 with gr.Accordion("고급 옵션", open=False):
                     use_openai = gr.Checkbox(
-                        value=False, label=f"Qwen이 실패하면 OpenAI Agent 개입 ({openai_tag})"
+                        value=False,
+                        label=f"{QWEN_LABEL}가 실패하면 {openai_label()}로 재시도",
+                        info="끄면 Qwen이 실패했을 때 바로 '사람 검토 필요'로 넘어갑니다",
                     )
                     results_path = gr.Textbox(
                         value=str(RESULTS_CSV), label="결과 저장 파일", interactive=False
@@ -669,9 +679,9 @@ def build_app() -> gr.Blocks:
                                     label="선택 버전에 대한 추가 수정 지시", lines=2
                                 )
                                 model_choice = gr.Radio(
-                                    ["Qwen (로컬, 실제 실행)", f"OpenAI ({openai_tag})"],
-                                    value="Qwen (로컬, 실제 실행)",
-                                    label="모델 선택",
+                                    [QWEN_LABEL, openai_label()],
+                                    value=QWEN_LABEL,
+                                    label="AI 재수정에 사용할 모델",
                                 )
                                 ai_revise_button = gr.Button("AI 재수정 실행")
                         with gr.Row():

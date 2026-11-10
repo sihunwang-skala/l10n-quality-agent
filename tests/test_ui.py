@@ -234,7 +234,12 @@ def test_mode_guide_states_input_and_intent():
         assert needle in html and "입력할 것" in html and "이럴 때" in html
 
 
-def test_hero_openai_badge_says_key_state_not_that_openai_ran():
+def test_model_labels_follow_one_naming_rule(monkeypatch):
     from l10n_quality_agent.ui_render import render_hero
-    assert "Mock (키 없음)" in render_hero("Mock, 키 없음", [])
-    assert "API 키 설정됨" in render_hero("실제 실행", []) and "실제 실행" not in render_hero("실제 실행", [])
+    monkeypatch.setattr(ui, "is_openai_configured", lambda: False)
+    assert ui.openai_label() == "OpenAI gpt-5-mini (API, 키 없음 → Mock)"
+    monkeypatch.setattr(ui, "is_openai_configured", lambda: True)
+    assert ui.openai_label() == "OpenAI gpt-5-mini (API, 키 있음)"
+    html = render_hero(ui.QWEN_LABEL, ui.openai_label(), [])
+    assert "기본 모델 · Qwen3.5 4B (로컬)" in html and "보조 모델 · OpenAI gpt-5-mini (API, 키 있음)" in html
+    assert ui.openai_label().startswith("OpenAI")  # ai_revise가 startswith("OpenAI")로 분기한다

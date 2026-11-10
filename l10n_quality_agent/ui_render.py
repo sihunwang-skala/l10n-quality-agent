@@ -262,10 +262,9 @@ def render_status_stats(statuses: list[str]) -> str:
     return f'<div class="lq-stats">{chips}</div>' if chips else ""
 
 
-def render_hero(openai_tag: str, resources: list[str]) -> str:
-    # openai_tag는 '키가 설정돼 있는지'만 알려준다. 실제 호출 여부가 아니므로 문구로 구분한다.
-    openai_badge = "OpenAI 에스컬레이션 · API 키 설정됨 (선택 시 사용)" if openai_tag.startswith("실제") else "OpenAI 에스컬레이션 · Mock (키 없음)"
-    badges = ["Qwen 로컬 Agent", openai_badge] + resources
+def render_hero(qwen_label: str, openai_label: str, resources: list[str]) -> str:
+    """모델 라벨은 '모델명 (실행 위치, 상태)' 규칙으로 ui.py에서 만들어 넘긴다."""
+    badges = [f"기본 모델 · {qwen_label}", f"보조 모델 · {openai_label}"] + resources
     chips = "".join(f'<span class="lq-badge">{escape(item)}</span>' for item in badges)
     return (
         '<div class="lq-hero"><div><h1>L10n Quality Agent</h1>'
