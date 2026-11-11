@@ -54,6 +54,17 @@ def openai_label() -> str:
     state = "키 있음" if is_openai_configured() else "키 없음 → Mock"
     return f"OpenAI {OPENAI_MODEL_NAME} (API, {state})"
 
+
+def openai_setup_guide() -> str:
+    if is_openai_configured():
+        return "✅ **OpenAI API 키가 등록되어 있습니다.** 보조 모델 재시도와 AI 재수정에 사용할 수 있습니다."
+    return (
+        "ℹ️ **OpenAI 보조 모델을 쓰려면 API 키 등록이 필요합니다.**  "
+        "[OpenAI Platform에서 API 키를 만든 뒤](https://platform.openai.com/api-keys) "
+        "앱 실행 환경에 `OPENAI_API_KEY`로 등록하고 재시작하세요. "
+        "API 사용량에 따라 비용이 발생할 수 있으며, 키를 화면이나 소스 코드에 입력하지 마세요."
+    )
+
 SAMPLE_SENTENCES_FILE = FLORES_PROCESSED_DIR / "evaluation_30.csv"
 
 
@@ -653,6 +664,7 @@ def build_app() -> gr.Blocks:
                         label=f"{QWEN_LABEL}가 실패하면 {openai_label()}로 재시도",
                         info="끄면 Qwen이 실패했을 때 바로 '사람 검토 필요'로 넘어갑니다",
                     )
+                    gr.Markdown(openai_setup_guide())
                     results_path = gr.Textbox(
                         value=str(RESULTS_CSV), label="결과 저장 파일", interactive=False
                     )
