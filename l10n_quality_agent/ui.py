@@ -779,4 +779,36 @@ def build_app() -> gr.Blocks:
 
 
 if __name__ == "__main__":
-    build_app().launch(theme=gr.themes.Soft(primary_hue="indigo"), css=CSS)
+    from fastapi import FastAPI
+    from fastapi.responses import FileResponse
+    import uvicorn
+
+    web = FastAPI()
+    static = Path(__file__).with_name("pwa")
+
+    @web.get("/manifest.webmanifest", include_in_schema=False)
+    async def pwa_manifest():
+        return FileResponse(static / "manifest.webmanifest", media_type="application/manifest+json")
+
+    @web.get("/service-worker.js", include_in_schema=False)
+    async def pwa_service_worker():
+        return FileResponse(static / "service-worker.js", media_type="application/javascript", headers={"Service-Worker-Allowed": "/"})
+
+    @web.get("/icons/{name}", include_in_schema=False)
+    async def pwa_icon(name: str):
+        if name not in {"icon-192.png", "icon-512.png"}:
+            from fastapi import HTTPException
+            raise HTTPException(status_code=404)
+        return FileResponse(static / name, media_type="image/png")
+
+    app = gr.mount_gradio_app(
+        web,
+        build_app(),
+        path="/",
+        head=Path(__file__).with_name("pwa_head.html").read_text(encoding="utf-8"),
+        js=Path(__file__).with_name("locale.js").read_text(encoding="utf-8"),
+        pwa=True,
+        theme=gr.themes.Soft(primary_hue="indigo"),
+        css=CSS,
+    )
+    uvicorn.run(app, host="127.0.0.1", port=7860)
