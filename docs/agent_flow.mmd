@@ -1,30 +1,28 @@
-%% L10n Quality Agent: GitHub-compatible execution flow
+%% L10n Quality Agent: concise execution flow
 flowchart TD
-    INPUT["사용자 입력"] --> UI["Gradio UI"]
-    UI --> WORKFLOW["QualityWorkflow"]
-    WORKFLOW --> TRANSLATE["초기 번역 체인 (Qwen)"]
-    TRANSLATE --> SAFETY["초기 Python 안전 검증"]
-    SAFETY --> INITIAL_MQM["초기 MQM 평가 (Qwen)"]
-    INITIAL_MQM --> INITIAL_RESULT{"오류가 있는가?"}
+    INPUT["입력"] --> UI["Gradio UI"]
+    UI --> WORKFLOW["Workflow"]
+    WORKFLOW --> TRANSLATE["초기 번역"]
+    TRANSLATE --> SAFETY["안전 검사"]
+    SAFETY --> MQM["MQM 평가"]
+    MQM --> INITIAL_RESULT{"오류?"}
 
-    INITIAL_RESULT -->|"없음"| APPROVAL["사람 최종 승인"]
-    INITIAL_RESULT -->|"있음"| PLANNER["Qwen Agent Planner: 수정 전략 선택"]
+    INITIAL_RESULT -->|"없음"| APPROVAL["사람 승인"]
+    INITIAL_RESULT -->|"있음"| PLANNER["Qwen Planner"]
+    PLANNER --> REVISION["전문 수정 체인"]
+    REVISION --> RECHECK["후보 재검증"]
+    RECHECK --> RESULT{"해결됐나?"}
 
-    PLANNER --> REVISION["선택된 카테고리 수정 체인"]
-    REVISION --> CANDIDATE_CHECK["후보 Python 검증"]
-    CANDIDATE_CHECK --> CANDIDATE_MQM["후보 MQM 재평가 (Qwen)"]
-    CANDIDATE_MQM --> AGENT_RESULT{"수정 결과"}
+    RESULT -->|"예"| APPROVAL
+    RESULT -->|"다음 전략, 최대 2회"| PLANNER
+    RESULT -->|"미해결"| ESCALATION{"OpenAI 사용?"}
 
-    AGENT_RESULT -->|"오류 해결"| APPROVAL
-    AGENT_RESULT -->|"다른 전략 시도 가능, 최대 2회"| PLANNER
-    AGENT_RESULT -->|"시도 종료 후 미해결"| ESCALATION{"OpenAI 에스컬레이션 사용?"}
+    ESCALATION -->|"예"| OPENAI["OpenAI 수정"]
+    OPENAI --> OPENAI_CHECK["동일 가드레일"]
+    OPENAI_CHECK --> OPENAI_RESULT{"통과?"}
+    OPENAI_RESULT -->|"예"| APPROVAL
+    OPENAI_RESULT -->|"아니요"| REVIEW["사람 검토"]
+    ESCALATION -->|"아니요"| REVIEW
 
-    ESCALATION -->|"사용"| OPENAI["OpenAI 수정 후보 생성"]
-    OPENAI --> OPENAI_CHECK["동일한 Python 검증과 MQM 재평가"]
-    OPENAI_CHECK --> OPENAI_RESULT{"재평가 결과"}
-    OPENAI_RESULT -->|"통과"| APPROVAL
-    OPENAI_RESULT -->|"미통과"| REVIEW["사람 검토"]
-    ESCALATION -->|"미사용"| REVIEW
-
-    APPROVAL --> STORE["RunRecord 및 결과 CSV 저장"]
+    APPROVAL --> STORE["RunRecord + CSV"]
     REVIEW --> STORE
