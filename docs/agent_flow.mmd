@@ -3,16 +3,24 @@ flowchart TD
     INPUT["사용자 입력"] --> UI["Gradio UI"]
     UI --> WORKFLOW["QualityWorkflow"]
     WORKFLOW --> TRANSLATE["초기 번역 체인 (Qwen)"]
-    TRANSLATE --> PLANNER["Qwen Agent Planner: 다음 전략 선택"]
-    PLANNER --> REVISION["선택된 카테고리 수정 체인"]
-    REVISION --> VALIDATION["Python 안전 검증"]
-    VALIDATION --> MQM["MQM 재평가 체인 (Qwen)"]
-    MQM --> RESULT{"Qwen 처리 결과"}
+    TRANSLATE --> SAFETY["초기 Python 안전 검증"]
+    SAFETY --> INITIAL_MQM["초기 MQM 평가 (Qwen)"]
+    INITIAL_MQM --> INITIAL_RESULT{"오류가 있는가?"}
 
-    RESULT -->|"오류 해결"| APPROVAL["사람 최종 승인"]
-    RESULT -->|"미해결 오류"| ESCALATION{"OpenAI 에스컬레이션 사용?"}
+    INITIAL_RESULT -->|"없음"| APPROVAL["사람 최종 승인"]
+    INITIAL_RESULT -->|"있음"| PLANNER["Qwen Agent Planner: 수정 전략 선택"]
+
+    PLANNER --> REVISION["선택된 카테고리 수정 체인"]
+    REVISION --> CANDIDATE_CHECK["후보 Python 검증"]
+    CANDIDATE_CHECK --> CANDIDATE_MQM["후보 MQM 재평가 (Qwen)"]
+    CANDIDATE_MQM --> AGENT_RESULT{"수정 결과"}
+
+    AGENT_RESULT -->|"오류 해결"| APPROVAL
+    AGENT_RESULT -->|"다른 전략 시도 가능, 최대 2회"| PLANNER
+    AGENT_RESULT -->|"시도 종료 후 미해결"| ESCALATION{"OpenAI 에스컬레이션 사용?"}
+
     ESCALATION -->|"사용"| OPENAI["OpenAI 수정 후보 생성"]
-    OPENAI --> OPENAI_CHECK["안전 검증과 MQM 재평가"]
+    OPENAI --> OPENAI_CHECK["동일한 Python 검증과 MQM 재평가"]
     OPENAI_CHECK --> OPENAI_RESULT{"재평가 결과"}
     OPENAI_RESULT -->|"통과"| APPROVAL
     OPENAI_RESULT -->|"미통과"| REVIEW["사람 검토"]
