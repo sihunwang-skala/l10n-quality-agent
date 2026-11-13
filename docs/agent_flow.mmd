@@ -1,25 +1,22 @@
-%% L10n Quality Agent: 현재 UI의 Agent-first 실행 경로
-flowchart LR
-    A[원문 입력<br/>목표 국가·언어] --> B[컨텍스트 구성<br/>TM · 용어집 · DNE · 보호 용어]
-    B --> C[초기 번역<br/>ChatPromptTemplate → Qwen]
-    C --> D{Python 안전 검증}
-    D -->|숫자·단위·보호 용어 통과| E[MQM 평가<br/>chains.evaluate()]
-    D -->|결정적 경고| F[Agent 조사<br/>MQM 재평가]
-    E --> G{오류가 있는가?}
-    G -->|없음| H[사람 최종 승인]
-    G -->|있음| I[Planner<br/>수정 영역 또는 human_review 선택]
-    F --> I
-    I -->|accuracy · terminology · spelling<br/>grammar · style · fluency| J[해당 영역 수정<br/>chains.revise()]
-    J --> K[후보 검증 + MQM 재평가]
-    K -->|통과| H
-    K -->|실패·상한 도달| L[사람 검토]
-    I -->|human_review| L
-    H --> M[결과 CSV + RunRecord JSON 저장]
-    L --> M
+%% L10n Quality Agent: GitHub-compatible execution flow
+flowchart TD
+    INPUT["사용자 입력"] --> UI["Gradio UI"]
+    UI --> WORKFLOW["QualityWorkflow"]
+    WORKFLOW --> TRANSLATE["초기 번역 체인 (Qwen)"]
+    TRANSLATE --> PLANNER["Qwen Agent Planner: 다음 전략 선택"]
+    PLANNER --> REVISION["선택된 카테고리 수정 체인"]
+    REVISION --> VALIDATION["Python 안전 검증"]
+    VALIDATION --> MQM["MQM 재평가 체인 (Qwen)"]
+    MQM --> RESULT{"Qwen 처리 결과"}
 
-    classDef input fill:#14243A,stroke:#42D6C4,color:#F2F6FB;
-    classDef check fill:#14243A,stroke:#FFC36A,color:#F2F6FB;
-    classDef human fill:#14243A,stroke:#FA807D,color:#F2F6FB;
-    class A,B,C,E,F,I,J,K,M input;
-    class D,G check;
-    class H,L human;
+    RESULT -->|"오류 해결"| APPROVAL["사람 최종 승인"]
+    RESULT -->|"미해결 오류"| ESCALATION{"OpenAI 에스컬레이션 사용?"}
+    ESCALATION -->|"사용"| OPENAI["OpenAI 수정 후보 생성"]
+    OPENAI --> OPENAI_CHECK["안전 검증과 MQM 재평가"]
+    OPENAI_CHECK --> OPENAI_RESULT{"재평가 결과"}
+    OPENAI_RESULT -->|"통과"| APPROVAL
+    OPENAI_RESULT -->|"미통과"| REVIEW["사람 검토"]
+    ESCALATION -->|"미사용"| REVIEW
+
+    APPROVAL --> STORE["RunRecord 및 결과 CSV 저장"]
+    REVIEW --> STORE
