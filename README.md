@@ -1,216 +1,220 @@
+**English** · [한국어](README.ko.md)
+
 # L10n Quality Agent
 
-> **AI 번역의 품질 문제를 "찾고 → 유형별로 고치고 → 다시 검증하고 → 사람이 승인"하는 과정으로 관리하는 번역 품질 개선 에이전트입니다.**
-> *An agent that translates Korean into other languages, finds errors with a standard quality framework (MQM), fixes them one category at a time, re-checks every change, and leaves the final approval to a human.*
+> **A translation-quality agent that manages AI translation problems as a loop: find → fix by category → re-verify → human approval.**
+> It translates Korean into other languages, finds errors with a standard quality framework (MQM), fixes them one category at a time, re-checks every change, and leaves the final approval to a human.
 
-### 한눈에 이해하기
+### At a glance
 
-- **무엇을 하나요?** 한국어 문장을 영어·일본어·프랑스어 등으로 번역한 뒤, AI가 번역 오류를 스스로 찾아 고치고, 고친 과정을 전부 기록합니다.
-- **왜 필요한가요?** AI에게 "여기만 고쳐줘"라고 해도 멀쩡한 부분까지 바꿔 버리거나 새 오류를 만들 때가 있습니다. 그래서 오류 종류별로 담당 도구를 나누고, 고칠 때마다 전체를 다시 평가해서 나빠지면 되돌립니다.
-- **누가 쓰나요?** 번역·현지화 품질을 다루는 사람, 번역 품질 자동화에 관심 있는 개발자.
+- **What does it do?** It translates Korean sentences into English, Japanese, French and more, lets the AI find and fix translation errors itself, and records the whole fixing process.
+- **Why is it needed?** Ask an AI to "fix just this" and it sometimes changes parts that were fine or introduces new errors. So this project assigns a dedicated tool per error type, re-evaluates everything after each fix, and rolls back if things got worse.
+- **Who is it for?** People who work on translation / localization quality, and developers interested in automating translation quality.
 
-### 용어 설명
+### Glossary
 
-| 용어 | 뜻 |
+| Term | Meaning |
 |---|---|
-| **L10n (Localization, 현지화)** | 단어를 옮기는 번역을 넘어, 대상 국가의 언어·표기·문화에 맞게 콘텐츠를 맞추는 작업. *Localization*은 L과 n 사이에 글자가 10개라서 L10n으로 줄여 씁니다. ([Wikipedia](https://en.wikipedia.org/wiki/Language_localisation)) |
-| **MQM (Multidimensional Quality Metrics)** | 번역 오류를 정확성(accuracy)·용어(terminology)·철자(spelling)·문법(grammar)·문체(style)·유창성(fluency) 등으로 나누고 심각도를 매기는 번역 품질 평가 프레임워크. ([themqm.org](https://themqm.org/)) |
-| **Agent (에이전트)** | 정해진 순서대로만 실행하지 않고, 현재 상태(남은 오류, 이전 수정 이력)를 보고 LLM이 다음에 할 일을 스스로 고르는 방식. |
-| **LCEL** | LangChain Expression Language. 프롬프트 → 모델 → 출력 파서를 `|`로 이어 붙이는 LangChain의 체인 작성 방식. ([문서](https://python.langchain.com/)) |
-| **Human-in-the-loop (HITL)** | 자동 처리 중 판단이 어려운 지점에서 사람이 검토·승인하도록 두는 설계. |
-| **TM (Translation Memory)** | 이전에 번역한 문장 쌍을 저장해 재사용하는 번역 메모리. |
-| **DNE (Do Not Edit)** | 이미 맞게 번역된 표현이 이후 수정 단계에서 바뀌지 않도록 보호하는 목록. |
-| **FLORES+** | 200개 안팎 언어의 공개 번역 평가 데이터셋. 이 프로젝트의 테스트 데이터로 사용. ([GitHub](https://github.com/openlanguagedata/flores)) |
-| **Ollama / Qwen** | 내 컴퓨터에서 LLM을 돌리는 도구([ollama.com](https://ollama.com))와 오픈 모델([Qwen](https://github.com/QwenLM/Qwen3)). |
+| **L10n (Localization)** | Beyond moving words, adapting content to the target country's language, notation and culture. *Localization* has 10 letters between L and n, hence L10n. ([Wikipedia](https://en.wikipedia.org/wiki/Language_localisation)) |
+| **MQM (Multidimensional Quality Metrics)** | A translation-quality evaluation framework that classifies errors as accuracy, terminology, spelling, grammar, style, fluency, etc. and grades their severity. ([themqm.org](https://themqm.org/)) |
+| **Agent** | Instead of running in a fixed order, the LLM looks at the current state (remaining errors, earlier fix history) and chooses the next step itself. |
+| **LCEL** | LangChain Expression Language. LangChain's way of chaining prompt → model → output parser with `\|`. ([docs](https://python.langchain.com/)) |
+| **Human-in-the-loop (HITL)** | A design in which a human reviews and approves at points where automatic handling is hard to judge. |
+| **TM (Translation Memory)** | Stores previously translated sentence pairs for reuse. |
+| **DNE (Do Not Edit)** | A list that protects already-correct expressions from being changed in later fix steps. |
+| **FLORES+** | A public translation-evaluation dataset covering roughly 200 languages. Used as this project's test data. ([GitHub](https://github.com/openlanguagedata/flores)) |
+| **Ollama / Qwen** | A tool for running LLMs on your own computer ([ollama.com](https://ollama.com)) and an open model ([Qwen](https://github.com/QwenLM/Qwen3)). |
 
 
 <p align="center">
   <img src="docs/images/ui-hero.png" alt="L10n Quality Agent Gradio UI" width="900">
 </p>
 
-## 🛠 주요 기술 (Tech Stack)
+## 🛠 Tech Stack
 
-| 구분 | 기술 |
+| Category | Technology |
 |---|---|
-| **언어** | ![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white) |
-| **LLM 프레임워크** | ![LangChain](https://img.shields.io/badge/LangChain_(LCEL)-1C3C3C?style=flat-square&logo=langchain&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white) |
-| **모델** | ![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white) ![Qwen](https://img.shields.io/badge/Qwen3.5_4B-615CED?style=flat-square) ![OpenAI](https://img.shields.io/badge/OpenAI_gpt--5--mini-412991?style=flat-square&logo=openai&logoColor=white) |
+| **Language** | ![Python](https://img.shields.io/badge/Python_3.11-3776AB?style=flat-square&logo=python&logoColor=white) |
+| **LLM framework** | ![LangChain](https://img.shields.io/badge/LangChain_(LCEL)-1C3C3C?style=flat-square&logo=langchain&logoColor=white) ![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat-square&logo=pydantic&logoColor=white) |
+| **Models** | ![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat-square&logo=ollama&logoColor=white) ![Qwen](https://img.shields.io/badge/Qwen3.5_4B-615CED?style=flat-square) ![OpenAI](https://img.shields.io/badge/OpenAI_gpt--5--mini-412991?style=flat-square&logo=openai&logoColor=white) |
 | **UI** | ![Gradio](https://img.shields.io/badge/Gradio-F97316?style=flat-square&logo=gradio&logoColor=white) |
-| **데이터·평가** | ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![FLORES+](https://img.shields.io/badge/FLORES%2B-CC_BY--SA_4.0-lightgrey?style=flat-square) ![MQM](https://img.shields.io/badge/MQM-error_taxonomy-2E7D32?style=flat-square) |
-| **테스트** | ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white) |
-| **라이선스** | ![MIT](https://img.shields.io/badge/code-MIT-yellow?style=flat-square) |
+| **Data & evaluation** | ![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white) ![FLORES+](https://img.shields.io/badge/FLORES%2B-CC_BY--SA_4.0-lightgrey?style=flat-square) ![MQM](https://img.shields.io/badge/MQM-error_taxonomy-2E7D32?style=flat-square) |
+| **Testing** | ![pytest](https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white) |
+| **License** | ![MIT](https://img.shields.io/badge/code-MIT-yellow?style=flat-square) |
 
 ---
 
-## ⚖️ 출처 및 독립성 고지 (Provenance & Independence Notice)
+## ⚖️ Provenance & Independence Notice
 
-이 프로젝트는 **작성자 개인이 직접 기획·설계·구현한 개인 프로젝트**입니다.
+This is a **personal project planned, designed and implemented by the author alone**.
 
-- 작성자는 과거 Flitto에서 인턴으로 근무하며 다국어 번역 품질 평가·검수 업무를 경험했고, 이 경험을 통해 "번역 품질 문제를 어떻게 구조적으로 다룰 것인가"라는 **일반적인 문제의식**을 얻었습니다. 이 프로젝트는 인턴 종료 **이후**, 작성자 개인의 시간과 개인 장비에서 별도로 시작·개발되었습니다.
-- 본 저장소에는 **Flitto 및 Flitto의 고객사가 보유한 어떠한 내부 자료도 포함되어 있지 않습니다.** 구체적으로 다음을 사용하지 않았습니다.
-  - 회사 소스 코드, 프롬프트, 평가 스크립트, 모델·가중치, 설정 파일
-  - 회사 또는 고객사의 데이터셋, 번역 메모리(TM), 용어집, 평가 결과, 보고서, 슬라이드
-  - 회사 내부 시스템·도구·문서에 대한 접근 정보나 비공개 기술 정보
-- 설계(MQM 오류 카테고리, 전문 도구 분할, Rollback, Human-in-the-loop 등)는 **공개된 표준·문헌·오픈소스 도구**(MQM, LangChain, Ollama 등)와 작성자 본인의 아이디어를 기반으로 하며, 작성자가 직접 만든 코드로 구현되었습니다.
-- 사용 데이터는 모두 **공개 데이터셋(FLORES+)** 에서 가져왔고, 번역 메모리·용어집·DNE 목록은 이 공개 데이터를 바탕으로 **작성자가 새로 만든 것**입니다. 실행 예시에 쓰인 문장도 모두 작성자가 직접 만든 가상의 예시입니다.
-- 이 저장소는 특정 회사나 고객사와 무관하며, 어떤 회사의 공식 프로젝트·제품도 아닙니다. 문서에 등장하는 제품·서비스·상표명은 각 소유자의 자산이며 설명 목적으로만 언급됩니다.
+- While interning at Flitto, the author gained experience in multilingual translation quality evaluation and review, which gave rise to a **general line of thought**: "how can translation-quality problems be handled in a structured way?" This project was started and developed separately, **after** the internship ended, on the author's own time and equipment.
+- This repository **contains no internal material owned by Flitto or its customers.** Specifically, none of the following was used:
+  - Company source code, prompts, evaluation scripts, models / weights, configuration files
+  - Company or customer datasets, translation memories (TM), glossaries, evaluation results, reports, slides
+  - Access information or non-public technical information about company internal systems, tools or documents
+- The design (MQM error categories, specialist tool split, rollback, human-in-the-loop, etc.) is based on **public standards, literature and open-source tools** (MQM, LangChain, Ollama, etc.) and the author's own ideas, and is implemented with code the author wrote.
+- All data comes from the **public dataset (FLORES+)**; the translation memory, glossary and DNE list were **newly created by the author** from this public data. The sentences used in the run examples are also fictional examples the author wrote.
+- This repository is unrelated to any specific company or customer and is not an official project or product of any company. Product, service and trademark names that appear in the documents belong to their respective owners and are mentioned for explanation only.
 
 > *This is an independent personal project. It was started and built by the author on personal time and equipment after the author's internship ended. It contains no source code, prompts, models, datasets, glossaries, translation memories, evaluation results, or any other confidential or proprietary material from any former employer or its customers. All data comes from the public FLORES+ dataset, and all resources (TM, terminology, DNE) were newly derived from it by the author.*
 
 ---
 
-## 왜 만들었나
+## Why I built it
 
-AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 다른 부분까지 바꾸거나 새 오류를 만들기도 합니다. 최종 결과만 보면 *무엇이 문제였고 왜 그렇게 고쳤는지* 되짚기도 어렵습니다.
+AI translation is fast, but when asked to fix one specific error it sometimes changes other parts too or creates new errors. Looking only at the final result, it is also hard to trace back *what the problem was and why it was fixed that way*.
 
-그래서 이 프로젝트는 다음 원칙으로 설계했습니다.
+So this project is designed on the following principles:
 
-1. 오류를 **MQM 카테고리**(accuracy / terminology / spelling / grammar / style / fluency)로 나눠서 다룬다.
-2. 수정할 때마다 **전체를 다시 평가**하고, 오류가 줄지 않았거나 새 오류가 생기면 **Rollback**한다.
-3. 숫자·단위·보호 용어는 LLM이 아닌 **Python 결정적 검사**로 한 번 더 막는다.
-4. 정해진 순서만 따르지 않고 **Agent가 오류와 수정 이력을 보고 다음 전략을 스스로 판단**한다.
-5. 로컬 Qwen Agent가 못 풀면 OpenAI로 한 번 더 시도하고, 그래도 안 되면 **사람이 검토**한다. 최종 승인은 항상 사람이 한다.
-6. 모든 과정(수정 전후, 판단 근거, 채택/거부 사유)을 JSON으로 남긴다.
+1. Handle errors by **MQM category** (accuracy / terminology / spelling / grammar / style / fluency).
+2. After every fix, **re-evaluate everything**, and **roll back** if errors did not decrease or new ones appeared.
+3. Numbers, units and protected terms are blocked once more by **deterministic Python checks**, not by the LLM.
+4. Rather than following a fixed order, the **agent looks at the errors and fix history and decides the next strategy itself**.
+5. If the local Qwen agent cannot solve it, try once more with OpenAI; if that still fails, **a human reviews it**. Final approval is always a human's.
+6. Record the whole process (before / after each fix, reasoning, accept / reject reasons) as JSON.
 
-## 전체 흐름
+## Overall flow
 
 ```text
-원문 입력 → 초기 번역 → MQM 평가
-          → 오류 있음 → 카테고리별 전문 수정 → 재평가 → (개선 시 채택 / 아니면 Rollback)
-          → 그래도 안 풀림 → Agent가 다음 전략 판단 → (필요 시 OpenAI 에스컬레이션)
-          → 그마저 안 되면 사람 검토 → 최종 승인
+Source input → initial translation → MQM evaluation
+          → errors found → specialist fix per category → re-evaluate → (accept if improved / otherwise roll back)
+          → still unsolved → agent decides next strategy → (escalate to OpenAI if needed)
+          → still not solved → human review → final approval
 ```
 
 <p align="center">
-  <img src="docs/images/architecture.png" alt="LangChain 체인과 Python 제어 구조">
+  <img src="docs/images/architecture.png" alt="LangChain chain and Python control structure">
 </p>
 
-모델 호출은 **LangChain 체인(LCEL)** 으로, 실행 순서·채택 여부·검증은 **Python 코드**로 제어합니다. 더 자세한 구조는 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)와 [docs/agent_flow.mmd](docs/agent_flow.mmd)를 참고하세요.
+Model calls are made with **LangChain chains (LCEL)**, while execution order, accept / reject decisions and verification are controlled by **Python code**. For the full structure see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and [docs/agent_flow.mmd](docs/agent_flow.mmd).
 
-검증 절차, 증거 해석 범위, 변경 전 확인 항목은 [docs/VALIDATION_PROTOCOL.md](docs/VALIDATION_PROTOCOL.md)에 정리했습니다.
+The verification procedure, the scope of evidence interpretation, and pre-change checks are in [docs/VALIDATION_PROTOCOL.md](docs/VALIDATION_PROTOCOL.md).
 
-## 주요 기능
+## Main features
 
-| 기능 | 설명 |
+| Feature | Description |
 |---|---|
-| 번역 체인 | `Prompt → ChatOllama(Qwen) → StrOutputParser`, 국가/로케일·보호 용어·TM·용어집·DNE 컨텍스트 주입 |
-| MQM 평가 체인 | Pydantic 구조화 출력(`MQMResult`)으로 오류 위치·심각도·설명·수정 제안 수집 |
-| 전문 수정 체인 6종 | accuracy, terminology, spelling, grammar, style, fluency 각각 해당 오류만 고치도록 제한 |
-| 결정적 검증 | 숫자·단위·보호 용어·메타 주석 혼입 여부를 Python으로 검사 (`validation.py`) |
-| Workflow / Agent | 고정 우선순위 Workflow와 Agent-first 모드 지원, 최대 시도 횟수·Rollback·재시도 |
-| OpenAI 에스컬레이션 | Qwen Agent가 못 푼 사례를 `gpt-5-mini`로 한 번 더 시도 (키 없으면 Mock으로 자동 대체) |
-| Human-in-the-loop | 승인·거부·직접 수정·AI 재수정, `human_review` 상태 |
-| 추적성 | 실행마다 `run_id`와 전체 이력을 JSON 저장, 결과는 CSV 누적 |
-| UI / CLI | Gradio 웹 UI(PoC·직접 입력·CSV 일괄 3가지 입력 방식, 단계별 진행 표시, 버전 diff) 및 터미널 CLI |
+| Translation chain | `Prompt → ChatOllama(Qwen) → StrOutputParser`, injecting country / locale, protected-term, TM, glossary and DNE context |
+| MQM evaluation chain | Collects error location, severity, explanation and fix suggestion via Pydantic structured output (`MQMResult`) |
+| 6 specialist fix chains | accuracy, terminology, spelling, grammar, style, fluency — each limited to fixing only its own errors |
+| Deterministic validation | Python checks for numbers, units, protected terms and meta-comment leakage (`validation.py`) |
+| Workflow / Agent | Fixed-priority workflow and agent-first mode, max attempts, rollback, retry |
+| OpenAI escalation | Retries cases the Qwen agent could not solve with `gpt-5-mini` (automatically replaced by a Mock if there is no key) |
+| Human-in-the-loop | Approve, reject, edit manually, AI re-fix, `human_review` state |
+| Traceability | Every run saves a `run_id` and full history as JSON; results accumulate in CSV |
+| UI / CLI | Gradio web UI (3 input modes: PoC, direct input, CSV batch; step-by-step progress; version diff) and terminal CLI |
 
-## 실행 화면
+## Screens
 
-### 입력 방식 3가지
+> The Gradio UI has an **English / 한국어** switch; the screenshots below show the Korean UI and are shared by both language versions.
 
-왼쪽 맨 위 **① 어떻게 입력할까요?** 에서 방식을 고르면, 그 방식에서 *무엇을 입력하고 무슨 일을 하는지* 설명 카드가 함께 바뀝니다. 어느 방식이든 이후 흐름(번역 → MQM 평가 → 수정 → 사람 승인)은 같습니다.
+### 3 input modes
 
-#### 🧪 PoC 테스트 — 내장 예시 문장
+Choosing a mode under **① How do you want to input?** at the top left also changes the explanation card describing *what you enter and what happens* in that mode. The flow after that (translation → MQM evaluation → fixing → human approval) is the same in every mode.
 
-- **입력:** 내장 문장 30개 중 1개 선택 (타이핑 없음)
-- **용도:** 설치 확인, 데모, 모델·프롬프트 변경 전후 비교
+#### 🧪 PoC test — built-in sample sentences
 
-<img src="docs/images/ui-mode-poc.png" alt="PoC 테스트 모드" width="800">
+- **Input:** pick 1 of 30 built-in sentences (no typing)
+- **Use:** installation check, demo, before / after comparison when changing the model or prompt
 
-#### ✍️ 직접 입력 — 사람이 타이핑
+<img src="docs/images/ui-mode-poc.png" alt="PoC test mode" width="800">
 
-- **입력:** 한국어 원문(필수), 보호 용어·추가 지시(선택)
-- **용도:** 사람이 한 문장씩 넣어 품질 점검
+#### ✍️ Direct input — typed by a person
 
-<img src="docs/images/ui-mode-direct.png" alt="직접 입력 모드" width="800">
+- **Input:** Korean source text (required), protected terms and extra instructions (optional)
+- **Use:** quality-check one sentence at a time
 
-#### 📄 CSV 업로드 — 자동 일괄 번역
+<img src="docs/images/ui-mode-direct.png" alt="Direct input mode" width="800">
 
-- **입력:** `한국어` 열이 있는 CSV 파일 (선택 열: `id`, `목표국가`, `보호용어`, `추가지시` · 최대 30문장)
-- **용도:** 여러 문장을 자동으로 일괄 번역
+#### 📄 CSV upload — automatic batch translation
 
-<img src="docs/images/ui-mode-csv.png" alt="CSV 업로드 모드" width="800">
+- **Input:** a CSV file with a `한국어` (Korean) column (optional columns: `id`, `목표국가` (target country), `보호용어` (protected terms), `추가지시` (extra instructions) · up to 30 sentences)
+- **Use:** translate many sentences in batch automatically
 
-- **CSV 업로드**는 파일을 올리는 즉시 검증하고 "몇 문장·몇 건이 실행될지"를 미리 보여줍니다. 문제가 있으면 실행을 막고 이유를 알려줍니다. 양식은 [`data/batch_input_template.csv`](data/batch_input_template.csv)입니다. 한 행에 여러 국가를 넣을 때는 `Japan|Italy`처럼 씁니다.
-- 일괄 실행 중 한 문장이 실패해도 나머지는 계속 진행합니다.
-- **자동으로 하는 것은 번역·평가·수정까지**이고, **최종 승인은 항상 사람이** 합니다.
+<img src="docs/images/ui-mode-csv.png" alt="CSV upload mode" width="800">
 
-### 실행 결과
+- **CSV upload** validates the file the moment you upload it and previews "how many sentences and how many runs will execute". If there is a problem, it blocks execution and tells you why. The template is [`data/batch_input_template.csv`](data/batch_input_template.csv). To put several countries in one row, write `Japan|Italy`.
+- If one sentence fails during a batch run, the rest continue.
+- **What runs automatically is translation, evaluation and fixing**; **final approval is always a human's**.
 
-**진행 단계(번역 → MQM 평가 → 전문 수정 → 재검증 → 사람 승인), 상태 배지, 원문·번역 비교, 수정 이력(채택/Rollback), Agent 판단 근거**를 국가별 카드로 보여줍니다. 아래는 CSV 두 행(일본어·프랑스어)을 일괄 실행한 화면입니다.
+### Run result
 
-<img src="docs/images/ui-run.png" alt="실행 결과" width="800">
+Shows **progress steps (translation → MQM evaluation → specialist fix → re-verification → human approval), status badges, source vs. translation comparison, fix history (accepted / rolled back), and the agent's reasoning** as a card per country. Below is a batch run of two CSV rows (Japanese and French).
 
-### 검토 · 승인
+<img src="docs/images/ui-run.png" alt="Run result" width="800">
 
-남은 MQM 오류와 실패 사유를 확인하고, 이전 버전과의 **변경점(diff)** 을 본 뒤 **직접 수정 / AI 재수정 / 최종 승인 / 거부**를 선택합니다. 프랑스어 예시는 숫자·단위 대응을 자동으로 확정할 수 없어 수정 후보를 거부(Rollback)하고 `HUMAN_REVIEW_REQUIRED`로 넘긴 사례입니다.
+### Review & approval
 
-<img src="docs/images/ui-review.png" alt="검토·승인" width="800">
+Check the remaining MQM errors and failure reasons, look at the **diff** against the previous version, then choose **edit manually / AI re-fix / final approve / reject**. The French example is a case where the number / unit correspondence could not be settled automatically, so the fix candidate was rejected (rolled back) and handed over as `HUMAN_REVIEW_REQUIRED`.
 
-> 화면 속 결과(일본어·프랑스어 번역, MQM 오류, 수정 이력)는 로컬 Qwen3.5 4B로 실제 실행해 `runs/`에 저장된 기록을 UI에서 다시 불러와 캡처한 것입니다. 문장(예: 가상의 스타트업 `BlueBridge Labs`, 데이터센터 백업 안내)은 모두 작성자가 직접 만든 예시입니다. 실패 사례를 숨기지 않고 사람 검토로 넘기는 것이 이 시스템의 의도된 동작입니다.
+<img src="docs/images/ui-review.png" alt="Review and approval" width="800">
 
-## 폴더 구조
+> The results in the screens (Japanese and French translations, MQM errors, fix history) were captured by reloading, in the UI, records actually produced with a local Qwen3.5 4B and saved in `runs/`. The sentences (e.g. the fictional startup `BlueBridge Labs`, a data-center backup notice) are all examples the author wrote. Not hiding failure cases and handing them to human review is the system's intended behavior.
+
+## Folder structure
 
 ```text
 .
-├── l10n_quality_agent/        # 핵심 Python 패키지
-│   ├── chains.py              # 번역·MQM·수정 체인 (LCEL)
-│   ├── workflow.py            # 기본 실행 흐름과 상태 전환
-│   ├── agent.py               # Agent 전략 선택과 재검증
-│   ├── openai_agent.py        # OpenAI 에스컬레이션 (Mock 포함)
-│   ├── validation.py          # 숫자·단위·보호 용어 결정적 검사
-│   ├── tm.py / terminology.py / dne.py   # 번역 메모리·용어집·Do-Not-Edit
-│   ├── ui.py / ui_render.py   # Gradio UI, UI 화면(HTML) 렌더링
+├── l10n_quality_agent/        # core Python package
+│   ├── chains.py              # translation / MQM / fix chains (LCEL)
+│   ├── workflow.py            # default execution flow and state transitions
+│   ├── agent.py               # agent strategy selection and re-verification
+│   ├── openai_agent.py        # OpenAI escalation (incl. Mock)
+│   ├── validation.py          # deterministic checks for numbers, units, protected terms
+│   ├── tm.py / terminology.py / dne.py   # translation memory / glossary / Do-Not-Edit
+│   ├── ui.py / ui_render.py   # Gradio UI, UI screen (HTML) rendering
 │   ├── cli.py                 # CLI
 │   └── storage.py / schemas.py / results_csv.py
-├── data/flores_plus/          # 공개 FLORES+ 원본·선정 샘플과 파생 리소스
-├── scripts/                   # 데이터 선정·리소스 생성·통합 실행 스크립트
-├── tests/                     # 단위 테스트
-├── reports/                   # 베이스라인·비교 실험 결과
-├── runs/                      # 실행 시 생성되는 문장별 이력(JSON, git 제외)
-├── docs/                      # 아키텍처 문서, 다이어그램, 화면 캡처
-└── EXPERIMENT_LOG.md          # 한 번에 하나씩 바꾼 실험 기록
+├── data/flores_plus/          # public FLORES+ source, selected samples and derived resources
+├── scripts/                   # data selection, resource generation, integrated run scripts
+├── tests/                     # unit tests
+├── reports/                   # baseline and comparison experiment results
+├── runs/                      # per-sentence history created at run time (JSON, git-ignored)
+├── docs/                      # architecture docs, diagrams, screen captures
+└── EXPERIMENT_LOG.md          # experiment log, changing one thing at a time
 ```
 
-## 실행 방법
+## How to run
 
 ```bash
-# 1) 환경
+# 1) environment
 python -m venv .venv && source .venv/bin/activate
 pip install langchain-core langchain-ollama langchain-openai pydantic gradio pandas pytest
 
-# 2) 로컬 모델 (Ollama 필요)
+# 2) local model (requires Ollama)
 ollama pull qwen3.5:4b
 
-# 3) (선택) OpenAI 에스컬레이션
-cp .env.example .env     # OPENAI_API_KEY 입력. 비워 두면 Mock으로 동작
+# 3) (optional) OpenAI escalation
+cp .env.example .env     # enter OPENAI_API_KEY. Leave empty to run with the Mock
 
-# 4) 실행
-python -m l10n_quality_agent.ui    # Gradio UI (기본 http://127.0.0.1:7860)
-python -m l10n_quality_agent.cli   # 터미널
-pytest -q tests                    # 테스트
+# 4) run
+python -m l10n_quality_agent.ui    # Gradio UI (default http://127.0.0.1:7860)
+python -m l10n_quality_agent.cli   # terminal
+pytest -q tests                    # tests
 ```
 
-### 앱처럼 설치하기 (PWA)
+### Install like an app (PWA)
 
-Gradio 화면은 브라우저에서 **English / 한국어** 전환을 제공하며, PWA 지원 브라우저에서는 설치형 창으로 열 수 있습니다.
+The Gradio screen offers an **English / 한국어** switch in the browser and can be opened as an installed window in PWA-capable browsers.
 
-- 로컬 실행: `python -m l10n_quality_agent.ui`를 실행하고 같은 컴퓨터의 Chrome에서 `http://127.0.0.1:7860`을 여세요. 브라우저 메뉴에서 **앱 설치**를 선택하면 됩니다.
-- iPhone·Android: 기기에서 설치하려면 HTTPS로 접근 가능한 서버에 앱과 백엔드를 함께 배포해야 합니다. 이 저장소는 호스팅을 포함하지 않으며, 로컬 Ollama 모델은 앱이 실행되는 서버에서 동작합니다.
-- 오프라인: 방문한 화면 리소스는 캐시될 수 있지만, 번역 실행과 파일 저장에는 앱의 Python 백엔드가 계속 실행 중이어야 합니다.
-- 파일 선택: 최종 승인 단계의 결과 CSV 선택은 macOS `osascript`를 사용하므로 현재 모바일 및 Windows 환경과 호환되지 않습니다.
+- Local run: start `python -m l10n_quality_agent.ui` and open `http://127.0.0.1:7860` in Chrome on the same computer. Choose **Install app** from the browser menu.
+- iPhone / Android: to install on a device, deploy the app and backend together to a server reachable over HTTPS. This repository does not include hosting, and the local Ollama model runs on the server where the app runs.
+- Offline: screen resources you have visited may be cached, but translation runs and file saving still need the app's Python backend to keep running.
+- File picker: choosing the result CSV at the final approval step uses macOS `osascript`, so it is currently incompatible with mobile and Windows.
 
-## 데이터와 라이선스
+## Data and license
 
-- **코드**: [MIT License](LICENSE)
-- **데이터**: `data/flores_plus/` 는 공개 데이터셋 **FLORES+** (Wikinews/Wikijunior/Wikivoyage 문장 기반, **CC BY-SA 4.0**)에서 가져왔거나 이를 바탕으로 파생한 것입니다. 자세한 출처와 조건은 [NOTICE.md](NOTICE.md)를 참고하세요.
+- **Code**: [MIT License](LICENSE)
+- **Data**: `data/flores_plus/` was taken or derived from the public dataset **FLORES+** (based on Wikinews / Wikijunior / Wikivoyage sentences, **CC BY-SA 4.0**). See [NOTICE.md](NOTICE.md) for details on sources and conditions.
 
-## 현재 한계와 향후 계획
+## Current limitations and future plans
 
-- CSV 일괄 번역은 순차 실행(최대 30문장)입니다. 비동기 Queue·병렬 처리·다중 사용자는 미구현입니다.
-- LangGraph Checkpointer(임의 중간 단계 복원)는 미구현입니다. 저장된 번역 버전에서 새 실행을 시작하는 방식입니다.
-- 소형 로컬 모델(`qwen3.5:4b`) 기준이라 판단 품질에 한계가 있으며, 모델별 정량 비교와 Golden Dataset 평가는 향후 과제입니다.
-- RAG/Vector DB는 현재 범위에서 제외했습니다.
+- CSV batch translation runs sequentially (up to 30 sentences). Async queues, parallel processing and multiple users are not implemented.
+- LangGraph Checkpointer (restoring an arbitrary intermediate step) is not implemented. A new run is started from a saved translation version instead.
+- It is based on a small local model (`qwen3.5:4b`), so judgment quality is limited; per-model quantitative comparison and Golden Dataset evaluation are future work.
+- RAG / Vector DB is excluded from the current scope.
 
-## 작성자
+## Author
 
-**Sihun Wang (왕시훈)** 
+**Sihun Wang (왕시훈)**
