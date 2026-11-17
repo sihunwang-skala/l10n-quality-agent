@@ -87,6 +87,8 @@ AI 번역은 빠르지만, 특정 오류를 고쳐 달라고 하면 그 김에 �
 
 모델 호출은 **LangChain 체인(LCEL)** 으로, 실행 순서·채택 여부·검증은 **Python 코드**로 제어합니다. 더 자세한 구조는 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)와 [docs/agent_flow.mmd](docs/agent_flow.mmd)를 참고하세요.
 
+검증 절차, 증거 해석 범위, 변경 전 확인 항목은 [docs/VALIDATION_PROTOCOL.md](docs/VALIDATION_PROTOCOL.md)에 정리했습니다.
+
 ## 주요 기능
 
 | 기능 | 설명 |
