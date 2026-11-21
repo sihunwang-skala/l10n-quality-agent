@@ -586,6 +586,16 @@ html.deck .gal2 .stage-r{min-width:0}
 .dk-prev,.dk-next{width:42px;height:42px;border-radius:99px;border:1px solid var(--line);background:var(--soft);color:var(--ink);font:700 18px/1 Manrope,sans-serif;cursor:pointer;flex:none}
 .dk-prev:disabled,.dk-next:disabled{opacity:.3;cursor:default}
 .dk-count{font:600 13px/1 Manrope,sans-serif;color:var(--mute);min-width:52px;text-align:center}
+/* SLIDE POLISH: no borders or shadows, and use the full screen */
+html.deck *{border-color:transparent!important;box-shadow:none!important}
+html.deck .deck-bar{border-top:0!important}
+html.deck .col{max-width:1280px!important}
+html.deck .hero-grid{max-width:1280px!important}
+html.deck .ph-wrap{max-width:none!important;width:100%}
+html.deck .ph.win{max-width:none!important;width:100%!important;background:transparent}
+html.deck .ph.win .pi{max-height:calc(100vh - 250px)!important;width:100%!important}
+html.deck .fig img{max-height:calc(100vh - 220px);width:auto;max-width:100%;margin:0 auto;display:block}
+html.deck .ph-tabs{margin-top:12px}
 /* hero screenshots: wide browser window below the text, so the web app is readable */
 .hero-grid{grid-template-columns:minmax(0,1fr)!important}
 .ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
