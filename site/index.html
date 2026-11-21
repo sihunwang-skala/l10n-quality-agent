@@ -560,6 +560,32 @@ html[data-theme=dark] .cards .card::before{color:var(--ac)}
 /* product gallery: always one screen at a time (slides), even when the page is not pinned */
 html:not(.pinned) .tilebeats .beat{display:none}
 html:not(.pinned) .tilebeats .beat.on{display:block}
+/* SLIDE DECK: each section is one full screen, moved with buttons / arrow keys / swipe */
+html.deck,html.deck body{height:100%;overflow:hidden}
+html.deck main{position:fixed;top:0;right:0;bottom:0;left:236px;overflow:hidden}
+@media (max-width:900px){html.deck main{left:0;top:56px}}
+html.deck main>header,html.deck main>section{display:none;position:absolute;top:0;left:0;right:0;bottom:64px;overflow-y:auto;overflow-x:hidden;margin:0;padding:0}
+html.deck main>header.on{display:flex}
+html.deck main>section.on{display:block}
+html.deck .hero{min-height:0!important;padding:40px 0 24px!important;align-items:center}
+html.deck .cs{padding:44px 0 36px!important;border-top:0!important}
+html.deck .scn .scene{height:auto!important}
+html.deck .scn .stage{position:static!important;height:auto!important;padding:40px 0!important;overflow:visible!important;display:block!important}
+html.deck .beats{min-height:0!important}
+html.deck .beat{position:relative!important;opacity:1!important;transform:none!important;pointer-events:auto!important}
+html.deck .beat+.beat{margin-top:18px!important}
+html.deck .tilebeats .beat{display:none!important}
+html.deck .tilebeats .beat.on{display:block!important}
+html.deck .gal2 .stage-r{min-width:0}
+.deck-bar{position:fixed;left:236px;right:0;bottom:0;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 24px;background:var(--bg);border-top:1px solid var(--line);z-index:30}
+@media (max-width:900px){.deck-bar{left:0}}
+.dk-mid{display:flex;align-items:center;gap:14px;min-width:0}
+.dk-dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.dk-dot{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0;transition:transform .2s,background .2s}
+.dk-dot.on{background:var(--ac);transform:scale(1.35)}
+.dk-prev,.dk-next{width:42px;height:42px;border-radius:99px;border:1px solid var(--line);background:var(--soft);color:var(--ink);font:700 18px/1 Manrope,sans-serif;cursor:pointer;flex:none}
+.dk-prev:disabled,.dk-next:disabled{opacity:.3;cursor:default}
+.dk-count{font:600 13px/1 Manrope,sans-serif;color:var(--mute);min-width:52px;text-align:center}
 /* hero screenshots: wide browser window below the text, so the web app is readable */
 .hero-grid{grid-template-columns:minmax(0,1fr)!important}
 .ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
@@ -652,7 +678,8 @@ html[data-theme=dark] .lq-s.agent .lq-k{background:#1d2f47;color:#a6c7ef}html[da
 <p class="role rv" data-en="&lt;mark class=kw&gt;Agent&lt;/mark&gt; Development · Human-in-the-loop Design"><mark class=kw>Agent</mark> 개발 · <mark class=kw>HITL</mark> 설계</p>
 <p class="quote rv" data-en="&amp;ldquo;The &lt;mark class=kw&gt;Agent&lt;/mark&gt; helps translate; anything that needs judgment goes to a human, with the reason.&amp;rdquo;">&ldquo;번역은 <mark class=kw>Agent</mark>가 돕고, 판단이 필요한 지점은 이유와 함께 사람에게 넘깁니다.&rdquo;</p>
 <p class="lead rv" data-en="It translates into the languages you choose, and the &lt;mark class=kw&gt;Agent&lt;/mark&gt; picks among &lt;b&gt;six &lt;mark class=kw&gt;specialist tools&lt;/mark&gt;&lt;/b&gt; (grammar, fluency and more) to fix it. It then shows &lt;b&gt;at which step and on which error it got stuck, and why a human should look&lt;/b&gt;, backed by a full record.">내가 고른 언어로 번역하고, <b>문법·유창성 등 6개 <mark class=kw>전문 도구</mark></b>를 <mark class=kw>Agent</mark>가 골라 고칩니다. 그리고 <b>어느 단계의 어떤 오류에서 막혔는지, 왜 사람이 봐야 하는지</b>를 기록과 함께 보여줍니다.</p>
-<div class="hmts rv"><div class="hcap" data-en="What one translation goes through">번역 한 건이 거치는 구조</div>
+</div></div></header>
+<section class="cs" id="overview"><div class="col"><div class="hmts rv"><div class="hcap" data-en="What one translation goes through">번역 한 건이 거치는 구조</div>
 <div class="hgrid">
 <div class="hm"><div class="hf">목표 언어 <span class="ar">&rarr;</span></div><div class="hv"><span class="cnt" data-to="5" data-dec="0" data-suffix="">5</span></div><div class="hl2" data-en="Choose from Japanese, Italian, French, German, English">일본어·이탈리아어·프랑스어·독일어·영어 중 선택</div></div>
 <div class="hm"><div class="hf">수정 도구 <span class="ar">&rarr;</span></div><div class="hv"><span class="cnt" data-to="6" data-dec="0" data-suffix="">6</span></div><div class="hl2" data-en="accuracy to fluency; the &lt;mark class=kw&gt;Agent&lt;/mark&gt; chooses which to use">accuracy ~ fluency, 쓸 도구는 <mark class=kw>Agent</mark>가 선택</div></div>
@@ -665,9 +692,8 @@ html[data-theme=dark] .lq-s.agent .lq-k{background:#1d2f47;color:#a6c7ef}html[da
 <div><div class="k" data-en="JUDGEMENT">판단</div><div class="v" data-en="Six &lt;mark class=kw&gt;MQM&lt;/mark&gt; categories + &lt;mark class=kw&gt;deterministic checks&lt;/mark&gt; (numbers, units, &lt;mark class=kw&gt;protected terms&lt;/mark&gt;) + &lt;mark class=kw&gt;Agent&lt;/mark&gt; strategy"><mark class=kw>MQM</mark> 6개 영역 + <mark class=kw>결정적 검사</mark>(숫자·단위·<mark class=kw>보호 용어</mark>) + <mark class=kw>Agent</mark> 전략</div></div>
 <div><div class="k" data-en="STACK">구성</div><div class="v" data-en="LangChain (LCEL), Ollama + Qwen3.5 4B, OpenAI gpt-5-mini, Gradio">LangChain (LCEL), Ollama · Qwen3.5 4B, OpenAI gpt-5-mini, Gradio</div></div>
 </div>
-<a class="ext-link rv" href="https://github.com/sihunwang-skala/l10n-quality-agent" target="_blank" rel="noopener" data-en="View on GitHub &#8599;">GitHub에서 보기 &#8599;</a></div>
-<div class="ph-wrap rv" id="phw"><div class="ph-lb">UI</div><div class="ph win"><i class="notch"></i><img class="pi ko on" data-k="0" src="img/ui-hero.png" alt="서비스 화면"><img class="pi en on" data-k="0" src="img/ui-hero.png" alt="Service screen"><img class="pi ko" data-k="1" src="img/ui-run.png" alt="실행 결과"><img class="pi en" data-k="1" src="img/ui-run.png" alt="Run result"><img class="pi ko" data-k="2" src="img/ui-review.png" alt="검토·승인"><img class="pi en" data-k="2" src="img/ui-review.png" alt="Review & approval"><img class="pi ko" data-k="3" src="img/ui-mode-direct.png" alt="언어 선택·입력"><img class="pi en" data-k="3" src="img/ui-mode-direct.png" alt="Language & input"></div><div class="ph-tabs"><button type="button" class="on" data-i="0" data-en="Service screen">서비스 화면</button><button type="button" class="" data-i="1" data-en="Run result">실행 결과</button><button type="button" class="" data-i="2" data-en="Review &amp; approval">검토·승인</button><button type="button" class="" data-i="3" data-en="Language &amp; input">언어 선택·입력</button></div></div>
-</div></header>
+<a class="ext-link rv" href="https://github.com/sihunwang-skala/l10n-quality-agent" target="_blank" rel="noopener" data-en="View on GitHub &#8599;">GitHub에서 보기 &#8599;</a></div><div class="ph-wrap rv" id="phw"><div class="ph-lb">UI</div><div class="ph win"><i class="notch"></i><img class="pi ko on" data-k="0" src="img/ui-hero.png" alt="서비스 화면"><img class="pi en on" data-k="0" src="img/ui-hero.png" alt="Service screen"><img class="pi ko" data-k="1" src="img/ui-run.png" alt="실행 결과"><img class="pi en" data-k="1" src="img/ui-run.png" alt="Run result"><img class="pi ko" data-k="2" src="img/ui-review.png" alt="검토·승인"><img class="pi en" data-k="2" src="img/ui-review.png" alt="Review & approval"><img class="pi ko" data-k="3" src="img/ui-mode-direct.png" alt="언어 선택·입력"><img class="pi en" data-k="3" src="img/ui-mode-direct.png" alt="Language & input"></div><div class="ph-tabs"><button type="button" class="on" data-i="0" data-en="Service screen">서비스 화면</button><button type="button" class="" data-i="1" data-en="Run result">실행 결과</button><button type="button" class="" data-i="2" data-en="Review &amp; approval">검토·승인</button><button type="button" class="" data-i="3" data-en="Language &amp; input">언어 선택·입력</button></div></div>
+</div></section>
 <section class="cs scn " id="context" style="--scene-h:220vh"><div class="scene"><div class="stage"><div class="col stage-grid"><div class="stage-l">
 <div class="eb" data-en="01 CONTEXT">01 배경</div>
 <h2 data-en="Translate into several languages: which ones need a human?">여러 언어로 번역하면, 어느 번역을 사람이 봐야 할까요?</h2>
@@ -926,52 +952,58 @@ bt.forEach(function(b){b.addEventListener('click',function(){user=true;clearInte
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches)t=setInterval(function(){if(user)return;if(cur===n-1)fin=true;go((cur+1)%n)},1600);})();
 
 (function(){var f=document.querySelector('.fan');if(!f||!('IntersectionObserver' in window))return;
-new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setTimeout(function(){f.classList.add('spread')},350)}else{f.classList.remove('spread')}})},{threshold:.55}).observe(f);})();
-
-/* autoplay: the page moves on by itself (scene beats, sections, gallery); any wheel/touch/key/click pauses it for a few seconds, or press the button to stop it */
-(function(){
-if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-var lastUser=0,lastStep=Date.now(),off=false,DW_SCENE=1200,DW_BUL=1000,DW_FREE=1000,IDLE=5000;
-['wheel','touchstart','keydown','mousedown'].forEach(function(ev){addEventListener(ev,function(){lastUser=Date.now()},{passive:true,capture:true})});
-function go(y){scrollTo({top:y,behavior:'smooth'})}
-var lastAnim=Date.now(),busySince=0;
-function inView(el){var r=el.getBoundingClientRect();return r.bottom>0&&r.top<innerHeight}
-function animBusy(){var busy=false;try{document.getAnimations().forEach(function(an){if(an.playState!=='running')return;var t=an.effect&&an.effect.getComputedTiming&&an.effect.getComputedTiming();if(!t||t.iterations===Infinity)return;var el=an.effect.target;if(el&&el.getBoundingClientRect&&inView(el))busy=true})}catch(e){}return busy}
-function groups(){var out=[],vh=innerHeight;
- [].slice.call(document.querySelectorAll('header.hero,section.cs')).forEach(function(sec){if(sec.closest('.scn')||sec.classList.contains('scn'))return;
-  var col=sec.querySelector(':scope > .col')||sec,kids=[].slice.call(col.children).filter(function(k){return k.offsetHeight>0});
-  var cur=null;kids.forEach(function(k){var r=k.getBoundingClientRect(),t=r.top+scrollY,bt=r.bottom+scrollY;
-   if(cur&&bt-cur.t<=vh*.85){cur.b=bt}else{if(cur)out.push(cur);cur={t:t,b:bt}}});if(cur)out.push(cur)});
- return out.map(function(g){var h=g.b-g.t;return h>vh*.9?g.t-70:g.t+h/2-vh/2})}
-function nextTarget(from){var best=null;
- groups().forEach(function(y){if(y>from+120&&(best===null||y<best))best=y});
- [].slice.call(document.querySelectorAll('.scn')).forEach(function(sc){var y=sc.querySelector('.scene').getBoundingClientRect().top+scrollY;if(y>from+24&&(best===null||y<best))best=y});
- return best}
-function heroBusy(){var w=document.getElementById('phw');return w&&window.__phBusy&&window.__phBusy()&&inView(w)}
-function tick(){
- var now=Date.now();if(off||document.hidden)return;
- if(animBusy()){if(!busySince)busySince=now;if(now-busySince<6000)lastAnim=now}else busySince=0;
- if(now-lastUser<IDLE)return;
- if(document.querySelector('.lb:not([hidden])'))return;
- if(now-lastAnim<1500)return;
- if(heroBusy())return;
- var a=window.__sc&&window.__sc.active();
- var dw=a?(a.sc.querySelector('.ind')?DW_BUL:DW_SCENE):DW_FREE;if(now-lastStep<dw)return;
- var g=document.getElementById('product');
- if(g&&window.__galBusy&&window.__galBusy()){var gr=g.getBoundingClientRect();if(gr.top<innerHeight*.5&&gr.bottom>innerHeight*.5)return}
- var maxY=document.documentElement.scrollHeight-innerHeight;
- if(scrollY>=maxY-4)return;
- var target=null;
- if(a){var st=window.__sc.stopsFor(a.sc)||[.25,.6,.98],total=a.r.height-innerHeight,p=Math.max(0,Math.min(1,-a.r.top/total));
-  for(var i=0;i<st.length;i++){if(st[i]>p+.012){target=a.r.top+scrollY+st[i]*total;break}}
-  if(target===null)target=nextTarget(a.r.top+scrollY+total)}
- else{target=nextTarget(scrollY)}
- if(target===null)target=maxY;
- target=Math.min(target,maxY);lastStep=now;go(target)}
-setInterval(tick,400);
-})();
+new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setTimeout
 </script>
 <script>
+/* slide deck: one section per screen, navigated by buttons, dots, keys, swipe and the sidebar */
+(function(){
+  var root=document.documentElement;
+  root.classList.add("deck");
+  var slides=[].slice.call(document.querySelectorAll("header.hero, main > section"));
+  var bar=document.createElement("nav");
+  bar.className="deck-bar";
+  bar.innerHTML='<button type="button" class="dk-prev" aria-label="이전 화면">&larr;</button><div class="dk-mid"><span class="dk-count"></span><div class="dk-dots"></div></div><button type="button" class="dk-next" aria-label="다음 화면">&rarr;</button>';
+  document.body.appendChild(bar);
+  var dots=bar.querySelector(".dk-dots"), count=bar.querySelector(".dk-count");
+  var prev=bar.querySelector(".dk-prev"), next=bar.querySelector(".dk-next");
+  slides.forEach(function(_,i){var d=document.createElement("button");d.type="button";d.className="dk-dot";d.setAttribute("aria-label","화면 "+(i+1));d.addEventListener("click",function(){show(i)});dots.appendChild(d)});
+  var cur=0;
+  function show(i,push){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach(function(s,k){s.classList.toggle("on",k===cur);if(k===cur)s.scrollTop=0});
+    [].forEach.call(dots.children,function(d,k){d.classList.toggle("on",k===cur)});
+    count.textContent=(cur+1)+" / "+slides.length;
+    prev.disabled=cur===0; next.disabled=cur===slides.length-1;
+    if(push!==false&&slides[cur].id){try{history.replaceState(null,"","#"+slides[cur].id)}catch(e){}}
+    window.dispatchEvent(new Event("resize"));
+  }
+  prev.addEventListener("click",function(){show(cur-1)});
+  next.addEventListener("click",function(){show(cur+1)});
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    var id=a.getAttribute("href").slice(1);
+    var i=slides.findIndex(function(s){return s.id===id}); if(i<0) return;
+    e.preventDefault(); show(i);
+  },true);
+  window.addEventListener("keydown",function(e){
+    if(e.target.closest&&e.target.closest("input,textarea,select")) return;
+    var k=e.key;
+    if(k==="ArrowRight"||k==="PageDown"||k===" "){e.preventDefault();e.stopPropagation();show(cur+1)}
+    else if(k==="ArrowLeft"||k==="PageUp"){e.preventDefault();e.stopPropagation();show(cur-1)}
+    else if(k==="Home"){e.stopPropagation();show(0)}
+    else if(k==="End"){e.stopPropagation();show(slides.length-1)}
+  },true);
+  var sx=null;
+  window.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
+  window.addEventListener("touchend",function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50){show(dx<0?cur+1:cur-1)}},{passive:true});
+  /* auto-advance: next screen every 7s, wraps to the first; any manual move restarts the timer */
+  var timer=null, reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function arm(){ if(reduce) return; clearInterval(timer); timer=setInterval(function(){ show(cur+1>=slides.length?0:cur+1) },7000); }
+  var _show=show; show=function(i,push){ _show(i,push); arm(); };
+  arm();
+  var h=location.hash.slice(1), start=slides.findIndex(function(s){return s.id===h});
+  show(start<0?0:start,false);
+})();
 /* keep the page from drifting sideways (it caused the cut-off text on some screens) */
 (function(){addEventListener("scroll",function(){if(scrollX){scrollTo(0,scrollY)}},{passive:true});})();
 /* handoff map + case tabs: all text is already in the DOM (with data-en), so the language switch keeps working */

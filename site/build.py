@@ -469,6 +469,32 @@ override = """<style>
 /* product gallery: always one screen at a time (slides), even when the page is not pinned */
 html:not(.pinned) .tilebeats .beat{display:none}
 html:not(.pinned) .tilebeats .beat.on{display:block}
+/* SLIDE DECK: each section is one full screen, moved with buttons / arrow keys / swipe */
+html.deck,html.deck body{height:100%;overflow:hidden}
+html.deck main{position:fixed;top:0;right:0;bottom:0;left:236px;overflow:hidden}
+@media (max-width:900px){html.deck main{left:0;top:56px}}
+html.deck main>header,html.deck main>section{display:none;position:absolute;top:0;left:0;right:0;bottom:64px;overflow-y:auto;overflow-x:hidden;margin:0;padding:0}
+html.deck main>header.on{display:flex}
+html.deck main>section.on{display:block}
+html.deck .hero{min-height:0!important;padding:40px 0 24px!important;align-items:center}
+html.deck .cs{padding:44px 0 36px!important;border-top:0!important}
+html.deck .scn .scene{height:auto!important}
+html.deck .scn .stage{position:static!important;height:auto!important;padding:40px 0!important;overflow:visible!important;display:block!important}
+html.deck .beats{min-height:0!important}
+html.deck .beat{position:relative!important;opacity:1!important;transform:none!important;pointer-events:auto!important}
+html.deck .beat+.beat{margin-top:18px!important}
+html.deck .tilebeats .beat{display:none!important}
+html.deck .tilebeats .beat.on{display:block!important}
+html.deck .gal2 .stage-r{min-width:0}
+.deck-bar{position:fixed;left:236px;right:0;bottom:0;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 24px;background:var(--bg);border-top:1px solid var(--line);z-index:30}
+@media (max-width:900px){.deck-bar{left:0}}
+.dk-mid{display:flex;align-items:center;gap:14px;min-width:0}
+.dk-dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.dk-dot{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0;transition:transform .2s,background .2s}
+.dk-dot.on{background:var(--ac);transform:scale(1.35)}
+.dk-prev,.dk-next{width:42px;height:42px;border-radius:99px;border:1px solid var(--line);background:var(--soft);color:var(--ink);font:700 18px/1 Manrope,sans-serif;cursor:pointer;flex:none}
+.dk-prev:disabled,.dk-next:disabled{opacity:.3;cursor:default}
+.dk-count{font:600 13px/1 Manrope,sans-serif;color:var(--mute);min-width:52px;text-align:center}
 /* hero screenshots: wide browser window below the text, so the web app is readable */
 .hero-grid{grid-template-columns:minmax(0,1fr)!important}
 .ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
@@ -556,8 +582,57 @@ html[data-theme=dark] .lq-s.agent .lq-k{background:#1d2f47;color:#a6c7ef}html[da
 </style>
 """
 head = head.replace("</head>", override + "</head>") if "</head>" in head else head + override + "</head>"
-scripts = (HERE / "template/scripts.html").read_text(encoding="utf-8")
+scripts = (HERE / "template/scripts_noautoplay.html").read_text(encoding="utf-8")
 custom_js = """<script>
+/* slide deck: one section per screen, navigated by buttons, dots, keys, swipe and the sidebar */
+(function(){
+  var root=document.documentElement;
+  root.classList.add("deck");
+  var slides=[].slice.call(document.querySelectorAll("header.hero, main > section"));
+  var bar=document.createElement("nav");
+  bar.className="deck-bar";
+  bar.innerHTML='<button type="button" class="dk-prev" aria-label="이전 화면">&larr;</button><div class="dk-mid"><span class="dk-count"></span><div class="dk-dots"></div></div><button type="button" class="dk-next" aria-label="다음 화면">&rarr;</button>';
+  document.body.appendChild(bar);
+  var dots=bar.querySelector(".dk-dots"), count=bar.querySelector(".dk-count");
+  var prev=bar.querySelector(".dk-prev"), next=bar.querySelector(".dk-next");
+  slides.forEach(function(_,i){var d=document.createElement("button");d.type="button";d.className="dk-dot";d.setAttribute("aria-label","화면 "+(i+1));d.addEventListener("click",function(){show(i)});dots.appendChild(d)});
+  var cur=0;
+  function show(i,push){
+    cur=Math.max(0,Math.min(slides.length-1,i));
+    slides.forEach(function(s,k){s.classList.toggle("on",k===cur);if(k===cur)s.scrollTop=0});
+    [].forEach.call(dots.children,function(d,k){d.classList.toggle("on",k===cur)});
+    count.textContent=(cur+1)+" / "+slides.length;
+    prev.disabled=cur===0; next.disabled=cur===slides.length-1;
+    if(push!==false&&slides[cur].id){try{history.replaceState(null,"","#"+slides[cur].id)}catch(e){}}
+    window.dispatchEvent(new Event("resize"));
+  }
+  prev.addEventListener("click",function(){show(cur-1)});
+  next.addEventListener("click",function(){show(cur+1)});
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest('a[href^="#"]'); if(!a) return;
+    var id=a.getAttribute("href").slice(1);
+    var i=slides.findIndex(function(s){return s.id===id}); if(i<0) return;
+    e.preventDefault(); show(i);
+  },true);
+  window.addEventListener("keydown",function(e){
+    if(e.target.closest&&e.target.closest("input,textarea,select")) return;
+    var k=e.key;
+    if(k==="ArrowRight"||k==="PageDown"||k===" "){e.preventDefault();e.stopPropagation();show(cur+1)}
+    else if(k==="ArrowLeft"||k==="PageUp"){e.preventDefault();e.stopPropagation();show(cur-1)}
+    else if(k==="Home"){e.stopPropagation();show(0)}
+    else if(k==="End"){e.stopPropagation();show(slides.length-1)}
+  },true);
+  var sx=null;
+  window.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
+  window.addEventListener("touchend",function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50){show(dx<0?cur+1:cur-1)}},{passive:true});
+  /* auto-advance: next screen every 7s, wraps to the first; any manual move restarts the timer */
+  var timer=null, reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function arm(){ if(reduce) return; clearInterval(timer); timer=setInterval(function(){ show(cur+1>=slides.length?0:cur+1) },7000); }
+  var _show=show; show=function(i,push){ _show(i,push); arm(); };
+  arm();
+  var h=location.hash.slice(1), start=slides.findIndex(function(s){return s.id===h});
+  show(start<0?0:start,false);
+})();
 /* keep the page from drifting sideways (it caused the cut-off text on some screens) */
 (function(){addEventListener("scroll",function(){if(scrollX){scrollTo(0,scrollY)}},{passive:true});})();
 /* handoff map + case tabs: all text is already in the DOM (with data-en), so the language switch keeps working */
@@ -577,8 +652,21 @@ var tabs=document.getElementById('lqtabs');
 if(tabs){var box=tabs.closest('.lq');tabs.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){pick(box,'#lqtabs button','.lq-c',+b.dataset.i)})})}
 })();
 </script>"""
+# split the hero into a cover slide (title + summary) and an overview slide (metrics + UI shots)
+_i=hero.index('<div class="hmts rv">')
+_j=hero.index('<div class="ph-wrap rv" id="phw">')
+_cover_end='</div></div></header>'
+cover=hero[:_i]+_cover_end
+_rest=hero[_i:_j].rstrip()
+assert _rest.endswith('</a></div>'), _rest[-30:]
+_rest=_rest[:-len('</div>')]          # drop the hero-l closing div
+_ph=hero[_j:]
+assert _ph.rstrip().endswith('</div></header>'), _ph[-40:]
+_ph=_ph.rstrip()[:-len('</div></header>')]  # keep ph-wrap block, drop hero-grid + header
+overview='<section class="cs" id="overview"><div class="col">'+_rest+'</div>'+_ph+'</div></section>'
+hero=cover
 page = (
-    head + "<body>\n" + side + "<main>" + hero + "\n" + context + "\n" + problem + "\n" + define + "\n" + decision + "\n"
+    head + "<body>\n" + side + "<main>" + hero + "\n" + overview + "\n" + context + "\n" + problem + "\n" + define + "\n" + decision + "\n"
     + build + "\n" + approach + "\n" + architecture + "\n" + cases + "\n" + product + "\n" + safety + "\n" + more
     + "\n</main>\n" + scripts + "\n" + custom_js + "\n</body></html>\n"
 )
