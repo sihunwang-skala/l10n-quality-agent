@@ -240,7 +240,7 @@ map_panels = ""
 for i, (kl, ke, cls, hl_ko, hl_en, who_ko, who_en, how_ko, how_en, see_ko, see_en, ex_ko, ex_en) in enumerate(MAP):
     on = " on" if i == 0 else ""
     num = "✓" if i == 0 else str(i)
-    map_btns += f'<button type="button" class="lq-n {cls}{on}" data-i="{i}"><i>{num}</i><span data-en="{en(ke)}">{kl}</span></button>'
+    map_btns += f'<button type="button" class="lq-n {cls}{on}" data-i="{i}" style="--k:{i}"><i>{num}</i><span data-en="{en(ke)}">{kl}</span></button>'
     ex = f'<div class="lq-r"><b data-en="Real example">실제 예시</b>{T("span", ex_ko, ex_en)}</div>' if ex_ko else ""
     map_panels += (
         f'<div class="lq-d{on}" data-i="{i}"><div class="lq-h">{T("h3", hl_ko, hl_en)}</div>'
@@ -451,6 +451,32 @@ code{font:500 .88em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(-
 .card code,.tbl code,.lq code{background:var(--bg)}
 .fig .imgbox{overflow-x:auto;border:1px solid var(--line);border-radius:18px;padding:12px;background:#fff}
 .tbl.oneline{width:100%;table-layout:fixed}.tbl.oneline th{width:170px}.tbl.oneline td,.tbl.oneline th{white-space:normal;overflow-wrap:anywhere}
+/* narrow / portrait screens: never let the hero push the page wider than the viewport */
+.hero-grid>*{min-width:0}
+@media (max-width:1100px){.hero-grid{grid-template-columns:minmax(0,1fr)}.quote{white-space:normal;overflow:visible}.ph.win{max-width:420px}}
+html,body{overflow-x:hidden}
+/* tap affordance: map buttons gently bounce in, then hint once when scrolled into view */
+.lq-n{transition:transform .2s ease,border-color .2s,background .2s,box-shadow .2s}
+.lq-n:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,24,40,.10)}
+.lq-n:active{transform:scale(.97)}
+.lq-n.bounce{animation:lqBounce .6s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--k,0) * 70ms)}
+.lq-n.hint i{animation:lqPulse 1.6s ease-in-out 2}
+.lq-n.on i{transform:scale(1.08)}
+@keyframes lqBounce{0%{opacity:0;transform:translateY(12px) scale(.96)}60%{opacity:1;transform:translateY(-4px) scale(1.02)}100%{opacity:1;transform:none}}
+@keyframes lqPulse{0%,100%{box-shadow:0 0 0 0 rgba(47,42,107,.35)}50%{box-shadow:0 0 0 7px rgba(47,42,107,0)}}
+.lq-panel{transition:box-shadow .3s}
+.lq-panel.flash{animation:lqFlash .5s ease}
+@keyframes lqFlash{0%{box-shadow:0 0 0 0 rgba(47,42,107,.25)}100%{box-shadow:0 0 0 14px rgba(47,42,107,0)}}
+@media (prefers-reduced-motion:reduce){.lq-n,.lq-n.bounce,.lq-n.hint i,.lq-panel.flash{animation:none!important;transition:none!important}}
+/* paper-style typography (matches the technical report): one sans family, bold headings, tighter tracking */
+*{font-family:"Noto Sans KR","Apple SD Gothic Neo","Helvetica Neue",Arial,sans-serif!important}
+code,pre,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace!important}
+body{font-size:16px!important;line-height:1.85!important;color:#111!important}
+h1,h2,h3,h4{font-weight:700!important;letter-spacing:-.01em!important;line-height:1.35!important}
+.cs h2,h1{font-size:clamp(24px,3vw,34px)!important}
+.hmw{font-weight:700!important;letter-spacing:-.02em!important}
+.lead,.cs .lead,.lq-s p,.card p,.note2{font-weight:400!important;line-height:1.85!important}
+.eb,.lq-k,.lq-r b,.tg,.ptags,.tags span{font-weight:700!important;letter-spacing:.04em!important}
 /* definition sentence: keep every line on one row, words light up with scroll */
 .hmw{max-width:none}
 .hmw .ln{white-space:nowrap}
@@ -495,7 +521,15 @@ custom_js = """<script>
 (function(){
 function pick(box,btnSel,paneSel,i){box.querySelectorAll(btnSel).forEach(function(b){b.classList.toggle('on',+b.dataset.i===i)});box.querySelectorAll(paneSel).forEach(function(p){p.classList.toggle('on',+p.dataset.i===i)})}
 var map=document.getElementById('lqmap');
-if(map){var root=map.closest('.lq');map.querySelectorAll('.lq-n').forEach(function(b){b.addEventListener('click',function(){pick(root,'.lq-n','.lq-d',+b.dataset.i)})})}
+if(map){var root=map.closest('.lq');var panel=root.querySelector('.lq-panel');
+ map.querySelectorAll('.lq-n').forEach(function(b){b.addEventListener('click',function(){pick(root,'.lq-n','.lq-d',+b.dataset.i);if(panel){panel.classList.remove('flash');void panel.offsetWidth;panel.classList.add('flash')}})});
+ /* when the map scrolls into view: bounce the buttons in once, then pulse the first unvisited one as a hint */
+ var played=false;
+ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting||played)return;played=true;io.disconnect();
+   var btns=map.querySelectorAll('.lq-n');btns.forEach(function(b){b.classList.add('bounce')});
+   setTimeout(function(){btns.forEach(function(b){b.classList.remove('bounce')});var h=map.querySelector('.lq-n:not(.on)');if(h)h.classList.add('hint');setTimeout(function(){if(h)h.classList.remove('hint')},3400)},900)})},{threshold:.35});
+ io.observe(map);
+}
 var tabs=document.getElementById('lqtabs');
 if(tabs){var box=tabs.closest('.lq');tabs.querySelectorAll('button').forEach(function(b){b.addEventListener('click',function(){pick(box,'#lqtabs button','.lq-c',+b.dataset.i)})})}
 })();
