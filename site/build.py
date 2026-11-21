@@ -115,6 +115,7 @@ def hm(frm, to, suf, ko, e):
 hero = f"""<header class="hero" id="top"><div class="col hero-grid"><div class="hero-l">
 <div class="tags rv"><span class="g1">Agentic</span><span class="g1">Multi-language</span><span class="g1">MQM</span><span class="g1">Specialist Tools</span><span class="g2">Localization</span><span class="g2">Translation QA</span><span class="g3">Human-in-the-loop</span><span class="g3">Deterministic Validation</span><span class="g3">Traceable Runs</span></div>
 {T("h1", "L10n Quality Agent:<br>어디서 막혔는지 찾아, 사람이 볼 지점을 알려줍니다", "L10n Quality Agent:<br>It finds where translation breaks and tells you where a human should look", "rv")}
+{T("p", "Agent 개발 · HITL 설계", "Agent Development · Human-in-the-loop Design", "role rv")}
 {T("p", "&ldquo;번역은 Agent가 돕고, 판단이 필요한 지점은 이유와 함께 사람에게 넘깁니다.&rdquo;", "&ldquo;The Agent helps translate; anything that needs judgment goes to a human, with the reason.&rdquo;", "quote rv")}
 {T("p", "내가 고른 언어로 번역하고, <b>문법·유창성 등 6개 전문 도구</b>를 Agent가 골라 고칩니다. 그리고 <b>어느 단계의 어떤 오류에서 막혔는지, 왜 사람이 봐야 하는지</b>를 기록과 함께 보여줍니다.", "It translates into the languages you choose, and the Agent picks among <b>six specialist tools</b> (grammar, fluency and more) to fix it. It then shows <b>at which step and on which error it got stuck, and why a human should look</b>, backed by a full record.", "lead rv")}
 <div class="hmts rv">{T("div", "번역 한 건이 거치는 구조", "What one translation goes through", "hcap")}
@@ -464,6 +465,7 @@ override = """<style>
 /* l10n additions on top of the shared case-study CSS */
 .ph.win{width:100%;max-width:340px;aspect-ratio:4/4.7;border-width:8px;border-radius:18px}
 .ph.win .notch{display:none}
+.role{font:700 14px/1.4 "Noto Sans KR",sans-serif;letter-spacing:.06em;color:var(--ac);margin:0 0 14px}
 /* hero screenshots: wide browser window below the text, so the web app is readable */
 .hero-grid{grid-template-columns:minmax(0,1fr)!important}
 .ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
