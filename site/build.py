@@ -12,11 +12,32 @@ Case files and distributions come from real saved runs (runs/*.json, git-ignored
 Run:  python3 build.py
 """
 import html
+import re
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
 GITHUB = "https://github.com/sihunwang-skala/l10n-quality-agent"
+
+
+
+# ---------------------------------------------------------------- keyword highlighter
+# Key terms get a neon marker bar. Applied to text only (never inside <code> or tags).
+KW_KO = ["사람 검토", "사람 승인", "결정적 검사", "전문 도구", "재평가", "Rollback", "롤백", "MQM", "HITL", "Agent", "보호 용어", "채택", "거부"]
+KW_EN = ["human review", "human approval", "deterministic checks", "specialist tools", "re-evaluation", "Rollback", "MQM", "HITL", "Agent", "protected terms", "accepted", "rejected"]
+
+
+def K(html_str, lang):
+    kws = sorted(KW_KO if lang == "ko" else KW_EN, key=len, reverse=True)
+    pat = re.compile("|".join(re.escape(k) for k in kws))
+    parts = re.split(r"(<code>.*?</code>|<[^>]+>)", html_str)
+    out = []
+    for part in parts:
+        if not part or part.startswith("<"):
+            out.append(part)
+        else:
+            out.append(pat.sub(lambda m: f"<mark class=kw>{m.group(0)}</mark>", part))
+    return "".join(out)
 
 
 def en(s):
@@ -26,7 +47,7 @@ def en(s):
 def T(tag, ko, e, cls="", extra=""):
     """element with KO content and an EN swap in data-en"""
     c = f' class="{cls}"' if cls else ""
-    return f'<{tag}{c} data-en="{en(e)}"{(" " + extra) if extra else ""}>{ko}</{tag}>'
+    return f'<{tag}{c} data-en="{en(K(e, "en"))}"{(" " + extra) if extra else ""}>{K(ko, "ko")}</{tag}>'
 
 
 def card(ko_h, en_h, ko_p, en_p):
@@ -481,6 +502,9 @@ h1,h2,h3,h4{font-weight:700!important;letter-spacing:-.01em!important;line-heigh
 .hmw{font-weight:700!important;letter-spacing:-.02em!important}
 .lead,.cs .lead,.lq-s p,.card p,.note2{font-weight:400!important;line-height:1.85!important}
 .eb,.lq-k,.lq-r b,.tg,.ptags,.tags span{font-weight:700!important;letter-spacing:.04em!important}
+/* keyword highlighter: neon marker behind key terms */
+mark.kw{background:linear-gradient(transparent 52%,#ffef3a 52%,#ffef3a 92%,transparent 92%);color:inherit;padding:0 .12em;font-weight:700;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+html[data-theme=dark] mark.kw{background:linear-gradient(transparent 52%,rgba(255,239,58,.55) 52%,rgba(255,239,58,.55) 92%,transparent 92%);color:#fff}
 /* definition sentence: keep every line on one row, words light up with scroll */
 .hmw{max-width:none}
 .hmw .ln{white-space:nowrap}
