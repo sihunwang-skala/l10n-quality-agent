@@ -114,20 +114,20 @@ def hm(frm, to, suf, ko, e):
 
 hero = f"""<header class="hero" id="top"><div class="col hero-grid"><div class="hero-l">
 <div class="tags rv"><span class="g1">Agentic</span><span class="g1">Multi-language</span><span class="g1">MQM</span><span class="g1">Specialist Tools</span><span class="g2">Localization</span><span class="g2">Translation QA</span><span class="g3">Human-in-the-loop</span><span class="g3">Deterministic Validation</span><span class="g3">Traceable Runs</span></div>
-{T("h1", "L10n Quality Agent:<br>어디서 막혔는지 찾아, 사람이 볼 지점을 알려줍니다", "L10n Quality Agent:<br>It finds where translation breaks and tells you where a human should look", "rv")}
+{T("h1", "L10n Quality Agent:<br>자동 처리가 중단된 단계와 사람의 검토가 필요한 이유를 알려줍니다", "L10n Quality Agent:<br>It shows where the workflow stopped and why human review is needed", "rv")}
 {T("p", "Agent 개발 · HITL 설계", "Agent Development · Human-in-the-loop Design", "role rv")}
-{T("p", "&ldquo;번역은 Agent가 돕고, 판단이 필요한 지점은 이유와 함께 사람에게 넘깁니다.&rdquo;", "&ldquo;The Agent helps translate; anything that needs judgment goes to a human, with the reason.&rdquo;", "quote rv")}
+{T("p", "&ldquo;번역은 Agent가 돕고, 판단이 필요한 지점은 이유와 함께 사람에게 넘깁니다.&rdquo;", "&ldquo;The Agent supports translation, while decisions requiring judgment are handed to a human with an explanation.&rdquo;", "quote rv")}
 {T("p", "내가 고른 언어로 번역하고, <b>문법·유창성 등 6개 전문 도구</b>를 Agent가 골라 고칩니다. 그리고 <b>어느 단계의 어떤 오류에서 막혔는지, 왜 사람이 봐야 하는지</b>를 기록과 함께 보여줍니다.", "It translates into the languages you choose, and the Agent picks among <b>six specialist tools</b> (grammar, fluency and more) to fix it. It then shows <b>at which step and on which error it got stuck, and why a human should look</b>, backed by a full record.", "lead rv")}
-<div class="hmts rv">{T("div", "번역 한 건이 거치는 구조", "What one translation goes through", "hcap")}
+<div class="hmts rv">{T("div", "번역 한 건의 처리 흐름", "Workflow for a single translation", "hcap")}
 <div class="hgrid">
 {hm("목표 언어", 5, "", "일본어·이탈리아어·프랑스어·독일어·영어 중 선택", "Choose from Japanese, Italian, French, German, English")}
-{hm("수정 도구", 6, "", "accuracy ~ fluency, 쓸 도구는 Agent가 선택", "accuracy to fluency; the Agent chooses which to use")}
-{hm("개입 지점", 7, "", "사람에게 넘어가는 조건, 이유와 함께 표시", "Conditions that hand off to a human, shown with reasons")}
-{hm("최종 승인", 100, "%", "항상 사람이 합니다", "Always done by a human")}
+{hm("수정 도구", 6, "", "accuracy ~ fluency, 쓸 도구는 Agent가 선택", "The Agent selects from six tools: accuracy, terminology, spelling, grammar, style, and fluency.")}
+{hm("개입 지점", 7, "", "사람에게 넘어가는 조건, 이유와 함께 표시", "Conditions that trigger human review, with reasons recorded")}
+{hm("최종 승인", 100, "%", "항상 사람이 합니다", "Final approval is always given by a human")}
 </div></div>
 <div class="meta rv">
 <div><div class="k" data-en="USERS">대상</div>{T("div", "번역·현지화 품질을 다루는 사람, 번역 품질 자동화에 관심 있는 개발자", "People working on translation/localization quality; developers interested in automating it", "v")}</div>
-<div><div class="k" data-en="INPUT">입력</div>{T("div", "PoC 문장 선택, 직접 입력, CSV 일괄 (문장 &times; 국가 여러 건)", "Pick a PoC sentence, type your own, or CSV batch (many sentences &times; countries)", "v")}</div>
+<div><div class="k" data-en="INPUT">입력</div>{T("div", "PoC 문장 선택, 직접 입력, CSV 일괄 (문장 &times; 국가 여러 건)", "Select a PoC sentence, enter your own text, or upload a CSV for batch processing across multiple sentences and countries.", "v")}</div>
 <div><div class="k" data-en="JUDGEMENT">판단</div>{T("div", "MQM 6개 영역 + 결정적 검사(숫자·단위·보호 용어) + Agent 전략", "Six MQM categories + deterministic checks (numbers, units, protected terms) + Agent strategy", "v")}</div>
 <div><div class="k" data-en="STACK">구성</div>{T("div", "LangChain (LCEL), Ollama · Qwen3.5 4B, OpenAI gpt-5-mini, Gradio", "LangChain (LCEL), Ollama + Qwen3.5 4B, OpenAI gpt-5-mini, Gradio", "v")}</div>
 </div>
@@ -139,21 +139,21 @@ hero = f"""<header class="hero" id="top"><div class="col hero-grid"><div class="
 LANGS = [("일본어", "Japanese"), ("이탈리아어", "Italian"), ("프랑스어", "French"), ("독일어", "German"), ("영어", "English")]
 context = f"""<section class="cs scn " id="context" style="--scene-h:220vh"><div class="scene"><div class="stage"><div class="col stage-grid"><div class="stage-l">
 {T("div", "01 배경", "01 CONTEXT", "eb")}
-{T("h2", "여러 언어로 번역하면, 어느 번역을 사람이 봐야 할까요?", "Translate into several languages: which ones need a human?")}
-{T("p", "한국어 문장을 여러 언어로 번역하면 결과가 금세 늘어납니다. 전부 사람이 읽을 수는 없고, 전부 AI에게 맡길 수도 없습니다. <b>사람이 봐야 할 번역과 이유</b>를 먼저 알려주는 것이 필요했습니다.", "Translating one Korean sentence into several languages multiplies the output fast. A person cannot read all of it, and none of it can simply be left to an AI. We needed something that says <b>which translations a human should look at, and why</b>.", "lead")}
+{T("h2", "여러 언어로 번역하면, 어느 번역을 사람이 봐야 할까요?", "When translating into multiple languages, which results need human review?")}
+{T("p", "한국어 문장을 여러 언어로 번역하면 결과가 금세 늘어납니다. 모든 번역을 사람이 검토하기에는 부담이 크고, AI에만 맡기기도 어렵습니다. <b>사람이 검토해야 할 번역을 선별하고 그 이유를 함께 제시해야 했습니다.", "Translating Korean text into multiple languages quickly increases the number of outputs. Reviewing every translation manually is costly, but relying entirely on AI is also risky. We needed a system that identifies which translations require human review and explains why.", "lead")}
 </div><div class="stage-r"><div class="qv chatv"><div class="chat-h"><span class="av"></span><span class="chat-t">L10n Quality Agent</span></div>
 <div class="msgs"><div class="um"><span class="tx" data-end="0.24" data-t-ko="이 회사는 San Jose 데이터센터에 약 2.5PB의 데이터를 저장합니다." data-t-en="This company stores about 2.5PB of data in its San Jose data center."></span><i class="caret"></i></div>
-<div class="am"><div class="abub">{T("div", "내가 고른 언어마다 번역하고 점검합니다", "Translate and check in every language I chose", "alabel")}
+<div class="am"><div class="abub">{T("div", "선택한 언어별로 번역하고 품질을 점검합니다", "Translate and review in each selected language", "alabel")}
 <div class="chips2">{"".join(f'<span class="chip" data-i="{i}" data-en="{en(e)}">{k}</span>' for i, (k, e) in enumerate(LANGS))}</div></div></div></div>
 {T("div", "예시 문장은 작성자가 만든 가상의 문장입니다.", "The example sentence is fictional, written by the author.", "illus")}</div></div></div></div></div></section>"""
 
 problem = f"""<section class="cs scn " id="system-problem" style="--scene-h:330vh"><div class="scene"><div class="stage"><div class="col stage-grid"><div class="stage-l">
 {T("div", "02 시스템 문제", "02 SYSTEM PROBLEM", "eb")}
-{T("h2", "번역문만 봐서는 어디가 문제인지, 사람이 봐야 하는지 알 수 없습니다", "From the translation alone you cannot tell what is wrong or whether a human must look")}
+{T("h2", "번역문만 봐서는 어디가 문제인지, 사람이 봐야 하는지 알 수 없습니다", "Translation output alone may not show what went wrong or whether human review is needed")}
 <ol class="ind"><li data-beat="0" data-en="Where is the problem?">어디가 문제인지 알 수 없다</li><li data-beat="1" data-en="Who should decide?">누가 판단해야 하는지 모른다</li></ol></div>
 <div class="stage-r"><div class="beats cardbeats">
-<div class="beat" data-beat="0">{card("어디가 문제인지 알 수 없다", "Where is the problem?", '번역 결과만 받으면 <span class="hl">어느 부분이, 어떤 종류의 오류인지</span>(정확성인지 문체인지) 알 수 없습니다. 모델에게 &ldquo;고쳐줘&rdquo;라고 하면 멀쩡한 부분까지 바뀌고, 고친 이유는 남지 않습니다.', 'With only the output you cannot tell <span class="hl">which part is wrong, or what kind of error</span> (accuracy or style). Asking the model to &ldquo;fix it&rdquo; changes parts that were fine and leaves no reason behind.')}</div>
-<div class="beat" data-beat="1">{card("누가 판단해야 하는지 모른다", "Who should decide?", '전부 자동으로 통과시키면 위험하고, 전부 사람이 보면 비용이 큽니다. <span class="hl">자동으로 해도 되는 것과 사람이 봐야 하는 것의 경계</span>가 있어야 하고, 그 경계가 이유와 함께 보여야 합니다.', 'Passing everything automatically is risky, and reviewing everything by hand is expensive. There must be <span class="hl">a boundary between what can be automated and what a human must see</span>, shown with reasons.')}</div>
+<div class="beat" data-beat="0">{card("어디가 문제인지 알 수 없다", "Where is the problem?", '번역 결과만 받으면 <span class="hl">어느 부분이, 어떤 종류의 오류인지</span>(정확성인지 문체인지) 알 수 없습니다. 모델에 수정만 요청하면 문제가 없는 부분까지 변경될 수 있고, 수정 근거도 기록되지 않을 수 있습니다.', 'The output alone may not identify <span class="hl">which segment is problematic</span> or whether the issue involves accuracy or style. Simply asking a model to &ldquo;fix it&rdquo; can change already-correct text without recording why.')}</div>
+<div class="beat" data-beat="1">{card("누가 판단해야 하는지 모른다", "Who should decide?", '전부 자동으로 통과시키면 위험하고, 전부 사람이 보면 비용이 큽니다. <span class="hl">자동 처리할 수 있는 작업과 사람의 검토가 필요한 작업을 구분하고, 그 판단 근거를 제시해야 합니다.', 'Passing everything automatically is risky, and reviewing everything by hand is expensive. The system must <span class="hl">distinguish what can be handled automatically from what requires human review</span>, and explain that distinction.')}</div>
 </div></div></div></div></div></section>"""
 
 # short lines (<= ~18 Korean chars each) so no line wraps; words light up as you scroll
@@ -164,8 +164,8 @@ define = f"""<section class="cs scn define" id="define" style="--scene-h:300vh">
 
 decision = f"""<section class="cs scn " id="decision" style="--scene-h:260vh"><div class="scene"><div class="stage"><div class="col stage-grid"><div class="stage-l">
 {T("div", "04 선택", "04 DECISION", "eb")}
-{T("h2", "그래서 전문 도구를 고르는 Agent와, 사람에게 넘기는 신호를 만들었습니다", "So we built an Agent that picks specialist tools, plus signals that hand off to a human")}
-{T("p", "Agent(Planner)는 <b>다음에 쓸 도구만 고르고</b>, 후보를 채택할지는 Python 검사와 MQM 재평가가 정합니다. 막히면 어느 단계에서 왜 막혔는지를 <code>RunRecord</code>에 남겨 사람에게 보여줍니다.", "The Agent (planner) <b>only chooses the next tool</b>; whether to accept a candidate is decided by Python checks and MQM re-evaluation. When it gets stuck, where and why is written to the <code>RunRecord</code> and shown to a human.", "lead")}
+{T("h2", "이를 위해 전문 도구를 선택하는 Agent와 사람 검토로 전환하는 조건을 구현했습니다", "I built an Agent that selects specialist tools and a set of conditions that trigger human review")}
+{T("p", "Agent(Planner)는 <b>다음에 쓸 도구만 고르고</b>, 후보를 채택할지는 Python 검사와 MQM 재평가가 정합니다. 처리가 중단되면 해당 단계와 중단 사유를 <code>RunRecord</code>에 기록해 사람에게 보여줍니다.", "The Agent (planner) <b>only chooses the next tool</b>; whether to accept a candidate is decided by Python checks and MQM re-evaluation. If processing stops, the stage and reason are recorded in <code>RunRecord</code> for human review.", "lead")}
 </div><div class="stage-r"><div class="fan">
 <div class="fc" style="--i:0;z-index:1"><img src="img/ui-run.png" alt="Run result"><span class="fl" data-en="Run result: stage, status and Agent reasoning">실행 결과: 단계, 상태, Agent 판단 근거</span></div>
 <div class="fc" style="--i:1;z-index:3"><img src="img/ui-review.png" alt="Review"><span class="fl" data-en="Review: remaining errors and diff">검토: 남은 오류와 변경점(diff)</span></div>
@@ -179,7 +179,7 @@ build = f"""<section class="cs scn " id="build" style="--scene-h:400vh"><div cla
 <div class="stage-r"><div class="beats cardbeats">
 <div class="beat" data-beat="0"><div class="card"><h3><span class="hl">고른 언어로 번역</span></h3>{T("p", '목표 국가를 고르면 언어가 함께 정해집니다(미국·일본·이탈리아·프랑스·독일). CSV에서는 한 행에 <code>Japan|Italy</code>처럼 <span class="hl">여러 국가</span>를 넣어 문장마다 언어별로 따로 실행합니다. TM·용어집·DNE와 보호 용어가 번역 프롬프트와 검증에 들어갑니다.', 'Choosing a target country also sets the language (US, Japan, Italy, France, Germany). In a CSV a row can hold <span class="hl">several countries</span> such as <code>Japan|Italy</code>, and each language runs separately. TM, terminology, DNE and protected terms feed the translation prompt and the checks.')}</div></div>
 <div class="beat" data-beat="1"><div class="card"><h3><span class="hl">Agent가 고르는 전문 도구</span></h3>{T("p", 'MQM 평가가 오류의 <span class="hl">영역·심각도·위치</span>를 알려주면, Agent가 그 가운데 다음에 쓸 <b>전문 도구</b> 하나를 고릅니다. 도구는 각자 한 영역만 고치도록 제한됩니다: <code>accuracy</code>, <code>terminology</code>, <code>spelling</code>, <code>grammar</code>, <code>style</code>, <code>fluency</code>. 고른 이유도 함께 기록합니다.', 'MQM evaluation reports each error&rsquo;s <span class="hl">category, severity and span</span>, and the Agent picks the next <b>specialist tool</b> from them. Each tool is restricted to one category: <code>accuracy</code>, <code>terminology</code>, <code>spelling</code>, <code>grammar</code>, <code>style</code>, <code>fluency</code>. The reason for the choice is recorded too.')}</div></div>
-<div class="beat" data-beat="2"><div class="card"><h3><span class="hl">사람에게 넘기는 신호</span></h3>{T("p", '후보는 <span class="hl">Python 검사와 MQM 재평가</span>를 통과해야 채택되고, 아니면 Rollback합니다. 안전 검증 실패, Critical 오류, 반복 실패, Agent의 포기처럼 <b>7가지 지점</b>에서 자동 처리를 멈추고, <b>어느 단계에서 왜</b> 멈췄는지를 붙여 사람에게 넘깁니다.', 'A candidate is accepted only if it passes <span class="hl">Python checks and an MQM re-evaluation</span>; otherwise it is rolled back. At <b>seven points</b> (safety-check failure, Critical error, repeated failure, Agent giving up, and more) automation stops and the run is handed to a human with <b>the step and the reason</b>.')}</div></div>
+<div class="beat" data-beat="2"><div class="card"><h3><span class="hl">사람에게 넘기는 신호</span></h3>{T("p", '수정 후보는 <span class="hl">Python 검사와 MQM 재평가</span>를 모두 통과해야 채택되며, 그렇지 않으면 Rollback합니다. 안전 검증 실패, Critical 오류, 반복 실패, Agent의 <code>human_review</code> 선택 등 <b>7가지 조건</b>에 해당하면 자동 처리를 중단하고, <b>중단 단계와 사유</b>를 기록해 사람 검토로 전환합니다.', 'A revision candidate is accepted only when it passes <span class="hl">both Python checks and an MQM re-evaluation</span>; otherwise it is rolled back. At <b>seven points</b> (safety-check failure, Critical error, repeated failure, Agent giving up, and more) automation stops and the run is handed to a human with <b>the step and the reason</b>.')}</div></div>
 </div></div></div></div></div></section>"""
 
 # ---------------------------------------------------------------- 06 where humans step in (interactive map)
@@ -198,7 +198,7 @@ MAP = [
         "결정적 검사에서 막힘", "Stopped by a deterministic check",
         "코드 (<code>validation.py</code>)", "Code (<code>validation.py</code>)",
         "보호 용어 누락, 숫자·단위 대응 확정 불가, 번역에 섞인 메타 주석. LLM이 아니라 규칙으로 판단해 <code>HUMAN_REVIEW_REQUIRED</code>로 보냅니다. Agent-first 경로에서는 Agent가 MQM으로 원인을 한 번 더 조사합니다.",
-        "Missing protected term, number/unit correspondence that cannot be confirmed, or meta-commentary leaked into the translation. Rules, not the LLM, decide and send the run to <code>HUMAN_REVIEW_REQUIRED</code>. On the Agent-first path the Agent re-investigates the cause with MQM.",
+        "Missing protected term, number/unit correspondence that cannot be confirmed, or meta-commentary leaked into the translation. Rules, not the LLM, decide and send the run to <code>HUMAN_REVIEW_REQUIRED</code>. On the Agent-first path, the Agent uses MQM to further investigate the cause.",
         "원문과 번역의 숫자·단위 목록을 나란히 보여 줍니다", "Source and translation number/unit lists side by side",
         "프랑스어 &lsquo;2,5 PB&rsquo;처럼 소수점 표기가 달라 같은 값으로 확정하지 못한 경우 → 사례 B", "French &lsquo;2,5 PB&rsquo;: a different decimal format that could not be confirmed as the same value → Case B",
     ),
@@ -224,7 +224,7 @@ MAP = [
         "전체 시도 12회", "12 attempts overall", "",
         "시도 총량 상한", "Overall attempt cap",
         "코드 (<code>MAX_TOTAL_ATTEMPTS=12</code>)", "Code (<code>MAX_TOTAL_ATTEMPTS=12</code>)",
-        "영역별로는 한계에 안 닿아도 한 번의 실행에서 수정 시도가 12회가 되면 멈추고 사람에게 넘깁니다. 끝없이 돌지 않게 하는 안전장치입니다.",
+        "영역별로는 한계에 안 닿아도 한 번의 실행에서 수정 시도가 12회가 되면 멈추고 사람에게 넘깁니다. 수정 시도가 무한히 반복되는 것을 방지하기 위한 제한입니다.",
         "Even if no single category hits its limit, a run stops after 12 revision attempts and goes to a human, so it can never loop forever.",
         "&ldquo;전체 수정 상한 12회 도달&rdquo; 사유", "The reason &ldquo;overall limit of 12 reached&rdquo;",
         "", "",
@@ -233,8 +233,8 @@ MAP = [
         "Agent 포기", "Agent gives up", "",
         "Agent가 사람 몫이라고 판단", "The Agent decides it is a human call",
         "Agent (Planner)", "Agent (planner)",
-        "Planner가 <code>human_review</code>를 고르거나, 전략 최대 2개를 써도 오류가 남으면 사람에게 넘깁니다. 고른 전략과 그 이유가 <code>agent_decisions</code>에 문장으로 남습니다.",
-        "The planner picks <code>human_review</code>, or errors remain after at most two strategies, and the run goes to a human. The chosen strategies and their reasons are stored as sentences in <code>agent_decisions</code>.",
+        "Planner가 <code>human_review</code>를 선택하거나 최대 2개의 전략을 시도한 후에도 오류가 남으면 사람 검토로 전환합니다. 고른 전략과 그 이유가 <code>agent_decisions</code>에 문장으로 남습니다.",
+        "The run is routed to human review if the Planner selects <code>human_review</code> or unresolved errors remain after up to two strategies. The chosen strategies and their reasons are stored as sentences in <code>agent_decisions</code>.",
         "Agent 전략 선택과 근거 문장", "The Agent&rsquo;s strategy choices and reasoning",
         "&ldquo;엄밀한 오류라기보다 표현의 미세한 차이&rdquo; → 사례 C", "&ldquo;less an error than a subtle difference in expression&rdquo; → Case C",
     ),
@@ -242,8 +242,8 @@ MAP = [
         "OpenAI도 미통과", "OpenAI also failed", "",
         "에스컬레이션 후에도 남음", "Still unresolved after escalation",
         "코드 + OpenAI <code>gpt-5-mini</code>", "Code + OpenAI <code>gpt-5-mini</code>",
-        "Qwen Agent가 못 푼 건은 OpenAI가 한 번 더 시도합니다. 후보는 같은 가드레일과 MQM 재평가를 거치고, 통과하지 못하면 그대로 사람 검토입니다. 키가 없으면 Mock이라 상태를 바꾸지 않습니다.",
-        "What the Qwen Agent could not solve gets one more attempt from OpenAI. Its candidate faces the same guardrails and MQM re-evaluation; if it fails, the run stays in human review. Without a key a Mock is used and nothing changes.",
+        "Qwen Agent가 못 푼 건은 OpenAI가 한 번 더 시도합니다. 후보는 같은 가드레일과 MQM 재평가를 거치고, 통과하지 못하면 그대로 사람 검토입니다. OpenAI API 키가 없으면 Mock으로 처리하며 실행 상태는 변경하지 않습니다.",
+        "What the Qwen Agent could not solve gets one more attempt from OpenAI. Its candidate faces the same guardrails and MQM re-evaluation; if it fails, the run stays in human review. If no OpenAI API key is configured, a Mock is used and the run state remains unchanged.",
         "OpenAI 후보와 거부 사유", "The OpenAI candidate and the rejection reason",
         "", "",
     ),
@@ -273,7 +273,7 @@ for i, (kl, ke, cls, hl_ko, hl_en, who_ko, who_en, how_ko, how_en, see_ko, see_e
 
 approach = f"""<section class="cs fig2s" id="approach"><div class="col">{T("div", "06 사람 개입 지점", "06 WHERE HUMANS STEP IN", "eb rv")}
 {T("h2", "자동 처리가 <span class='mk'>어디서 멈추는지</span>, 이유와 함께 알려줍니다", "It tells you <span class='mk'>where automation stops</span>, with the reason", "rv")}
-{T("p", "번역은 한 건마다 이 지점들을 지납니다. 멈춘 지점에 따라 사람이 봐야 할 내용이 달라지므로, 번호를 눌러 <b>누가 판단하고, 무엇을 사람에게 보여주는지</b> 확인해 보세요.", "Every translation passes these points. What a human must look at depends on where it stopped, so click a number to see <b>who decides and what the human is shown</b>.", "lead rv")}
+{T("p", "번역 실행 중 각 조건을 검사하며, 해당하는 조건에 따라 자동 처리를 중단하고 사람 검토로 전환합니다. 멈춘 지점에 따라 사람이 봐야 할 내용이 달라지므로, 번호를 눌러 <b>누가 판단하고, 무엇을 사람에게 보여주는지</b> 확인해 보세요.", "Each translation is checked against these conditions during execution. What a human must look at depends on where it stopped, so click a number to see <b>who decides and what the human is shown</b>.", "lead rv")}
 <div class="lq rv"><div class="lq-map" id="lqmap">{map_btns}</div><div class="lq-panel">{map_panels}</div>
 {T("p", "<b>Figure 1.</b> 코드 상수와 실제 실행 기록에서 정리한 <span class='hl'>사람 개입 지점 7가지와 정상 통과</span>.", "<b>Figure 1.</b> <span class='hl'>Seven human-handoff points plus the pass path</span>, taken from the code constants and real run records.", "cap2")}</div></div></section>"""
 
@@ -286,7 +286,7 @@ team = (
 architecture = f"""<section class="cs" id="architecture"><div class="col">{T("div", "07 구조", "07 ARCHITECTURE", "eb rv")}
 {T("h2", "<span class='mk'>Agent는 고르고</span>, <span class='mk'>코드가 정합니다</span>", "<span class='mk'>The Agent chooses</span>, <span class='mk'>code decides</span>", "rv")}
 {team}
-{T("p", "<code>agent.py</code>의 Planner는 도구 이름 하나와 이유만 돌려줍니다(Tool-calling Agent가 아니라 Planner Chain). 후보 번역을 채택할지는 <code>validation.py</code>와 MQM 재평가가 정하고, 모델과 통신하는 곳은 <code>chains.py</code>뿐입니다. 이 구조 덕분에 <b>무엇이 어디서 막혔는지</b>를 모두 필드로 남길 수 있습니다.", "The planner in <code>agent.py</code> returns just a tool name and a reason (a planner chain, not a tool-calling agent). Whether to accept a candidate is decided by <code>validation.py</code> and MQM re-evaluation, and <code>chains.py</code> is the only place that talks to the model. This is what lets every <b>stuck point</b> be stored as a field.", "lead rv")}
+{T("p", "<code>agent.py</code>의 Planner는 다음에 사용할 도구 한 개와 선택 이유만 반환합니다. Tool-calling Agent가 아닌 Planner Chain으로 구현했습니다. 후보 번역을 채택할지는 <code>validation.py</code>와 MQM 재평가가 정하고, 모델과 통신하는 곳은 <code>chains.py</code>뿐입니다. 이 구조를 통해 <b>실행 단계와 처리 중단 사유</b>를 구조화된 필드에 기록할 수 있습니다.", "The planner in <code>agent.py</code> returns just a tool name and a reason (a planner chain, not a tool-calling agent). Whether to accept a candidate is decided by <code>validation.py</code> and MQM re-evaluation, and <code>chains.py</code> is the only place that talks to the model. This separation allows the system to record the <b>stage and reason</b> for each stop as structured fields.", "lead rv")}
 <div class="rv"><div class="fig"><div class="imgbox"><img src="img/architecture.png" alt="LangChain chains and Python control architecture" style="display:block;width:100%;min-width:760px"></div>
 {T("p", "<b>Figure 2.</b> 모델 호출은 <span class='hl'>LangChain 체인(LCEL)</span>, 실행 순서·채택 여부·검증은 <span class='hl'>Python 코드</span>.", "<b>Figure 2.</b> Model calls via <span class='hl'>LangChain chains (LCEL)</span>; order, acceptance and validation in <span class='hl'>Python code</span>.", "cap")}</div></div>
 <h3 class="grp rv" data-en="What every run records: where and why it got stuck">실행마다 남는 기록: 어디서, 왜 막혔는가</h3>
@@ -308,12 +308,12 @@ KIND = {
 CASES = [
     {
         "tab": ("A · 일본어", "A · Japanese"),
-        "title": ("지명 표기는 고치고, 뉘앙스는 사람에게", "It fixed the place name and left a nuance for a human"),
-        "sum": ("한국어 &lsquo;San Jose&rsquo;가 일본어에서 &lsquo;サンホセ&rsquo;로 옮겨졌습니다. spelling 도구가 이를 고쳤고, 남은 문체 문제는 도구가 해결하지 못해 사람 몫으로 남았습니다.", "&lsquo;San Jose&rsquo; came out as &lsquo;サンホセ&rsquo; in Japanese. The spelling tool fixed it; a remaining style issue the tool could not resolve was left for a human."),
+        "title": ("지명 표기는 고치고, 뉘앙스는 사람에게", "The place name was corrected, while a remaining nuance required human review"),
+        "sum": ("한국어 원문의 지명 &lsquo;San Jose&rsquo;가 일본어로 &lsquo;サンホセ&rsquo;로 번역됐습니다. spelling 도구가 이를 고쳤고, 남은 fluency 오류는 도구가 해결하지 못해 사람의 검토 대상으로 남았습니다.", "&lsquo;San Jose&rsquo; came out as &lsquo;サンホセ&rsquo; in Japanese. The spelling tool fixed it; a remaining style issue the tool could not resolve was left for a human."),
         "steps": [
             ("auto", "초기 번역 (v1)", "Initial translation (v1)", "この会社は、米国カリフォルニア州<b>サンホセ</b>にあるデータセンターに約 2.5PB のデータを保存し&hellip;", "この会社は、米国カリフォルニア州<b>サンホセ</b>にあるデータセンターに約 2.5PB のデータを保存し&hellip;"),
             ("agent", "MQM 평가 → Agent가 spelling 도구 선택", "MQM evaluation → the Agent picks the spelling tool", "<b>spelling · minor</b> — &lsquo;サンホセ&rsquo;는 일본어 표기 &lsquo;サンノゼ&rsquo;와 다르다는 지적. Agent(전략 1/2)는 지역명 표기 오류라 먼저 고쳐야 한다고 판단하고 spelling 도구를 호출했습니다.", "<b>spelling · minor</b>: &lsquo;サンホセ&rsquo; differs from the Japanese form &lsquo;サンノゼ&rsquo;. The Agent (strategy 1/2) judged it a place-name error to fix first and called the spelling tool."),
-            ("auto", "후보 채택 → v2", "Candidate accepted → v2", "サンホセ → <b>サンノゼ</b>. 재평가에서 spelling 오류가 사라져 채택했습니다.", "サンホセ → <b>サンノゼ</b>. The spelling error was gone after re-evaluation, so it was accepted."),
+            ("auto", "후보 채택 → v2", "Candidate accepted → v2", "サンホセ → <b>サンノゼ</b>. 재평가에서 spelling 오류가 사라져 채택했습니다.", "サンホセ → <b>サンノゼ</b>. The revision was accepted after MQM re-evaluation confirmed that the spelling error had been resolved."),
             ("rb", "fluency 도구 후보 거부 → Rollback", "Fluency tool candidate rejected → Rollback", "남은 오류 <b>fluency · minor</b>(&lsquo;매일 새벽&rsquo; 뉘앙스 누락)에 Agent(전략 2/2)가 fluency 도구를 호출했지만 &ldquo;fluency 오류가 감소하지 않음&rdquo;으로 거부되어 v2를 유지했습니다.", "For the remaining <b>fluency · minor</b> error (the &lsquo;early morning&rsquo; nuance missing) the Agent (strategy 2/2) called the fluency tool, but &ldquo;fluency errors did not decrease&rdquo;, so it was rejected and v2 kept."),
             ("human", "사람 검토 필요", "Human review required", "남은 오류: <b>fluency · minor</b>. &lsquo;새벽&rsquo;을 번역에 넣을지는 문체 판단이라, 시도 이력과 거부 사유가 함께 남은 채 사람에게 넘어갑니다.", "Remaining error: <b>fluency · minor</b>. Whether to include &lsquo;early morning&rsquo; is a style call, so it goes to a human with the attempt history and the rejection reason."),
         ],
@@ -328,18 +328,18 @@ CASES = [
             ("agent", "Agent가 원인 조사 (MQM 재평가)", "The Agent investigates (MQM re-evaluation)", "MQM이 아직 돌지 않은 상태라 Agent가 직접 평가를 실행해 <b>accuracy · minor</b> 1건(California &lsquo;주&rsquo; 단위 표현이 약해짐)을 찾았습니다.", "MQM had not run yet, so the Agent ran it and found one <b>accuracy · minor</b> issue (the &lsquo;state&rsquo; level of California is weakened)."),
             ("agent", "전략 1/2: fluency 선택 → 호출 안 함", "Strategy 1/2: fluency → not called", "해당 영역에 미해결 오류가 없어 도구를 부르지 않고 건너뛰었습니다. Planner가 실제 오류에 근거하지 않고 고른 사례로, 이 사실도 그대로 기록됩니다.", "No unresolved error in that category, so the tool was skipped. A case of the planner choosing without grounding in an actual error, and that fact is recorded as is."),
             ("rb", "전략 2/2: accuracy 후보 거부 → Rollback", "Strategy 2/2: accuracy candidate rejected → Rollback", "후보가 현재 번역과 동일하고, 숫자 대응도 확정하지 못해 거부했습니다. v1을 유지합니다.", "The candidate was identical to the current translation and numbers still could not be confirmed, so it was rejected. v1 is kept."),
-            ("human", "사람 검토 필요", "Human review required", "사람이 볼 것: <b>① 2,5 = 2.5 표기 차이인지</b>, <b>② California &lsquo;주&rsquo;를 더 살릴지</b>. 두 이유가 같은 화면에 함께 표시됩니다.", "What the human checks: <b>① whether 2,5 = 2.5 is just a format difference</b>, <b>② whether to preserve &lsquo;state&rsquo; for California</b>. Both reasons appear on the same screen."),
+            ("human", "사람 검토 필요", "Human review required", "사람이 볼 것: <b>① 2,5 = 2.5 표기 차이인지</b>, <b>② California &lsquo;주&rsquo;를 더 살릴지</b>. 두 이유가 같은 화면에 함께 표시됩니다.", "What the human checks: <b>① whether 2,5 = 2.5 is just a format difference</b>, <b>② whether the translation should explicitly identify California as a state</b>. Both reasons appear on the same screen."),
         ],
     },
     {
         "tab": ("C · 영어", "C · English"),
-        "title": ("Agent가 &lsquo;고칠 문제가 아니다&rsquo;라고 사람에게 넘김", "The Agent decided it was not a fix and handed it over"),
+        "title": ("Agent가 &lsquo;고칠 문제가 아니다&rsquo;라고 사람에게 넘김", "The Agent treated it as a subtle wording issue and handed it off for human review"),
         "sum": ("FLORES+(공개 데이터) 문장입니다. Agent가 수정 도구를 부르지 않고, 표현의 미세한 차이라는 이유와 함께 사람 판단으로 넘겼습니다.", "A FLORES+ (public data) sentence. The Agent did not call a fix tool and handed it to a human, with the reason that it was a subtle difference in expression."),
         "steps": [
             ("auto", "초기 번역 (v1)", "Initial translation (v1)", "&hellip;genuine imported models might cost more than <b>their country of origin</b>.", "&hellip;genuine imported models might cost more than <b>their country of origin</b>."),
             ("agent", "MQM 재평가", "MQM re-evaluation", "<b>fluency · minor</b> 1건: 원문 &lsquo;모국&rsquo;을 &lsquo;their country of origin&rsquo;으로 옮긴 부분.", "One <b>fluency · minor</b> issue: the source &lsquo;모국&rsquo; rendered as &lsquo;their country of origin&rsquo;."),
             ("agent", "전략 1/2: <code>human_review</code> 선택", "Strategy 1/2: <code>human_review</code>", "Planner는 &ldquo;엄밀한 오류라기보다는 표현의 미세한 차이&rdquo;라고 판단해 수정 도구를 호출하지 않았습니다.", "The planner judged it &ldquo;less an error than a subtle difference in expression&rdquo; and called no fix tool."),
-            ("human", "사람 검토 필요", "Human review required", "남은 오류 <b>fluency · minor</b> 1건과 Agent의 판단 근거가 남아, 사람은 받아들일지만 정하면 됩니다.", "One <b>fluency · minor</b> error and the Agent&rsquo;s reasoning remain, so the human only decides whether to accept it."),
+            ("human", "사람 검토 필요", "Human review required", "남은 오류 <b>fluency · minor</b> 1건과 Agent의 판단 근거가 남아, 사람은 해당 표현의 수용 여부와 최종 승인 여부를 결정합니다.", "One <b>fluency · minor</b> error and the Agent&rsquo;s reasoning remain, so the human only decides whether to accept it."),
         ],
     },
 ]
@@ -399,14 +399,14 @@ def rows_tools(items):
 
 
 cases = f"""<section class="cs" id="cases"><div class="col">{T("div", "08 실행 사례", "08 CASE FILES", "eb rv")}
-{T("h2", "실제 실행 기록으로 보는 &lsquo;어디서, 왜 막혔나&rsquo;", "Real run records: where and why it got stuck", "rv")}
-{T("p", "저장된 실행 기록(<code>runs/*.json</code>)에서 고른 사례입니다. 번역이 더 좋아졌는지 점수로 겨루는 것이 아니라, <b>Agent의 단계마다 무슨 일이 일어났고 사람에게 무엇이 남았는지</b>를 따라갑니다.", "Cases picked from the saved run records (<code>runs/*.json</code>). They do not score whether the translation got better; they follow <b>what happened at each Agent step and what was left for the human</b>.", "lead rv")}
+{T("h2", "실제 실행 기록으로 보는 &lsquo;어디서, 왜 막혔나&rsquo;", "Real run records: where processing stopped and why", "rv")}
+{T("p", "저장된 실행 기록(<code>runs/*.json</code>)에서 고른 사례입니다. 번역 품질 점수를 비교하기보다, <b>Agent의 실행 단계별 처리 결과와 사람에게 전달된 검토 항목</b>을 살펴봅니다.", "Cases picked from the saved run records (<code>runs/*.json</code>). Rather than measuring translation improvement, these cases show <b>what happened at each Agent step and what required human review</b>.", "lead rv")}
 <div class="lq rv"><div class="ph-tabs lq-tabs" id="lqtabs">{tabs_html}</div>{cases_html}</div>
 
-<h3 class="grp rv" data-en="Where do humans end up being needed? (127 saved runs)">사람이 필요해지는 곳은 어디였나 (저장된 run 127건)</h3>
+<h3 class="grp rv" data-en="What triggered human review? (127 saved runs)">사람이 필요해지는 곳은 어디였나 (저장된 run 127건)</h3>
 <div class="grid6"><div class="rv chart key">{T("h3", "사람 검토로 넘어간 89건: 멈춘 이유<span class='fin'>HITL</span>", "89 runs handed to a human: why it stopped<span class='fin'>HITL</span>")}{T("p", "한 건은 하나의 이유로 분류했습니다. 숫자·단위 28건에는 &lsquo;2~3km&rsquo;, &lsquo;1600킬로미터 → 1,600km&rsquo;처럼 오류라기보다 표기 차이로 확정하지 못한 경우가 포함됩니다.", "Each run is classified under one reason. The 28 number/unit cases include format differences, such as &lsquo;2~3km&rsquo; or &lsquo;1600 킬로미터 → 1,600km&rsquo;, that could not be confirmed.", "q")}{rows_why(WHY, 51, "final")}</div>
 <div class="rv chart">{T("h3", "사람에게 남은 오류: MQM 영역", "Errors left for the human: MQM category")}{T("p", "사람 검토 건에 남은 미해결 오류 86개를 영역별로 센 것입니다.", "The 86 unresolved errors left in the human-review runs, counted by category.", "q")}{rows_plain(LEFT, 51, "c2")}</div></div>
-<div class="grid6"><div class="rv chart">{T("h3", "도구별 수정 시도: 채택 / 전체", "Tool attempts: accepted / total")}{T("p", "같은 기록에서 수정 시도 중 재평가를 통과해 채택된 비율입니다. 도구마다 잘 듣는 영역이 달라, 사람이 필요한 영역을 미리 짐작할 수 있습니다.", "Of the revision attempts in the same records, the share that passed re-evaluation and was accepted. Tools differ in what they can fix, so you can anticipate where a human will be needed.", "q")}{rows_tools(TOOLS_USE)}</div>
+<div class="grid6"><div class="rv chart">{T("h3", "도구별 수정 시도: 채택 / 전체", "Tool attempts: accepted / total")}{T("p", "같은 기록에서 수정 시도 중 재평가를 통과해 채택된 비율입니다. 도구별 수정 후보의 채택 비율을 통해 어떤 영역에서 수정이 자주 거부됐는지 참고할 수 있습니다.", "Of the revision attempts in the same records, the share that passed re-evaluation and was accepted. Tools differ in what they can fix, so you can anticipate where a human will be needed.", "q")}{rows_tools(TOOLS_USE)}</div>
 <div class="rv chart">{T("h3", "이 숫자를 읽는 법", "How to read these numbers")}{T("p", "개발·실험 중 쌓인 기록이라(영어 82·일본어 16·프랑스어 12·이탈리아어 9·독일어 8) <b>성능 지표가 아닙니다.</b> 같은 문장을 반복 실행한 건도 포함됩니다.", "These accumulated during development and experiments (English 82, Japanese 16, French 12, Italian 9, German 8), so they are <b>not a performance metric</b>; repeated runs of the same sentence are included.", "q")}
 {T("p", "<span class='hl'>이 기록에서 사람 몫으로 남는 것은 주로 fluency와 accuracy의 미세한 차이와, 숫자·단위 표기의 확정 불가였습니다.</span> 그래서 이 영역에서 멈출 때 이유를 붙여 알려주는 것이 Agent 구조의 핵심 역할입니다.", "<span class='hl'>In these records, what is left for humans is mostly subtle fluency/accuracy differences and number/unit formats that cannot be confirmed.</span> Reporting the reason when it stops in those areas is the Agent structure&rsquo;s main job.", "note")}</div></div>
 </div></section>"""
@@ -416,9 +416,9 @@ PRODUCT = [
     ("ui-hero.png", "u", "Service", "서비스", "1. 서비스 화면", "1. Service screen", "입력 방식과 목표 국가를 고르면 번역 &rarr; MQM 평가 &rarr; 수정 &rarr; 사람 승인 단계가 진행 표시와 함께 나옵니다.", "Choose the input mode and target country; the steps translate &rarr; MQM &rarr; revise &rarr; approval appear with progress."),
     ("ui-mode-direct.png", "u", "Input", "입력", "2. 직접 입력: 언어 고르기", "2. Direct input: choose languages", "한국어 원문(필수)과 목표 국가, 보호 용어·추가 지시(선택)를 넣고 사람이 한 문장씩 점검합니다.", "Enter the Korean source (required), target countries, and optional protected terms and instructions to check one sentence at a time."),
     ("ui-mode-csv.png", "u", "Input", "입력", "3. CSV: 여러 문장 × 여러 국가", "3. CSV: many sentences × many countries", "<code>한국어</code> 열이 있는 CSV(최대 30문장)를 올리면 즉시 검증하고 &ldquo;몇 건이 실행될지&rdquo;를 미리 보여줍니다. 한 행에 <code>Japan|Italy</code>처럼 쓰면 언어별로 따로 실행되고, 한 건이 실패해도 나머지는 계속됩니다.", "Upload a CSV with a <code>한국어</code> column (max 30 sentences); it validates at once and previews how many runs will execute. A row like <code>Japan|Italy</code> runs per language, and one failure does not stop the rest."),
-    ("ui-mode-poc.png", "u", "Input", "입력", "4. PoC 테스트", "4. PoC test", "내장 문장 30개 중 하나를 골라 바로 돌려 봅니다. 설치 확인과 데모, 모델·프롬프트 변경 전후 비교에 씁니다.", "Pick one of 30 built-in sentences and run it right away, for install checks, demos, and before/after comparison of model or prompt changes."),
+    ("ui-mode-poc.png", "u", "Input", "입력", "4. PoC 테스트", "4. PoC test", "내장 문장 30개 중 하나를 골라 바로 돌려 봅니다. 설치 확인과 데모, 모델·프롬프트 변경 전후 비교에 씁니다.", "Select one of 30 built-in sentences to verify installation, run a demo, or compare results before and after model or prompt changes."),
     ("ui-run.png", "c", "Result", "결과", "5. 실행 결과: 단계·상태·판단 근거", "5. Run result: steps, status, reasoning", "진행 단계, 상태 배지, 원문·번역 비교, 수정 이력(채택/Rollback), Agent 판단 근거를 국가별 카드로 보여줍니다. 어디서 멈췄는지가 한눈에 보입니다.", "Progress steps, status badge, source vs. translation, revision history (accepted / rolled back) and Agent reasoning per country, so where it stopped is visible at a glance."),
-    ("ui-review.png", "c", "Result", "결과", "6. 검토·승인", "6. Review & approval", "남은 MQM 오류와 실패 사유, 이전 버전과의 변경점(diff)을 보고 직접 수정 / AI 재수정 / 승인 / 거부를 선택합니다. 프랑스어 예시는 숫자·단위를 자동 확정할 수 없어 후보를 거부하고 사람에게 넘긴 의도된 동작입니다.", "See remaining MQM errors, failure reasons and a diff against the previous version, then edit / AI re-revise / approve / reject. The French example rejects the candidate and hands off because numbers/units cannot be confirmed automatically, which is intended."),
+    ("ui-review.png", "c", "Result", "결과", "6. 검토·승인", "6. Review & approval", "남은 MQM 오류와 실패 사유, 이전 버전과의 변경점(diff)을 보고 직접 수정 / AI 재수정 / 승인 / 거부를 선택합니다. 프랑스어 예시는 숫자·단위를 자동 확정할 수 없어 후보를 거부하고 사람에게 넘긴 의도된 동작입니다.", "Review the remaining MQM errors, failure reasons, and differences from the previous version, then choose to edit, request another AI revision, approve, or reject. The French example rejects the candidate and hands off because numbers/units cannot be confirmed automatically, which is intended."),
 ]
 beats = ""
 inds = ""
@@ -431,29 +431,29 @@ for i, (f, kind, tag_en, tag_ko, t_ko, t_en, d_ko, d_en) in enumerate(PRODUCT):
     )
     inds += f'<li data-beat="{i}" data-en="{en(t_en)}">{t_ko}</li>'
 product = f"""<section class="cs gal gal2" id="product"><div class="col stage-grid"><div class="stage-l">{T("div", "09 화면", "09 PRODUCT", "eb")}
-{T("h2", "고르고, 돌리고, 막힌 곳을 확인합니다", "Choose, run, and check where it got stuck")}
-{T("p", "어느 입력 방식이든 이후 흐름(번역 &rarr; MQM 평가 &rarr; 수정 &rarr; 사람 승인)은 같습니다. 화면 속 결과는 로컬 Qwen3.5 4B로 실제 실행해 저장된 기록을 다시 불러와 캡처했고, 문장은 모두 작성자가 만든 가상의 예시입니다.", "Whichever way you enter text, the rest is identical: translate &rarr; MQM &rarr; revise &rarr; human approval. Results shown were captured by reloading real runs (local Qwen3.5 4B); all sentences are fictional examples by the author.", "lead")}
+{T("h2", "고르고, 돌리고, 막힌 곳을 확인합니다", "Select an input, execute the workflow, and inspect where it stopped")}
+{T("p", "어느 입력 방식이든 이후 흐름(번역 &rarr; MQM 평가 &rarr; 수정 &rarr; 사람 승인)은 같습니다. 화면 속 결과는 로컬 Qwen3.5 4B로 실제 실행해 저장된 기록을 다시 불러와 캡처했고, 문장은 모두 작성자가 만든 가상의 예시입니다.", "Regardless of the input method, the same workflow follows: translation &rarr; MQM evaluation &rarr; revision &rarr; human approval. Results shown were captured by reloading real runs (local Qwen3.5 4B); all sentences are fictional examples by the author.", "lead")}
 <ol class="ind">{inds}</ol></div>
 <div class="stage-r"><div class="beats cardbeats tilebeats">{beats}</div>
 <div class="gnav"><button type="button" class="gb" data-d="-1" aria-label="Previous screen">&larr;</button><span class="gcount">1 / {len(PRODUCT)}</span><button type="button" class="gb" data-d="1" aria-label="Next screen">&rarr;</button></div></div></div></section>"""
 
 # ---------------------------------------------------------------- 10 / 11
 VP = GITHUB + "/blob/main/docs/VALIDATION_PROTOCOL.md"
-safety = f"""<section class="cs" id="safety"><div class="col">{T("div", "10 안전", "10 SAFETY", "eb rv")}{T("h2", "사람이 결정권을 갖도록", "Keeping the decision with a human", "rv")}
+safety = f"""<section class="cs" id="safety"><div class="col">{T("div", "10 안전", "10 SAFETY", "eb rv")}{T("h2", "사람이 결정권을 갖도록", "Keeping final decisions with human reviewers", "rv")}
 <div class="rv"><table class="tbl oneline">
 <tr>{T("th", "자동 승인 없음", "No auto-approval")}{T("td", "오류가 하나도 없어도 <code>AWAITING_HUMAN_APPROVAL</code>에서 멈춥니다. 번역 메모리(TM) 일치도 자동 승인하지 않습니다.", "Even with zero errors the run stops at <code>AWAITING_HUMAN_APPROVAL</code>. A translation-memory (TM) hit is not auto-approved either.")}</tr>
 <tr>{T("th", "Agent의 권한 제한", "Limited Agent authority")}{T("td", "Agent는 다음 도구와 이유만 고릅니다. 후보의 채택·Rollback·상태 전환은 Python 검사와 MQM 재평가가 정합니다.", "The Agent only chooses the next tool and a reason. Acceptance, rollback and state transitions are decided by Python checks and MQM re-evaluation.")}</tr>
 <tr>{T("th", "결정적 검사", "Deterministic checks")}{T("td", "보호 용어, 숫자·단위, 번역에 섞인 메타 주석은 LLM이 아니라 규칙으로 막고, 확정할 수 없으면 사람에게 넘깁니다.", "Protected terms, numbers/units and leaked meta-comments are caught by rules, not the LLM; if they cannot be confirmed the run goes to a human.")}</tr>
 <tr>{T("th", "설명 가능성", "Explainability")}{T("td", "수정 전후, Agent 판단 근거, 채택/거부 사유를 <code>run_id</code>별 JSON으로 저장하고 결과는 CSV로 누적합니다.", "Before/after, Agent reasoning and accept/reject reasons are stored per <code>run_id</code> as JSON; results accumulate in CSV.")}</tr>
-<tr>{T("th", "검증 원칙", "Validation protocol")}{T("td", "테스트 통과는 번역 품질의 증거가 아니고, 실험 결과가 사람 승인을 대신하지 않습니다. 증거의 범위는 <a href='" + VP + "' target='_blank' rel='noopener'>VALIDATION_PROTOCOL.md</a>에 정리했습니다.", "Passing tests is not proof of translation quality, and an experiment result does not replace human approval. The evidence boundaries are written down in <a href='" + VP + "' target='_blank' rel='noopener'>VALIDATION_PROTOCOL.md</a>.")}</tr>
+<tr>{T("th", "검증 원칙", "Validation protocol")}{T("td", "테스트 통과만으로 번역 품질이 입증되지는 않으며, 실험 결과도 사람 승인을 대체하지 않습니다. 증거의 범위는 <a href='" + VP + "' target='_blank' rel='noopener'>VALIDATION_PROTOCOL.md</a>에 정리했습니다.", "Passing tests is not proof of translation quality, and an experiment result does not replace human approval. The evidence boundaries are written down in <a href='" + VP + "' target='_blank' rel='noopener'>VALIDATION_PROTOCOL.md</a>.")}</tr>
 </table></div></div></section>"""
 
 more = f"""<section class="cs" id="more"><div class="col">{T("div", "11 기타", "11 MORE", "eb rv")}{T("h2", "기타", "More", "rv")}
 <div class="rv"><table class="tbl oneline">
-<tr>{T("th", "현재 한계", "Limits")}{T("td", "소형 로컬 모델(Qwen3.5 4B) 기준이라 Agent의 판단 품질에 한계가 있습니다. Planner가 실제 오류에 근거하지 않고 도구를 고르는 경우가 있어(사례 B), 선택 가능한 도구를 남은 오류의 영역으로 제한하는 개선을 계획 중입니다. 숫자·단위 검사는 표기 차이를 오탐할 수 있습니다.", "The small local model (Qwen3.5 4B) limits the Agent&rsquo;s judgment. The planner sometimes picks a tool without grounding in an actual error (Case B); restricting its choices to categories present in the remaining errors is planned. The number/unit check can false-positive on format differences.")}</tr>
+<tr>{T("th", "현재 한계", "Limits")}{T("td", "소형 로컬 모델(Qwen3.5 4B) 기준이라 Agent의 판단 품질에 한계가 있습니다. Planner가 실제 오류에 근거하지 않고 도구를 고르는 경우가 있어(사례 B), 선택 가능한 도구를 남은 오류의 영역으로 제한하는 개선을 계획 중입니다. 숫자·단위 검사는 표기 차이를 오탐할 수 있습니다.", "The Agent's decision quality is constrained by the capabilities of the local Qwen3.5 4B model. The planner sometimes picks a tool without grounding in an actual error (Case B); restricting its choices to categories present in the remaining errors is planned. The number/unit check can produce false positives when formatting differs.")}</tr>
 <tr>{T("th", "미구현", "Not built")}{T("td", "CSV는 순차 실행(최대 30문장)입니다. 비동기 큐·병렬·다중 사용자와 LangGraph Checkpointer, 모델별 정량 비교와 Golden Dataset 평가는 향후 과제입니다. RAG/Vector DB는 범위에서 제외했습니다.", "CSV runs sequentially (max 30). Async queue, parallelism, multi-user, a LangGraph Checkpointer, per-model quantitative comparison and a golden dataset are future work. RAG/vector DB is out of scope.")}</tr>
 <tr>{T("th", "데이터", "Data")}{T("td", "공개 데이터셋 FLORES+(CC BY-SA 4.0)만 사용했고, TM·용어집·DNE는 이를 바탕으로 새로 만들었습니다. 화면과 사례 속 예시 문장은 FLORES+ 문장을 제외하면 모두 가상입니다.", "Only the public FLORES+ dataset (CC BY-SA 4.0) is used; TM, terminology and DNE were newly derived from it. Apart from FLORES+ sentences, all example sentences shown are fictional.")}</tr>
-<tr>{T("th", "독립성", "Independence")}{T("td", "작성자 개인이 개인 시간·장비로 만든 독립 프로젝트이며, 어떤 회사의 내부 코드·프롬프트·데이터·평가 결과도 포함하지 않습니다. 코드는 MIT 라이선스입니다.", "An independent personal project built on personal time and equipment; it contains no internal code, prompts, data or evaluation results of any company. Code is MIT-licensed.")}</tr>
+<tr>{T("th", "독립성", "Independence")}{T("td", "개인 시간과 장비로 개발한 독립 프로젝트이며, 어떤 회사의 내부 코드·프롬프트·데이터·평가 결과도 포함하지 않습니다. 코드는 MIT 라이선스입니다.", "This independent project was developed using personal time and equipment. It contains no proprietary code, prompts, data, or evaluation results from any company. Code is MIT-licensed.")}</tr>
 <tr><th>Tech</th><td>Python 3.11, LangChain (LCEL), Pydantic, Ollama (Qwen3.5 4B), OpenAI gpt-5-mini</td></tr>
 <tr><th>Tech (UI &amp; data)</th><td>Gradio (PWA, English/한국어), pandas, pytest, FLORES+</td></tr>
 <tr>{T("th", "저장소", "Repository")}<td><a href="{GITHUB}" target="_blank" rel="noopener">github.com/sihunwang-skala/l10n-quality-agent</a></td></tr>
