@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L10n Quality Agent</title>
+<meta name="description" content="번역 오류를 MQM으로 찾고, 유형별로 고치고, 다시 검증하고, 사람이 승인하는 번역 품질 개선 Agent.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16202a;--mute:#47566a;--line:#e3e8ee;--bg:#fff;--soft:#f5f7fa;--navy:#14304f;--accent:#0f8b8d;--accent2:#e4572e;--ok:#2e8b57;--warn:#c98a00;--bad:#c0392b;--hl:#ffe27a;--shadow:0 8px 30px rgba(20,48,79,.08)}
+html[data-theme=dark]{--ink:#e8edf3;--mute:#a3b0c0;--line:#27323f;--bg:#0e141b;--soft:#151e28;--navy:#9cc6ee;--accent:#4fd1c5;--accent2:#ff8a65;--ok:#5fcf8f;--warn:#f0b84a;--bad:#ff7b6b;--hl:#5a4a10;--shadow:0 8px 30px rgba(0,0,0,.4)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.72 Inter,"Noto Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word;transition:background .3s,color .3s}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+a{color:var(--accent)}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:22px;align-items:center;height:54px;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
+nav b{margin-right:auto;font-weight:800;letter-spacing:-.01em}nav b i{font-style:normal;color:var(--accent)}
+nav a{color:var(--mute);text-decoration:none;font-size:14px;font-weight:500}nav a:hover,nav a.on{color:var(--ink)}
+nav a.on{font-weight:700}
+.tb{font:600 12.5px Inter,sans-serif;border:1px solid var(--line);background:var(--soft);color:var(--ink);border-radius:99px;padding:5px 12px;cursor:pointer}.tb:hover{border-color:var(--accent)}
+#prog{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;z-index:20}
+.hero{text-align:center;padding:76px 0 30px}
+.eb{font:700 12.5px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.18;font-weight:800;letter-spacing:-.025em;margin:12px auto 16px;max-width:920px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.slogan{font-size:clamp(17px,2.2vw,22px);font-weight:600;color:var(--mute);margin:0 auto 18px;max-width:760px}
+.auth{margin:4px 0 0;font-size:17px}.aff{color:var(--mute);font-size:14.5px}
+.btns{display:flex;gap:10px;justify-content:center;margin:24px 0 30px;flex-wrap:wrap}
+.btn{background:var(--navy);color:var(--bg);text-decoration:none;font-weight:700;padding:10px 20px;border-radius:10px;font-size:15px;transition:transform .15s}.btn:hover{transform:translateY(-2px)}
+.btn.o{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.tldr{font-size:19px;max-width:860px;margin:0 auto 28px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;text-align:left}
+.kpi{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.kpi b{display:block;font-size:32px;line-height:1.1;color:var(--accent2);font-weight:800}
+.kpi .kl{display:block;font-weight:800;font-size:15px;margin:4px 0 4px}
+.kpi span{font-size:13px;color:var(--mute);line-height:1.45;display:block}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:22px}
+.chips span{background:color-mix(in srgb,var(--accent) 12%,transparent);border:1.5px solid color-mix(in srgb,var(--accent) 45%,transparent);color:var(--ink);font-weight:600;font-size:13.5px;padding:4px 12px;border-radius:99px}
+.herofig{margin:34px auto 0;max-width:760px;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.herofig img{display:block;width:100%}
+section{padding:68px 0;border-top:1px solid var(--line)}
+h2{font-size:clamp(24px,3.3vw,34px);line-height:1.28;margin:4px 0 12px;letter-spacing:-.018em;font-weight:800;max-width:820px}
+.lead{color:var(--mute);font-size:17.5px;max-width:820px;margin:0 0 28px}
+.hl{background:linear-gradient(transparent 58%,var(--hl) 58%);font-weight:700;padding:0 1px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.card h3{margin:0 0 6px;font-size:17px}.card p{margin:0;color:var(--mute);font-size:15px}
+.card .ic{font-size:26px;display:block;margin-bottom:6px}
+.card.top{border-top:4px solid var(--accent)}.card.topb{border-top:4px solid var(--accent2)}
+code{font:500 .88em "JetBrains Mono",monospace;background:var(--soft);border:1px solid var(--line);padding:1px 6px;border-radius:6px}
+/* pipeline stepper */
+.stepper{display:grid;grid-template-columns:260px 1fr;gap:18px;margin-top:6px}
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{all:unset;cursor:pointer;display:flex;gap:12px;align-items:center;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg);font-size:14.5px;font-weight:600;transition:.2s}
+.step i{font:700 12px "JetBrains Mono",monospace;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);flex:none}
+.step:hover{border-color:var(--accent)}
+.step.on{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--bg))}.step.on i{background:var(--accent);color:var(--bg)}
+.panel{border:1px solid var(--line);border-radius:16px;padding:24px 26px;background:var(--soft);min-height:300px}
+.panel h3{margin:0 0 4px;font-size:21px}.panel .who{font:700 12px "JetBrains Mono",monospace;color:var(--accent);letter-spacing:.08em}
+.panel ul{margin:12px 0 0;padding-left:20px;color:var(--mute);font-size:15px}.panel li{margin:4px 0}
+.badge{display:inline-block;font:700 11.5px "JetBrains Mono",monospace;padding:3px 9px;border-radius:6px;margin-right:6px}
+.b-ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}.b-bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}.b-warn{background:color-mix(in srgb,var(--warn) 20%,transparent);color:var(--warn)}.b-n{background:var(--line);color:var(--mute)}
+.loop{margin-top:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px}
+.loop .n{border:1.5px solid var(--line);background:var(--bg);border-radius:10px;padding:6px 11px;font-weight:600}
+.loop .n.r{border-color:var(--bad);color:var(--bad)}.loop .n.g{border-color:var(--ok);color:var(--ok)}
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.tab{all:unset;cursor:pointer;padding:9px 16px;border:1.5px solid var(--line);border-radius:10px;font-weight:700;font-size:14.5px}
+.tab.on{background:var(--navy);color:var(--bg);border-color:var(--navy)}
+.modes{display:grid;grid-template-columns:1fr 1.25fr;gap:24px;align-items:start}
+.modes .shot{border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}.modes .shot img{display:block;width:100%}
+.kv{margin:0;padding:0;list-style:none}.kv li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:15px;color:var(--mute)}.kv b{color:var(--ink);display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;font-family:"JetBrains Mono",monospace}
+.fig{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff;overflow-x:auto}.fig img{display:block;min-width:760px;width:100%}
+.cap{font-size:14px;color:var(--mute);margin:10px 4px 0}
+/* charts */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:20px 22px}
+.chart h3{margin:0 0 2px;font-size:17px}.chart .q{color:var(--mute);font-size:13.5px;margin:0 0 14px}
+.row{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:center;margin:9px 0;font-size:13px}
+.row .nm{font-weight:700}
+.pair{display:flex;flex-direction:column;gap:4px}
+.track{height:15px;background:var(--line);border-radius:5px;overflow:hidden;display:flex;align-items:center;position:relative}
+.bar{height:100%;width:0;border-radius:5px;transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.bar.a{background:#9fb2c8}.bar.b{background:var(--accent)}.bar.w{background:var(--accent2)}
+.in .bar{width:var(--w)}
+.bv{position:absolute;right:6px;font:700 10.5px Inter,sans-serif;color:var(--ink)}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--mute);margin-top:8px}.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.note{margin:12px 0 0;font-size:13.5px;color:var(--mute)}
+.caveat{margin-top:18px;border:1.5px dashed var(--warn);border-radius:14px;padding:14px 18px;font-size:14.5px;color:var(--mute)}.caveat b{color:var(--ink)}
+table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{font:700 12px "JetBrains Mono",monospace;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.tw{overflow-x:auto}
+/* timeline */
+.tl{border-left:2px solid var(--line);margin:8px 0 0 8px;padding-left:24px}
+.tl .it{position:relative;margin-bottom:22px}.tl .it::before{content:"";position:absolute;left:-31px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent2);border:3px solid var(--bg)}
+.tl .it h3{margin:0 0 2px;font-size:17px}.tl .it p{margin:0;color:var(--mute);font-size:15px}.tl .d{font:700 12px "JetBrains Mono",monospace;color:var(--accent2)}
+details{border:1px solid var(--line);border-radius:12px;margin-bottom:8px;background:var(--bg)}
+summary{cursor:pointer;padding:12px 16px;font-weight:700;font-size:15px;list-style:none;display:flex;justify-content:space-between}
+summary::-webkit-details-marker{display:none}summary::after{content:"+";color:var(--accent2);font-size:20px}details[open] summary::after{content:"\2212"}details[open]{border-color:var(--accent2)}
+details p{margin:0;padding:0 16px 14px;font-size:14.5px;color:var(--mute)}
+footer{border-top:1px solid var(--line);padding:36px 0 60px;color:var(--mute);font-size:14px;text-align:center}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+@media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}.stepper,.modes,.grid2{grid-template-columns:1fr}.steps{flex-direction:row;overflow-x:auto}.step{white-space:nowrap}}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.bar{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav><div class="wrap">
+  <b>L10n <i>Quality</i> Agent</b>
+  <a href="#problem" data-ko="문제" data-en="Problem">문제</a>
+  <a href="#design" data-ko="설계 원칙" data-en="Design">설계 원칙</a>
+  <a href="#flow" data-ko="동작 흐름" data-en="Flow">동작 흐름</a>
+  <a href="#architecture" data-ko="구조" data-en="Architecture">구조</a>
+  <a href="#product" data-ko="화면" data-en="Product">화면</a>
+  <a href="#evaluation" data-ko="평가" data-en="Evaluation">평가</a>
+  <a href="#lessons" data-ko="실험 기록" data-en="Lessons">실험 기록</a>
+  <a href="#limits" data-ko="한계·출처" data-en="Limits">한계·출처</a>
+  <button class="tb" id="lang">EN</button><button class="tb" id="theme" aria-label="theme">◐</button>
+</div></nav>
+
+<header class="wrap hero">
+  <div class="eb rv">Agentic · MQM · Human-in-the-loop</div>
+  <h1 class="rv" data-ko="L10n Quality Agent:<br><em>찾고, 고치고, 다시 검증하고, 사람이 승인합니다</em>" data-en="L10n Quality Agent:<br><em>Find, fix, re-verify — a human approves</em>">L10n Quality Agent:<br><em>찾고, 고치고, 다시 검증하고, 사람이 승인합니다</em></h1>
+  <p class="slogan rv" data-ko="AI 번역의 오류를 MQM 기준으로 찾고, 유형별 전문 도구로 고치고, 나빠지면 되돌리는 번역 품질 개선 Agent" data-en="A translation-quality agent that finds errors with MQM, fixes them with category-specific tools, and rolls back whenever a fix makes things worse.">AI 번역의 오류를 MQM 기준으로 찾고, 유형별 전문 도구로 고치고, 나빠지면 되돌리는 번역 품질 개선 Agent</p>
+  <p class="auth rv"><b>Sihun Wang (왕시훈)</b></p>
+  <div class="aff rv" data-ko="개인 프로젝트 · 로컬 LLM(Qwen3.5 4B) 기반" data-en="Personal project · built on a local LLM (Qwen3.5 4B)">개인 프로젝트 · 로컬 LLM(Qwen3.5 4B) 기반</div>
+  <div class="btns rv">
+    <a class="btn" href="https://github.com/sihunwang-skala/l10n-quality-agent" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn o" href="#flow" data-ko="동작 흐름 보기" data-en="See how it works">동작 흐름 보기</a>
+  </div>
+  <p class="tldr rv" data-ko="AI에게 “여기만 고쳐줘”라고 하면 <span class='hl'>멀쩡한 부분까지 바꾸거나 새 오류를 만듭니다.</span> 그래서 오류 종류별로 담당 도구를 나누고, 고칠 때마다 전체를 다시 평가해 나빠지면 되돌립니다." data-en="Ask an AI to “just fix this part” and it often <span class='hl'>rewrites parts that were fine or introduces new errors.</span> So the work is split by error category, everything is re-evaluated after each fix, and any change that makes things worse is rolled back.">AI에게 “여기만 고쳐줘”라고 하면 <span class="hl">멀쩡한 부분까지 바꾸거나 새 오류를 만듭니다.</span> 그래서 오류 종류별로 담당 도구를 나누고, 고칠 때마다 전체를 다시 평가해 나빠지면 되돌립니다.</p>
+  <div class="kpis rv">
+    <div class="kpi"><b>6</b><span class="kl" data-ko="전문 수정 체인" data-en="Specialist fix chains">전문 수정 체인</span><span data-ko="accuracy · terminology · spelling · grammar · style · fluency" data-en="accuracy · terminology · spelling · grammar · style · fluency">accuracy · terminology · spelling · grammar · style · fluency</span></div>
+    <div class="kpi"><b>2×</b><span class="kl" data-ko="카테고리별 재시도 상한" data-en="Retries per category">카테고리별 재시도 상한</span><span data-ko="전체 시도는 최대 12회. 넘으면 사람에게 넘김" data-en="Max 12 attempts overall, then it hands off to a human">전체 시도는 최대 12회. 넘으면 사람에게 넘김</span></div>
+    <div class="kpi"><b>7</b><span class="kl" data-ko="실행 상태" data-en="Run states">실행 상태</span><span data-ko="모든 실행을 JSON으로 저장 · 수정 전후와 판단 근거 추적" data-en="Every run saved as JSON: before/after and the reasoning">모든 실행을 JSON으로 저장 · 수정 전후와 판단 근거 추적</span></div>
+    <div class="kpi"><b>100%</b><span class="kl" data-ko="최종 승인은 사람" data-en="Human final say">최종 승인은 사람</span><span data-ko="자동 처리는 번역·평가·수정까지" data-en="Automation stops at translate · evaluate · revise">자동 처리는 번역·평가·수정까지</span></div>
+  </div>
+  <div class="chips rv"><span>LangChain (LCEL)</span><span>Ollama · Qwen3.5 4B</span><span>OpenAI gpt-5-mini (escalation)</span><span>Pydantic</span><span>Gradio</span><span>FLORES+</span></div>
+  <figure class="herofig rv"><img src="img/ui-hero.png" alt="L10n Quality Agent Gradio UI" loading="eager"></figure>
+</header>
+
+<section id="problem"><div class="wrap">
+  <div class="eb rv">01 · Problem</div>
+  <h2 class="rv" data-ko="AI 번역은 빠르지만, “고치는 과정”이 통제되지 않습니다" data-en="AI translation is fast, but the fixing step is uncontrolled">AI 번역은 빠르지만, “고치는 과정”이 통제되지 않습니다</h2>
+  <p class="lead rv" data-ko="오류를 하나 지적하면 모델은 문장 전체를 다시 쓰곤 합니다. 최종 결과만 보면 무엇이 문제였고 왜 그렇게 고쳤는지 되짚기도 어렵습니다." data-en="Point out one error and the model tends to rewrite the whole sentence. From the final output alone, it is hard to tell what was wrong and why it was changed.">오류를 하나 지적하면 모델은 문장 전체를 다시 쓰곤 합니다. 최종 결과만 보면 무엇이 문제였고 왜 그렇게 고쳤는지 되짚기도 어렵습니다.</p>
+  <div class="cards">
+    <div class="card topb rv"><span class="ic">🎯</span><h3 data-ko="과잉 수정" data-en="Over-editing">과잉 수정</h3><p data-ko="용어 하나만 고치라 했는데 멀쩡한 표현까지 바뀝니다." data-en="Asked to fix one term, it rewrites phrasing that was already right.">용어 하나만 고치라 했는데 멀쩡한 표현까지 바뀝니다.</p></div>
+    <div class="card topb rv"><span class="ic">🧨</span><h3 data-ko="새 오류 유입" data-en="New errors">새 오류 유입</h3><p data-ko="고치다가 숫자·단위가 틀어지거나 보호 용어가 사라집니다." data-en="Numbers, units or protected terms drift while fixing.">고치다가 숫자·단위가 틀어지거나 보호 용어가 사라집니다.</p></div>
+    <div class="card topb rv"><span class="ic">🕳️</span><h3 data-ko="추적 불가" data-en="No audit trail">추적 불가</h3><p data-ko="수정 전후와 채택·거부 이유가 남지 않아 검수자가 검증할 수 없습니다." data-en="No record of before/after or accept/reject reasons for reviewers.">수정 전후와 채택·거부 이유가 남지 않아 검수자가 검증할 수 없습니다.</p></div>
+    <div class="card topb rv"><span class="ic">🙈</span><h3 data-ko="자기 확신" data-en="Overconfidence">자기 확신</h3><p data-ko="모델은 “다 고쳤다”고 말하지만 사람이 승인할 근거는 없습니다." data-en="The model says it's all fixed, but gives a human nothing to base approval on.">모델은 “다 고쳤다”고 말하지만 사람이 승인할 근거는 없습니다.</p></div>
+  </div>
+</div></section>
+
+<section id="design"><div class="wrap">
+  <div class="eb rv">02 · Design principles</div>
+  <h2 class="rv" data-ko="여섯 가지 원칙으로 설계했습니다" data-en="Six principles shaped the design">여섯 가지 원칙으로 설계했습니다</h2>
+  <p class="lead rv" data-ko="LLM은 후보를 만들 뿐, 채택·상태 전환·종료는 Python 코드가 결정합니다." data-en="The LLM only proposes candidates; Python code decides acceptance, state transitions and termination.">LLM은 후보를 만들 뿐, 채택·상태 전환·종료는 Python 코드가 결정합니다.</p>
+  <div class="cards">
+    <div class="card top rv"><h3>1 · <span data-ko="MQM으로 나눠 다룬다" data-en="Split by MQM">MQM으로 나눠 다룬다</span></h3><p data-ko="오류를 accuracy / terminology / spelling / grammar / style / fluency로 분류하고 심각도를 매깁니다." data-en="Errors are classified into six MQM categories with severity.">오류를 accuracy / terminology / spelling / grammar / style / fluency로 분류하고 심각도를 매깁니다.</p></div>
+    <div class="card top rv"><h3>2 · <span data-ko="고칠 때마다 전체 재평가, Rollback" data-en="Re-evaluate and roll back">고칠 때마다 전체 재평가, Rollback</span></h3><p data-ko="대상 오류가 줄지 않았거나 새 Critical 오류가 생기면 후보를 버리고 이전 번역을 유지합니다." data-en="If the target error didn't shrink or a new Critical error appears, the candidate is discarded.">대상 오류가 줄지 않았거나 새 Critical 오류가 생기면 후보를 버리고 이전 번역을 유지합니다.</p></div>
+    <div class="card top rv"><h3>3 · <span data-ko="결정적 검사로 한 번 더" data-en="Deterministic checks">결정적 검사로 한 번 더</span></h3><p data-ko="숫자·단위·보호 용어·메타 주석 혼입은 LLM이 아니라 정규식·집합 비교로 막습니다 (<code>validation.py</code>)." data-en="Numbers, units, protected terms and leaked meta-comments are checked by regex and set comparison, not the LLM (<code>validation.py</code>).">숫자·단위·보호 용어·메타 주석 혼입은 LLM이 아니라 정규식·집합 비교로 막습니다 (<code>validation.py</code>).</p></div>
+    <div class="card top rv"><h3>4 · <span data-ko="다음 전략은 Agent가 판단" data-en="Agent picks the strategy">다음 전략은 Agent가 판단</span></h3><p data-ko="남은 오류와 수정 이력을 보고 다음에 어떤 카테고리를 시도할지, 포기할지를 고릅니다." data-en="Given remaining errors and history, it chooses which category to try next, or to give up.">남은 오류와 수정 이력을 보고 다음에 어떤 카테고리를 시도할지, 포기할지를 고릅니다.</p></div>
+    <div class="card top rv"><h3>5 · <span data-ko="로컬 → OpenAI → 사람" data-en="Local → OpenAI → human">로컬 → OpenAI → 사람</span></h3><p data-ko="Qwen이 못 풀면 gpt-5-mini로 한 번 더. 그래도 안 되면 사람 검토. API 키가 없으면 Mock으로 대체됩니다." data-en="If Qwen can't solve it, gpt-5-mini gets one more try; then a human reviews. Without an API key a Mock stands in.">Qwen이 못 풀면 gpt-5-mini로 한 번 더. 그래도 안 되면 사람 검토. API 키가 없으면 Mock으로 대체됩니다.</p></div>
+    <div class="card top rv"><h3>6 · <span data-ko="전부 기록한다" data-en="Record everything">전부 기록한다</span></h3><p data-ko="수정 전후, 판단 근거, 채택/거부 사유를 <code>run_id</code> 단위 JSON으로 남기고 결과는 CSV로 누적합니다." data-en="Before/after, reasoning and accept/reject reasons are stored per <code>run_id</code> as JSON; results accumulate in CSV.">수정 전후, 판단 근거, 채택/거부 사유를 <code>run_id</code> 단위 JSON으로 남기고 결과는 CSV로 누적합니다.</p></div>
+  </div>
+</div></section>
+
+<section id="flow"><div class="wrap">
+  <div class="eb rv">03 · How it works</div>
+  <h2 class="rv" data-ko="한 문장이 승인될 때까지: 단계를 눌러 보세요" data-en="From one sentence to approval — click a step">한 문장이 승인될 때까지: 단계를 눌러 보세요</h2>
+  <p class="lead rv" data-ko="코드의 실제 상태 머신(<code>AgentStatus</code>)과 임계값(<code>MAX_ATTEMPTS_PER_CATEGORY=2</code>, <code>MAX_TOTAL_ATTEMPTS=12</code>)을 그대로 옮겼습니다." data-en="This mirrors the real state machine (<code>AgentStatus</code>) and limits (<code>MAX_ATTEMPTS_PER_CATEGORY=2</code>, <code>MAX_TOTAL_ATTEMPTS=12</code>).">코드의 실제 상태 머신(<code>AgentStatus</code>)과 임계값(<code>MAX_ATTEMPTS_PER_CATEGORY=2</code>, <code>MAX_TOTAL_ATTEMPTS=12</code>)을 그대로 옮겼습니다.</p>
+  <div class="stepper rv">
+    <div class="steps" id="steps"></div>
+    <div class="panel" id="panel"></div>
+  </div>
+</div></section>
+
+<section id="architecture"><div class="wrap">
+  <div class="eb rv">04 · Architecture</div>
+  <h2 class="rv" data-ko="모델 호출은 LangChain, 제어는 Python" data-en="LangChain for model calls, Python for control">모델 호출은 LangChain, 제어는 Python</h2>
+  <p class="lead rv" data-ko="<code>workflow.py</code> 하나가 유일한 오케스트레이터이고, Ollama와 통신하는 곳은 <code>chains.py</code>뿐입니다. UI와 CLI는 같은 Workflow를 호출합니다." data-en="<code>workflow.py</code> is the only orchestrator, and <code>chains.py</code> is the only place that talks to Ollama. The UI and CLI call the same Workflow.">
+  <code>workflow.py</code> 하나가 유일한 오케스트레이터이고, Ollama와 통신하는 곳은 <code>chains.py</code>뿐입니다. UI와 CLI는 같은 Workflow를 호출합니다.</p>
+  <figure class="fig rv"><img src="img/architecture.png" alt="LangChain chains and Python control architecture" loading="lazy"></figure>
+  <div class="cards" style="margin-top:18px">
+    <div class="card rv"><h3 data-ko="번역 · MQM 평가 체인" data-en="Translate · MQM chains">번역 · MQM 평가 체인</h3><p data-ko="<code>Prompt → ChatOllama → Parser</code>. 평가는 Pydantic 구조화 출력(<code>MQMResult</code>)으로 오류 위치·심각도·수정 제안을 받습니다." data-en="<code>Prompt → ChatOllama → Parser</code>. Evaluation returns Pydantic <code>MQMResult</code> with span, severity and suggested fix.">…</p></div>
+    <div class="card rv"><h3 data-ko="번역 자원 3종" data-en="Three resources">번역 자원 3종</h3><p data-ko="<b>TM</b>(번역 메모리)·<b>용어집</b>·<b>DNE</b>(이미 맞는 표현 보호)를 프롬프트와 검증에 주입합니다. TM 일치도 자동 승인하지 않습니다." data-en="<b>TM</b>, <b>terminology</b> and <b>DNE</b> (protect already-correct phrases) feed prompts and validation. A TM hit is never auto-approved.">…</p></div>
+    <div class="card rv"><h3 data-ko="재현성 스냅샷" data-en="Reproducibility">재현성 스냅샷</h3><p data-ko="<code>RunRecord</code>가 모델명·temperature·seed·프롬프트 버전과 전체 버전·시도 이력을 소유해, 설정이 바뀌어도 과거 실행을 그대로 재현합니다." data-en="<code>RunRecord</code> owns model, temperature, seed, prompt versions and every version/attempt, so past runs stay reproducible.">…</p></div>
+  </div>
+</div></section>
+
+<section id="product"><div class="wrap">
+  <div class="eb rv">05 · Product</div>
+  <h2 class="rv" data-ko="입력은 세 가지, 흐름은 같습니다" data-en="Three ways in, one flow">입력은 세 가지, 흐름은 같습니다</h2>
+  <p class="lead rv" data-ko="어느 방식이든 이후 흐름(번역 → MQM 평가 → 수정 → 사람 승인)은 같습니다. 자동으로 하는 것은 수정까지이고, 승인은 항상 사람이 합니다." data-en="Whichever way you enter text, the rest is identical: translate → MQM → revise → human approval. Automation stops at revision; approval is always human.">어느 방식이든 이후 흐름(번역 → MQM 평가 → 수정 → 사람 승인)은 같습니다. 자동으로 하는 것은 수정까지이고, 승인은 항상 사람이 합니다.</p>
+  <div class="tabs rv" id="tabs"></div>
+  <div class="modes rv" id="modes"></div>
+
+  <h2 class="rv" style="margin-top:56px;font-size:clamp(20px,2.6vw,26px)" data-ko="결과와 검토·승인 화면" data-en="Results and review screens">결과와 검토·승인 화면</h2>
+  <div class="grid2">
+    <figure class="fig rv" style="margin:0"><img src="img/ui-run.png" alt="Run result" style="min-width:0" loading="lazy"><p class="cap" data-ko="<b>실행 결과</b>: 진행 단계, 상태 배지, 원문·번역 비교, 수정 이력(채택/Rollback), Agent 판단 근거" data-en="<b>Run result</b>: progress steps, status badge, source vs. translation, revision history (accepted/rolled back), agent reasoning"></p></figure>
+    <figure class="fig rv" style="margin:0"><img src="img/ui-review.png" alt="Review and approval" style="min-width:0" loading="lazy"><p class="cap" data-ko="<b>검토·승인</b>: 남은 MQM 오류, 이전 버전과의 diff, 직접 수정 / AI 재수정 / 승인 / 거부" data-en="<b>Review</b>: remaining MQM errors, diff against the previous version, edit / AI re-revise / approve / reject"></p></figure>
+  </div>
+  <p class="note rv" data-ko="화면 속 결과는 로컬 Qwen3.5 4B로 실제 실행해 <code>runs/</code>에 저장된 기록을 UI에서 다시 불러와 캡처한 것입니다. 문장은 모두 작성자가 만든 가상의 예시이며, 프랑스어 예시는 숫자·단위 대응을 자동 확정할 수 없어 수정 후보를 거부(Rollback)하고 사람 검토로 넘긴, 의도된 동작입니다." data-en="Screens were captured by reloading real runs (local Qwen3.5 4B) saved in <code>runs/</code>. All sentences are fictional examples by the author. The French example rejects the candidate (rollback) and hands off to a human because number/unit correspondence cannot be confirmed automatically — intended behavior."></p>
+</div></section>
+
+<section id="evaluation"><div class="wrap">
+  <div class="eb rv">06 · Evaluation</div>
+  <h2 class="rv" data-ko="아직 “더 좋아졌다”고 말할 수 있는 단계는 아닙니다" data-en="Not yet at “it got better” — and the numbers say so">아직 “더 좋아졌다”고 말할 수 있는 단계는 아닙니다</h2>
+  <p class="lead rv" data-ko="FLORES+ dev 문장을 언어당 3개씩 뽑아(seed=42) <b>단순 번역(A)</b>과 <b>Agent 최종본(B)</b>을 chrF로 비교한 Baseline입니다. 표본이 작아서 방향성만 봅니다." data-en="Baseline on 3 FLORES+ dev sentences per language (seed=42), comparing <b>plain translation (A)</b> with the <b>agent's final output (B)</b> by chrF. The sample is tiny; read it as direction only.">FLORES+ dev 문장을 언어당 3개씩 뽑아(seed=42) 단순 번역(A)과 Agent 최종본(B)을 chrF로 비교한 Baseline입니다. 표본이 작아서 방향성만 봅니다.</p>
+  <div class="grid2" id="charts">
+    <div class="chart rv"><h3 data-ko="chrF: 단순 번역 vs Agent" data-en="chrF: plain vs agent">chrF: 단순 번역 vs Agent</h3><p class="q" data-ko="언어별 평균(n=3). 높을수록 참조 번역과 가깝습니다." data-en="Mean per language (n=3). Higher is closer to the reference."></p>
+      <div id="chrf"></div>
+      <div class="legend"><span><i style="background:#9fb2c8"></i>A · plain</span><span><i style="background:var(--accent)"></i>B · agent</span></div></div>
+    <div class="chart rv"><h3 data-ko="문장당 평균 소요 시간 (초)" data-en="Mean seconds per sentence">문장당 평균 소요 시간 (초)</h3><p class="q" data-ko="로컬 Ollama(Qwen3.5 4B) 기준. 평가·재시도 호출이 늘어난 비용입니다." data-en="Local Ollama (Qwen3.5 4B). The cost of extra evaluate/retry calls."></p>
+      <div id="secs"></div>
+      <div class="legend"><span><i style="background:#9fb2c8"></i>A · plain</span><span><i style="background:var(--accent2)"></i>B · agent</span></div></div>
+  </div>
+  <div class="caveat rv" data-ko="<b>정직하게 읽기.</b> 4개 언어 12쌍 모두 최종 상태가 <code>HUMAN_REVIEW_REQUIRED</code>였고, chrF는 일본어·이탈리아어 동일, 독일어 +1.6, 프랑스어 −5.6이었습니다. 즉 현재 4B 로컬 모델에서 Agent는 품질 점수를 일관되게 올리지 못했고, 시간만 약 10~20배 늘었습니다. 이 시스템의 가치는 “점수 상승”보다 <b>실패를 숨기지 않고 사람에게 넘기며 이유를 남기는 것</b>에 있습니다." data-en="<b>Read it honestly.</b> All 12 pairs across 4 languages ended in <code>HUMAN_REVIEW_REQUIRED</code>. chrF was unchanged for Japanese and Italian, +1.6 for German and −5.6 for French. With a 4B local model the agent did not reliably raise scores and cost roughly 10–20× the time. Its value today is <b>not hiding failures: it hands them to a human with the reasons recorded</b>."></div>
+
+  <h3 class="rv" style="margin:40px 0 10px" data-ko="Wikivoyage KO→EN 5문장 비교 (TM·용어집·DNE 적용)" data-en="Wikivoyage KO→EN, 5 sentences (TM + terminology + DNE)">Wikivoyage KO→EN 5문장 비교 (TM·용어집·DNE 적용)</h3>
+  <div class="tw rv"><table>
+    <tr><th>id</th><th data-ko="최종 상태" data-en="Final status">최종 상태</th><th data-ko="MQM 오류 (초기→최종)" data-en="MQM errors (init→final)">MQM 오류 (초기→최종)</th><th data-ko="시도" data-en="Attempts">시도</th><th data-ko="시간" data-en="Time">시간</th><th>chrF</th></tr>
+    <tr><td>889</td><td><span class="badge b-ok">AWAITING_APPROVAL</span></td><td>0 → 0</td><td>0</td><td>1.7s</td><td>67.3</td></tr>
+    <tr><td>883</td><td><span class="badge b-ok">AWAITING_APPROVAL</span></td><td>0 → 0</td><td>0</td><td>1.7s</td><td>78.3</td></tr>
+    <tr><td>806</td><td><span class="badge b-warn">HUMAN_REVIEW</span></td><td>1 → 1</td><td>2</td><td>27.2s</td><td>33.9</td></tr>
+    <tr><td>969</td><td><span class="badge b-warn">HUMAN_REVIEW</span></td><td>1 → 1</td><td>2</td><td>28.8s</td><td>31.4</td></tr>
+    <tr><td>938</td><td><span class="badge b-warn">HUMAN_REVIEW</span></td><td>3 → 1</td><td>2</td><td>28.6s</td><td>31.7</td></tr>
+  </table></div>
+  <p class="note rv" data-ko="고정 Workflow 기준 첫 실행(2026-09-22 13:05). 5문장 중 2문장은 자동 검사를 통과해 사람 승인 대기, 3문장은 사람 검토로 넘어갔고 id 938만 오류가 3건에서 1건으로 줄었습니다." data-en="First fixed-Workflow run (2026-09-22 13:05). Two of five passed automatic checks and await approval; three went to human review, and only id 938 reduced errors (3 → 1)."></p>
+</div></section>
+
+<section id="lessons"><div class="wrap">
+  <div class="eb rv">07 · Experiment log</div>
+  <h2 class="rv" data-ko="실험하면서 실제로 발견한 문제들" data-en="Problems found while experimenting">실험하면서 실제로 발견한 문제들</h2>
+  <p class="lead rv" data-ko="한 번에 하나의 가설만 바꾸고 전후를 기록합니다. 불리한 결과도 그대로 적었습니다 (<code>EXPERIMENT_LOG.md</code>)." data-en="One hypothesis at a time, before/after recorded — including the unflattering results (<code>EXPERIMENT_LOG.md</code>).">한 번에 하나의 가설만 바꾸고 전후를 기록합니다. 불리한 결과도 그대로 적었습니다 (<code>EXPERIMENT_LOG.md</code>).</p>
+  <div class="tl">
+    <div class="it rv"><span class="d">2026-09-22 · Baseline 0</span><h3 data-ko="카테고리별 성공률이 다를 수 있다는 신호" data-en="Category success rates may differ">카테고리별 성공률이 다를 수 있다는 신호</h3><p data-ko="독일어 2문장 모두 chrF는 올랐지만 사람 검토로 종료. 한 문장은 다른 카테고리는 고쳤고 fluency만 반복 실패 → fluency 프롬프트가 약하다는 가설 A." data-en="Both German sentences improved on chrF yet ended in human review. One fixed other categories but kept failing on fluency → hypothesis A: the fluency prompt is weaker."></p></div>
+    <div class="it rv"><span class="d">2026-09-22 · Wikivoyage smoke</span><h3 data-ko="결정적 검증기의 오탐" data-en="False positive in the deterministic validator">결정적 검증기의 오탐</h3><p data-ko="번역은 정확한데 “2~3km”가 “2 to 3 kilometers”와 매칭되지 않아(spelled-out 단위) 숫자 검증에서 즉시 사람 검토로 보냈습니다. 정규식 한계로 기록하고 범위 밖 이슈로 남김." data-en="The translation was right, but “2~3km” didn't match “2 to 3 kilometers” (spelled-out unit), so the numeric check sent it straight to human review. Logged as a regex limitation."></p></div>
+    <div class="it rv"><span class="d">2026-09-22 · Agent</span><h3 data-ko="“오류 없음 = 해결됨”이라 착각한 심각한 버그" data-en="A serious bug: “no errors” read as “solved”">“오류 없음 = 해결됨”이라 착각한 심각한 버그</h3><p data-ko="결정적 검증 실패로 MQM을 건너뛴 run은 <code>unresolved_errors</code>가 빈 리스트인데, Agent가 이를 해결됨으로 보고 승인 대기로 올렸습니다. 진입 가드를 고치고 회귀 테스트를 추가했습니다." data-en="For runs that skipped MQM after a deterministic failure, <code>unresolved_errors</code> was empty and the agent treated it as solved, queuing it for approval. Fixed the guard and added a regression test."></p></div>
+    <div class="it rv"><span class="d">2026-09-22 · Planner</span><h3 data-ko="Planner가 근거 없는 카테고리를 제안" data-en="Planner proposes ungrounded categories">Planner가 근거 없는 카테고리를 제안</h3><p data-ko="5문장 예비 실행에서 Agent는 추가로 해결한 건이 0건이었고, 감지되지 않은 카테고리(accuracy, terminology)를 골라 예산만 소모했습니다. 다음 개선: <code>strategy</code>를 실제 남은 오류의 category 집합으로 제한." data-en="In the 5-sentence preliminary run the agent resolved nothing extra and spent budget on categories (accuracy, terminology) never detected. Next fix: constrain <code>strategy</code> to categories actually present in the remaining errors."></p></div>
+  </div>
+  <div class="toggles rv" style="margin-top:20px">
+    <details><summary data-ko="다음에 할 실험" data-en="Next experiments">다음에 할 실험</summary><p data-ko="Baseline 1(4개 언어 × 3문장)에서 카테고리별 accept/reject 비율을 집계하고, 그 결과로 나온 구체적 실패 사례를 근거로 프롬프트 변경을 시작합니다. 거부 조건(<code>category_count</code> 비교)이 “개선됐는데도 거부”로 오판하는지는 별도 이슈로 추적합니다." data-en="Aggregate per-category accept/reject rates in Baseline 1 (4 languages × 3 sentences), then change prompts only based on concrete failures. Whether the rejection rule (<code>category_count</code> comparison) wrongly rejects real improvements is tracked as a separate issue."></p></details>
+  </div>
+</div></section>
+
+<section id="limits"><div class="wrap">
+  <div class="eb rv">08 · Limits &amp; provenance</div>
+  <h2 class="rv" data-ko="한계와 출처" data-en="Limits and provenance">한계와 출처</h2>
+  <div class="cards">
+    <div class="card rv"><h3 data-ko="현재 한계" data-en="Current limits">현재 한계</h3><p data-ko="CSV는 순차 실행(최대 30문장). 비동기 큐·병렬·다중 사용자와 LangGraph Checkpointer는 미구현. 4B 로컬 모델이라 판단 품질에 한계가 있고, 모델별 정량 비교·Golden Dataset 평가는 향후 과제. RAG/Vector DB는 범위 제외." data-en="CSV runs sequentially (max 30). No async queue, parallelism, multi-user or LangGraph Checkpointer. A 4B local model limits judgment quality; per-model comparison and a golden dataset are future work. RAG/vector DB is out of scope."></p></div>
+    <div class="card rv"><h3 data-ko="데이터" data-en="Data">데이터</h3><p data-ko="공개 데이터셋 <b>FLORES+</b>(CC BY-SA 4.0)만 사용했고, TM·용어집·DNE는 이를 바탕으로 새로 만들었습니다. 화면 속 예시 문장은 모두 가상입니다." data-en="Only the public <b>FLORES+</b> dataset (CC BY-SA 4.0) is used; TM, terminology and DNE were newly derived from it. All example sentences on screen are fictional."></p></div>
+    <div class="card rv"><h3 data-ko="독립성" data-en="Independence">독립성</h3><p data-ko="작성자 개인이 개인 시간·장비로 만든 독립 프로젝트이며, 어떤 회사의 내부 코드·프롬프트·데이터·평가 결과도 포함하지 않습니다. 코드는 MIT 라이선스입니다." data-en="An independent personal project built on personal time and equipment. It includes no internal code, prompts, data or evaluation results from any company. Code is MIT-licensed."></p></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div data-ko="© 2026 Sihun Wang · <a href='https://github.com/sihunwang-skala/l10n-quality-agent' target='_blank' rel='noopener'>GitHub</a> · MIT License" data-en="© 2026 Sihun Wang · <a href='https://github.com/sihunwang-skala/l10n-quality-agent' target='_blank' rel='noopener'>GitHub</a> · MIT License">© 2026 Sihun Wang · <a href="https://github.com/sihunwang-skala/l10n-quality-agent" target="_blank" rel="noopener">GitHub</a> · MIT License</div>
+</div></footer>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+let lang='ko';
+try{lang=localStorage.getItem('l10n-lang')||'ko'}catch(e){}
+
+/* ---- data (all content bilingual) ---- */
+const STEPS=[
+ {k:['번역','Translate'],who:'chains.translate',t:['① 초기 번역 (v1)','① Initial translation (v1)'],
+  b:[['TM에 같은 문장이 있으면 신규 번역 호출을 생략하고 그 번역을 씁니다. TM 일치도 자동 승인하지 않습니다.','If the TM has the same sentence, the translate call is skipped and that translation is used — still never auto-approved.'],
+     ['목표 국가/로케일, 보호 용어, 용어집, DNE를 프롬프트 컨텍스트로 주입합니다.','Target locale, protected terms, glossary and DNE are injected as prompt context.'],
+     ['<code>Prompt → ChatOllama(Qwen) → StrOutputParser</code> 체인(LCEL).','<code>Prompt → ChatOllama(Qwen) → StrOutputParser</code> chain (LCEL).']],
+  loop:null},
+ {k:['안전 검증','Safety check'],who:'validation.py',t:['② 결정적 안전 검증','② Deterministic safety check'],
+  b:[['숫자·단위가 원문과 대응하는지, 보호 용어가 남아 있는지, “수정했습니다” 같은 메타 주석이 섞였는지 Python으로 검사합니다.','Python checks numbers/units against the source, that protected terms survive, and that no meta-commentary (“I fixed…”) leaked in.'],
+     ['실패하면 MQM까지 가지 않고 즉시 <span class="badge b-warn">HUMAN_REVIEW_REQUIRED</span>.','On failure it skips MQM and goes straight to <span class="badge b-warn">HUMAN_REVIEW_REQUIRED</span>.'],
+     ['알려진 한계: “2~3km” ↔ “2 to 3 kilometers” 같은 범위+풀어 쓴 단위는 오탐이 납니다.','Known limit: ranges with spelled-out units (“2~3km” ↔ “2 to 3 kilometers”) trigger false positives.']],
+  loop:null},
+ {k:['MQM 평가','MQM evaluate'],who:'chains.evaluate',t:['③ MQM 평가','③ MQM evaluation'],
+  b:[['Pydantic <code>MQMResult</code>로 오류 목록(카테고리, 심각도, 위치 span, 설명, 수정 제안)을 구조화해 받습니다.','Returns a structured Pydantic <code>MQMResult</code>: category, severity, span, explanation, suggested fix.'],
+     ['오류가 없으면 <span class="badge b-ok">AWAITING_HUMAN_APPROVAL</span>. Critical이 있으면 곧바로 사람 검토.','No errors → <span class="badge b-ok">AWAITING_HUMAN_APPROVAL</span>. Any Critical → straight to human review.'],
+     ['우선순위: accuracy › terminology › spelling › grammar › style › fluency','Priority: accuracy › terminology › spelling › grammar › style › fluency']],
+  loop:null},
+ {k:['전문 수정','Specialist fix'],who:'chains.revise(category)',t:['④ 카테고리별 전문 수정','④ Category-specific revision'],
+  b:[['선택된 카테고리의 오류만 고치도록 제한된 전용 체인을 호출합니다. (6종)','A dedicated chain restricted to the selected category runs (6 in total).'],
+     ['DNE에 등록된 이미 맞는 표현은 수정에서 보호됩니다.','Phrases registered in DNE are protected from edits.'],
+     ['카테고리당 최대 2회, 전체 최대 12회.','Max 2 attempts per category, 12 overall.']],
+  loop:null},
+ {k:['재검증·Rollback','Re-verify'],who:'workflow._improve',t:['⑤ 재검증과 Rollback','⑤ Re-verify and roll back'],
+  b:[['후보에 안전 검증을 돌리고, 전체를 다시 MQM 평가합니다.','The candidate gets the safety check and a full MQM re-evaluation.'],
+     ['<b>채택</b>: 검증 통과 + 대상 오류 감소 + 새 Critical 없음 → 새 버전 저장, ③으로 복귀.','<b>Accept</b>: passes validation + target errors shrink + no new Critical → saved as a new version, back to ③.'],
+     ['<b>Rollback</b>: 그 외에는 후보를 버리고 이전 번역을 유지. 같은 카테고리에서 2회 실패하면 사람 검토.','<b>Rollback</b>: otherwise the candidate is discarded. Two failures in one category → human review.']],
+  loop:true},
+ {k:['Agent·에스컬레이션','Agent · escalate'],who:'agent.py · openai_agent.py',t:['⑥ Agent 전략 판단과 에스컬레이션','⑥ Agent strategy & escalation'],
+  b:[['고정 우선순위로 풀리지 않으면 Qwen Agent(Planner)가 남은 오류와 이력을 보고 다음 카테고리를 고르거나 포기합니다.','When fixed priority fails, the Qwen agent (planner) reads remaining errors and history and picks the next category or gives up.'],
+     ['그래도 안 풀리면 OpenAI <code>gpt-5-mini</code>로 한 번 더. 키가 없으면 Mock으로 자동 대체.','Still unresolved → one more try with OpenAI <code>gpt-5-mini</code>; a Mock substitutes when no key is set.'],
+     ['현재 한계: Planner가 감지되지 않은 카테고리를 제안하는 경향이 있습니다 (실험 기록 참고).','Current limit: the planner tends to propose categories that were never detected (see experiment log).']],
+  loop:null},
+ {k:['사람 승인','Human approval'],who:'ui.py · workflow.approve()',t:['⑦ 사람 검토와 승인','⑦ Human review & approval'],
+  b:[['남은 오류와 실패 사유, 이전 버전과의 diff를 보고 <b>직접 수정 / AI 재수정 / 승인 / 거부</b>를 선택합니다.','See remaining errors, failure reasons and a diff, then choose <b>edit / AI re-revise / approve / reject</b>.'],
+     ['<span class="badge b-warn">HUMAN_REVIEW_REQUIRED</span>는 종단 상태가 아니라 “여기서 멈추고 사람이 새 run을 분기하라”는 신호입니다 (<code>parent_run_id</code>로 계보 추적).','<span class="badge b-warn">HUMAN_REVIEW_REQUIRED</span> isn’t terminal — it means “stop, and let a human branch a new run” (lineage via <code>parent_run_id</code>).'],
+     ['<span class="badge b-ok">APPROVED</span> / <span class="badge b-bad">REJECTED</span>']],
+  loop:null}
+];
+const MODES=[
+ {k:['PoC 테스트','PoC test'],img:'img/ui-mode-poc.png',
+  kv:[['입력','Input','내장 문장 30개 중 1개 선택 (타이핑 없음)','Pick 1 of 30 built-in sentences (no typing)'],['용도','Use','설치 확인, 데모, 모델·프롬프트 변경 전후 비교','Install check, demo, before/after comparison for model or prompt changes']]},
+ {k:['직접 입력','Direct input'],img:'img/ui-mode-direct.png',
+  kv:[['입력','Input','한국어 원문(필수), 보호 용어·추가 지시(선택)','Korean source (required); protected terms and extra instructions (optional)'],['용도','Use','사람이 한 문장씩 넣어 품질 점검','A person checks quality one sentence at a time']]},
+ {k:['CSV 업로드','CSV upload'],img:'img/ui-mode-csv.png',
+  kv:[['입력','Input','<code>한국어</code> 열이 있는 CSV (선택: id, 목표국가, 보호용어, 추가지시 · 최대 30문장). 한 행에 <code>Japan|Italy</code>처럼 여러 국가 가능','CSV with a <code>한국어</code> column (optional: id, target country, protected terms, instructions · max 30). Multiple countries per row like <code>Japan|Italy</code>'],['검증','Validation','업로드 즉시 검증하고 “몇 문장·몇 건이 실행될지”를 미리 보여줍니다. 문제가 있으면 실행을 막고 이유를 알려줍니다.','Validated on upload with a preview of how many sentences/runs will execute; blocks with a reason if invalid.'],['용도','Use','한 문장이 실패해도 나머지는 계속 진행하는 일괄 번역','Batch runs that continue even if one sentence fails']]}
+];
+const CHRF=[['Japanese',22.12,22.12],['Italian',37.66,37.66],['French',42.9,37.26],['German',44.36,45.96]];
+const SECS=[['Japanese',2.58,18.65],['Italian',1.29,25.43],['French',1.34,28.43],['German',1.35,21.46]];
+
+/* ---- render ---- */
+const L=()=>lang==='ko'?0:1;
+function renderSteps(sel=0){
+  $('#steps').innerHTML=STEPS.map((s,i)=>`<button class="step ${i===sel?'on':''}" data-i="${i}"><i>${i+1}</i>${s.k[L()]}</button>`).join('');
+  const s=STEPS[sel];
+  $('#panel').innerHTML=`<div class="who">${s.who}</div><h3>${s.t[L()]}</h3><ul>${s.b.map(x=>`<li>${x[L()]||x[0]}</li>`).join('')}</ul>`+(s.loop?`<div class="loop"><span class="n">${L()?'candidate':'후보'}</span>→<span class="n">${L()?'validate + re-evaluate':'검증 + 재평가'}</span>→<span class="n g">${L()?'improved: accept':'개선: 채택'}</span><span style="color:var(--mute)">${L()?'or':'또는'}</span><span class="n r">${L()?'no gain / new Critical: rollback':'개선 없음·새 Critical: Rollback'}</span></div>`:'');
+  $$('.step').forEach(b=>b.onclick=()=>renderSteps(+b.dataset.i));
+}
+function renderModes(sel=0){
+  $('#tabs').innerHTML=MODES.map((m,i)=>`<button class="tab ${i===sel?'on':''}" data-i="${i}">${m.k[L()]}</button>`).join('');
+  const m=MODES[sel];
+  $('#modes').innerHTML=`<ul class="kv">${m.kv.map(r=>`<li><b>${r[L()]}</b>${r[2+L()]}</li>`).join('')}</ul><div class="shot"><img src="${m.img}" alt="${m.k[L()]}" loading="lazy"></div>`;
+  $$('.tab').forEach(b=>b.onclick=()=>renderModes(+b.dataset.i));
+}
+function bars(id,data,max,cls,unit){
+  $(id).innerHTML=data.map(([n,a,b])=>`<div class="row"><div class="nm">${n}</div><div class="pair"><div class="track"><div class="bar a" style="--w:${a/max*100}%"></div><span class="bv">${a}${unit}</span></div><div class="track"><div class="bar ${cls}" style="--w:${b/max*100}%"></div><span class="bv">${b}${unit}</span></div></div></div>`).join('');
+}
+function applyLang(){
+  document.documentElement.lang=lang;
+  $$('[data-en]').forEach(el=>{
+    if(!el.hasAttribute('data-ko'))el.setAttribute('data-ko',el.innerHTML);
+    el.innerHTML=el.getAttribute(lang==='ko'?'data-ko':'data-en');
+  });
+  $('#lang').textContent=lang==='ko'?'EN':'KO';
+  const on=$('.step.on');renderSteps(on?+on.dataset.i:0);
+  const t=$('.tab.on');renderModes(t?+t.dataset.i:0);
+  try{localStorage.setItem('l10n-lang',lang)}catch(e){}
+}
+bars('#chrf',CHRF,50,'b','');bars('#secs',SECS,30,'w','');
+$('#lang').onclick=()=>{lang=lang==='ko'?'en':'ko';applyLang()};
+let th='light';try{th=localStorage.getItem('l10n-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light')}catch(e){}
+document.documentElement.dataset.theme=th;
+$('#theme').onclick=()=>{th=th==='dark'?'light':'dark';document.documentElement.dataset.theme=th;try{localStorage.setItem('l10n-theme',th)}catch(e){}};
+applyLang();
+
+/* reveal + progress + nav highlight */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+$$('.rv,.chart').forEach(el=>io.observe(el));
+const secs=$$('section[id]'),links=$$('nav a[href^="#"]');
+addEventListener('scroll',()=>{
+  const h=document.documentElement;$('#prog').style.width=(scrollY/(h.scrollHeight-innerHeight)*100)+'%';
+  let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<120)cur=s.id});
+  links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur));
+},{passive:true});
+</script>
+</body>
+</html>
