@@ -557,6 +557,9 @@ html[data-theme=dark] .cards .card::before{color:var(--ac)}
 .ph.win{width:100%;max-width:340px;aspect-ratio:4/4.7;border-width:8px;border-radius:18px}
 .ph.win .notch{display:none}
 .role{font:700 14px/1.4 "Noto Sans KR",sans-serif;letter-spacing:.06em;color:var(--ac);margin:0 0 14px}
+/* product gallery: always one screen at a time (slides), even when the page is not pinned */
+html:not(.pinned) .tilebeats .beat{display:none}
+html:not(.pinned) .tilebeats .beat.on{display:block}
 /* hero screenshots: wide browser window below the text, so the web app is readable */
 .hero-grid{grid-template-columns:minmax(0,1fr)!important}
 .ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
@@ -580,7 +583,7 @@ code{font:500 .88em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(-
 /* narrow / portrait screens: never let the hero push the page wider than the viewport */
 .hero-grid>*{min-width:0}
 @media (max-width:1100px){.hero-grid{grid-template-columns:minmax(0,1fr)}.quote{white-space:normal;overflow:visible}.ph.win{max-width:420px}}
-html,body{overflow-x:hidden}
+html,body{overflow-x:clip}
 /* tap affordance: map buttons gently bounce in, then hint once when scrolled into view */
 .lq-n{transition:transform .2s ease,border-color .2s,background .2s,box-shadow .2s}
 .lq-n:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(16,24,40,.10)}
@@ -969,6 +972,8 @@ setInterval(tick,400);
 })();
 </script>
 <script>
+/* keep the page from drifting sideways (it caused the cut-off text on some screens) */
+(function(){addEventListener("scroll",function(){if(scrollX){scrollTo(0,scrollY)}},{passive:true});})();
 /* handoff map + case tabs: all text is already in the DOM (with data-en), so the language switch keeps working */
 (function(){
 function pick(box,btnSel,paneSel,i){box.querySelectorAll(btnSel).forEach(function(b){b.classList.toggle('on',+b.dataset.i===i)});box.querySelectorAll(paneSel).forEach(function(p){p.classList.toggle('on',+p.dataset.i===i)})}
