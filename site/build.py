@@ -599,6 +599,7 @@ custom_js = """<script>
   var cur=0;
   function show(i,push){
     cur=Math.max(0,Math.min(slides.length-1,i));
+    window.scrollTo(0,0); root.scrollTop=0; document.body.scrollTop=0;
     slides.forEach(function(s,k){s.classList.toggle("on",k===cur);if(k===cur)s.scrollTop=0});
     [].forEach.call(dots.children,function(d,k){d.classList.toggle("on",k===cur)});
     count.textContent=(cur+1)+" / "+slides.length;
