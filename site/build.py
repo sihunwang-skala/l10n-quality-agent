@@ -12,6 +12,7 @@ Case files and distributions come from real saved runs (runs/*.json, git-ignored
 Run:  python3 build.py
 """
 import html
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -33,6 +34,13 @@ def card(ko_h, en_h, ko_p, en_p):
 
 
 # ---------------------------------------------------------------- sidebar
+# Standalone by default. `python3 build.py <out.html> --portfolio` links back to the
+# portfolio (../) the way the health-agent page does.
+PORTFOLIO = "--portfolio" in sys.argv
+LOGO_HREF = "../" if PORTFOLIO else "#top"
+BACK_LINK = (
+    '<a href="../#projects" style="display:block;font-size:12px;opacity:.6;margin:-6px 0 10px">&larr; Portfolio</a>' if PORTFOLIO else ""
+)
 NAV = [
     ("context", "01 Context", "01 배경"),
     ("system-problem", "02 System Problem", "02 시스템 문제"),
@@ -47,7 +55,7 @@ NAV = [
     ("more", "11 More", "11 기타"),
 ]
 side = (
-    '<aside class="side"><a class="logo" href="#top">Sihun Wang</a>'
+    f'<aside class="side"><a class="logo" href="{LOGO_HREF}">Sihun Wang</a>{BACK_LINK}'
     '<div class="tree"><div class="t0">Work</div><div class="t1">Projects</div>'
     '<a class="t2 on" href="#top">L10n Quality Agent</a>'
     + "".join(f'<a class="t3" href="#{i}" data-en="{en(e)}">{k}</a>' for i, e, k in NAV)
@@ -497,5 +505,7 @@ page = (
     + build + "\n" + approach + "\n" + architecture + "\n" + cases + "\n" + product + "\n" + safety + "\n" + more
     + "\n</main>\n" + scripts + "\n" + custom_js + "\n</body></html>\n"
 )
-(HERE / "index.html").write_text(page, encoding="utf-8")
-print("wrote", HERE / "index.html", len(page), "bytes")
+args = [a for a in sys.argv[1:] if not a.startswith("--")]
+out = Path(args[0]) if args else HERE / "index.html"
+out.write_text(page, encoding="utf-8")
+print("wrote", out, len(page), "bytes")
