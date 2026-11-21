@@ -224,9 +224,9 @@ MAP = [
         "전체 시도 12회", "12 attempts overall", "",
         "시도 총량 상한", "Overall attempt cap",
         "코드 (<code>MAX_TOTAL_ATTEMPTS=12</code>)", "Code (<code>MAX_TOTAL_ATTEMPTS=12</code>)",
-        "영역별로는 한계에 안 닿아도 한 번의 실행에서 수정 시도가 12회가 되면 멈추고 사람에게 넘깁니다. 수정 시도가 무한히 반복되는 것을 방지하기 위한 제한입니다.",
-        "Even if no single category hits its limit, a run stops after 12 revision attempts and goes to a human, so it can never loop forever.",
-        "&ldquo;전체 수정 상한 12회 도달&rdquo; 사유", "The reason &ldquo;overall limit of 12 reached&rdquo;",
+        "영역별 횟수와 별개로, 한 번의 실행에서 수정 시도가 12회가 되면 멈추고 사람에게 넘깁니다. 수정 시도가 무한히 반복되는 것을 방지하기 위한 제한입니다.",
+        "Even if no single category reaches its cap, a run stops after 12 revision attempts and goes to a human, so it can never loop forever.",
+        "&ldquo;전체 수정 상한 12회 도달&rdquo; 사유", "The reason &ldquo;overall cap of 12 reached&rdquo;",
         "", "",
     ),
     (
@@ -450,7 +450,6 @@ safety = f"""<section class="cs" id="safety"><div class="col">{T("div", "10 안�
 
 more = f"""<section class="cs" id="more"><div class="col">{T("div", "11 기타", "11 MORE", "eb rv")}{T("h2", "기타", "More", "rv")}
 <div class="rv"><table class="tbl oneline">
-<tr>{T("th", "현재 한계", "Limits")}{T("td", "소형 로컬 모델(Qwen3.5 4B) 기준이라 Agent의 판단 품질에 한계가 있습니다. Planner가 실제 오류에 근거하지 않고 도구를 고르는 경우가 있어(사례 B), 선택 가능한 도구를 남은 오류의 영역으로 제한하는 개선을 계획 중입니다. 숫자·단위 검사는 표기 차이를 오탐할 수 있습니다.", "The Agent's decision quality is constrained by the capabilities of the local Qwen3.5 4B model. The planner sometimes picks a tool without grounding in an actual error (Case B); restricting its choices to categories present in the remaining errors is planned. The number/unit check can produce false positives when formatting differs.")}</tr>
 <tr>{T("th", "미구현", "Not built")}{T("td", "CSV는 순차 실행(최대 30문장)입니다. 비동기 큐·병렬·다중 사용자와 LangGraph Checkpointer, 모델별 정량 비교와 Golden Dataset 평가는 향후 과제입니다. RAG/Vector DB는 범위에서 제외했습니다.", "CSV runs sequentially (max 30). Async queue, parallelism, multi-user, a LangGraph Checkpointer, per-model quantitative comparison and a golden dataset are future work. RAG/vector DB is out of scope.")}</tr>
 <tr>{T("th", "데이터", "Data")}{T("td", "공개 데이터셋 FLORES+(CC BY-SA 4.0)만 사용했고, TM·용어집·DNE는 이를 바탕으로 새로 만들었습니다. 화면과 사례 속 예시 문장은 FLORES+ 문장을 제외하면 모두 가상입니다.", "Only the public FLORES+ dataset (CC BY-SA 4.0) is used; TM, terminology and DNE were newly derived from it. Apart from FLORES+ sentences, all example sentences shown are fictional.")}</tr>
 <tr>{T("th", "독립성", "Independence")}{T("td", "개인 시간과 장비로 개발한 독립 프로젝트이며, 어떤 회사의 내부 코드·프롬프트·데이터·평가 결과도 포함하지 않습니다. 코드는 MIT 라이선스입니다.", "This independent project was developed using personal time and equipment. It contains no proprietary code, prompts, data, or evaluation results from any company. Code is MIT-licensed.")}</tr>
