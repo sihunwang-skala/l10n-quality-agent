@@ -140,7 +140,7 @@ LANGS = [("일본어", "Japanese"), ("이탈리아어", "Italian"), ("프랑스�
 context = f"""<section class="cs scn " id="context" style="--scene-h:220vh"><div class="scene"><div class="stage"><div class="col stage-grid"><div class="stage-l">
 {T("div", "01 배경", "01 CONTEXT", "eb")}
 {T("h2", "여러 언어로 번역하면, 어느 번역을 사람이 봐야 할까요?", "When translating into multiple languages, which results need human review?")}
-{T("p", "한국어 문장을 여러 언어로 번역하면 결과가 금세 늘어납니다. 모든 번역을 사람이 검토하기에는 부담이 크고, AI에만 맡기기도 어렵습니다. <b>사람이 검토해야 할 번역을 선별하고 그 이유를 함께 제시해야 했습니다.", "Translating Korean text into multiple languages quickly increases the number of outputs. Reviewing every translation manually is costly, but relying entirely on AI is also risky. We needed a system that identifies which translations require human review and explains why.", "lead")}
+{T("p", "한국어 문장을 여러 언어로 번역하면 결과가 금세 늘어납니다. 모든 번역을 사람이 검토하기에는 부담이 크고, AI에만 맡기기도 어렵습니다. <b>사람이 검토해야 할 번역과 이유</b>를 함께 제시해야 했습니다.", "Translating Korean text into multiple languages quickly increases the number of outputs. Reviewing every translation manually is costly, but relying entirely on AI is also risky. We needed a system that identifies which translations require human review and explains why.", "lead")}
 </div><div class="stage-r"><div class="qv chatv"><div class="chat-h"><span class="av"></span><span class="chat-t">L10n Quality Agent</span></div>
 <div class="msgs"><div class="um"><span class="tx" data-end="0.24" data-t-ko="이 회사는 San Jose 데이터센터에 약 2.5PB의 데이터를 저장합니다." data-t-en="This company stores about 2.5PB of data in its San Jose data center."></span><i class="caret"></i></div>
 <div class="am"><div class="abub">{T("div", "선택한 언어별로 번역하고 품질을 점검합니다", "Translate and review in each selected language", "alabel")}
@@ -674,7 +674,7 @@ _rest=_rest[:-len('</div>')]          # drop the hero-l closing div
 _ph=hero[_j:]
 assert _ph.rstrip().endswith('</div></header>'), _ph[-40:]
 _ph=_ph.rstrip()[:-len('</div></header>')]  # keep ph-wrap block, drop hero-grid + header
-overview='<section class="cs" id="overview"><div class="col">'+_rest+'</div>'+_ph+'</div></section>'
+overview='<section class="cs" id="overview"><div class="col">'+_rest+'</div>'+_ph+'</section>'
 hero=cover
 page = (
     head + "<body>\n" + side + "<main>" + hero + "\n" + overview + "\n" + context + "\n" + problem + "\n" + define + "\n" + decision + "\n"
