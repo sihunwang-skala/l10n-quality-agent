@@ -556,7 +556,11 @@ html[data-theme=dark] .cards .card::before{color:var(--ac)}
 /* l10n additions on top of the shared case-study CSS */
 .ph.win{width:100%;max-width:340px;aspect-ratio:4/4.7;border-width:8px;border-radius:18px}
 .ph.win .notch{display:none}
-.ph.win .pi{object-position:top left}
+.ph.win{background:#fff}
+.ph.win .pi{object-position:top;object-fit:contain;background:#fff;display:none}
+.ph.win .pi.on{display:block}
+html[lang=en] .ph.win .pi.ko{display:none}
+html:not([lang=en]) .ph.win .pi.en{display:none}
 .tile .shot{display:block;width:100%;padding:0;cursor:default}
 .tile .shot img{display:block;width:100%;max-height:62vh;object-fit:cover;object-position:top}
 .tile .shot:hover{transform:none}
