@@ -274,7 +274,7 @@ for i, (kl, ke, cls, hl_ko, hl_en, who_ko, who_en, how_ko, how_en, see_ko, see_e
 approach = f"""<section class="cs fig2s" id="approach"><div class="col">{T("div", "06 사람 개입 지점", "06 WHERE HUMANS STEP IN", "eb rv")}
 {T("h2", "자동 처리가 <span class='mk'>어디서 멈추는지</span>, 이유와 함께 알려줍니다", "It tells you <span class='mk'>where automation stops</span>, with the reason", "rv")}
 {T("p", "번역 실행 중 각 조건을 검사하며, 해당하는 조건에 따라 자동 처리를 중단하고 사람 검토로 전환합니다. 멈춘 지점에 따라 사람이 봐야 할 내용이 달라지므로, 번호를 눌러 <b>누가 판단하고, 무엇을 사람에게 보여주는지</b> 확인해 보세요.", "Each translation is checked against these conditions during execution. What a human must look at depends on where it stopped, so click a number to see <b>who decides and what the human is shown</b>.", "lead rv")}
-<div class="lq rv"><div class="lq-map" id="lqmap">{map_btns}</div><div class="lq-panel">{map_panels}</div>
+<div class="lq rv">{T("p", "<i>↓</i> 번호나 버튼을 눌러 각 지점을 확인하세요", "<i>↓</i> Click a step to see what happens there", "lq-hint")}<div class="lq-map" id="lqmap">{map_btns}</div><div class="lq-panel">{map_panels}</div>
 {T("p", "<b>Figure 1.</b> 코드 상수와 실제 실행 기록에서 정리한 <span class='hl'>사람 개입 지점 7가지와 정상 통과</span>.", "<b>Figure 1.</b> <span class='hl'>Seven human-handoff points plus the pass path</span>, taken from the code constants and real run records.", "cap2")}</div></div></section>"""
 
 # ---------------------------------------------------------------- 07 architecture
@@ -470,7 +470,7 @@ html:not(.pinned) .tilebeats .beat{display:none}
 html:not(.pinned) .tilebeats .beat.on{display:block}
 /* SLIDE DECK: each section is one full screen, moved with buttons / arrow keys / swipe */
 html.deck,html.deck body{height:100%;overflow:hidden}
-html.deck main{position:fixed;top:0;right:0;bottom:0;left:236px;overflow:hidden}
+html.deck main{position:fixed;top:0;right:0;bottom:0;left:236px;margin-left:0!important;overflow:hidden}
 @media (max-width:900px){html.deck main{left:0;top:56px}}
 html.deck main>header,html.deck main>section{display:none;position:absolute;top:0;left:0;right:0;bottom:64px;overflow-y:auto;overflow-x:hidden;margin:0;padding:0}
 html.deck main>header.on{display:flex}
@@ -504,6 +504,22 @@ html.deck .ph.win{max-width:none!important;width:100%!important;background:trans
 html.deck .ph.win .pi{max-height:calc(100vh - 250px)!important;width:100%!important}
 html.deck .fig img{max-height:calc(100vh - 220px);width:auto;max-width:100%;margin:0 auto;display:block}
 html.deck .ph-tabs{margin-top:12px}
+/* definition sentence in the deck: dark text, words fade up one by one (no grey) */
+html.deck .hmw,html.deck .hmw .w{color:var(--ink)!important}
+html.deck .hmw em,html.deck .hmw em .w{color:var(--ac)!important}
+html.deck .hmw .w{opacity:0;transform:translateY(14px);filter:none!important;transition:opacity .45s ease,transform .45s ease}
+html.deck .hmw .w.on{opacity:1;transform:none}
+/* cards step one at a time; the left list stays dark, the active item is bold */
+html.deck .cardbeats .beat{display:none!important}
+html.deck .cardbeats .beat.on{display:block!important}
+html.deck .ind li{color:var(--ink)!important;opacity:.45;font-weight:500;transition:opacity .4s ease}
+html.deck .ind li.on{opacity:1;font-weight:700}
+/* invite a click: unvisited map buttons keep a gentle nudge and the hint stays visible */
+.lq-n:not(.seen){animation:lqNudge 2.4s ease-in-out infinite}
+.lq-n.seen{animation:none}
+@keyframes lqNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.lq-hint{display:flex;align-items:center;gap:8px;font:700 14px/1.4 "Noto Sans KR",sans-serif;color:var(--ac);margin:4px 0 12px}
+.lq-hint i{font-style:normal;display:inline-block;animation:lqNudge 1.6s ease-in-out infinite}
 /* hero screenshots: wide browser window below the text, so the web app is readable */
 .hero-grid{grid-template-columns:minmax(0,1fr)!important}
 .ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
@@ -605,7 +621,24 @@ custom_js = """<script>
   var dots=bar.querySelector(".dk-dots"), count=bar.querySelector(".dk-count");
   var prev=bar.querySelector(".dk-prev"), next=bar.querySelector(".dk-next");
   slides.forEach(function(_,i){var d=document.createElement("button");d.type="button";d.className="dk-dot";d.setAttribute("aria-label","화면 "+(i+1));d.addEventListener("click",function(){show(i)});dots.appendChild(d)});
+  var fill=document.querySelector("[data-fill]");
+  if(fill){
+    fill.removeAttribute("data-fill");
+    if(!fill.querySelector(".w")){
+      (function go(n){[].slice.call(n.childNodes).forEach(function(c){
+        if(c.nodeType===3){var f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(function(t){if(!t)return;if(/^\s+$/.test(t)){f.appendChild(document.createTextNode(t))}else{var sp=document.createElement("span");sp.className="w";sp.textContent=t;f.appendChild(sp)}});c.parentNode.replaceChild(f,c)}
+        else if(c.nodeType===1){go(c)}
+      })})(fill);
+    }
+  }
   var cur=0;
+  function play(i){
+    var box=slides[i]&&slides[i].querySelector(".hmw");
+    if(!box) return;
+    var ws=box.querySelectorAll(".w");
+    ws.forEach(function(w){w.classList.remove("on")});
+    ws.forEach(function(w,k){setTimeout(function(){w.classList.add("on")},200+k*110)});
+  }
   function show(i,push){
     cur=Math.max(0,Math.min(slides.length-1,i));
     window.scrollTo(0,0); root.scrollTop=0; document.body.scrollTop=0;
@@ -614,7 +647,8 @@ custom_js = """<script>
     count.textContent=(cur+1)+" / "+slides.length;
     prev.disabled=cur===0; next.disabled=cur===slides.length-1;
     if(push!==false&&slides[cur].id){try{history.replaceState(null,"","#"+slides[cur].id)}catch(e){}}
-    window.dispatchEvent(new Event("resize"));
+    beatState[cur]=0; paintBeats(cur);
+    play(cur);
   }
   prev.addEventListener("click",function(){show(cur-1)});
   next.addEventListener("click",function(){show(cur+1)});
@@ -635,9 +669,29 @@ custom_js = """<script>
   var sx=null;
   window.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
   window.addEventListener("touchend",function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>50){show(dx<0?cur+1:cur-1)}},{passive:true});
-  /* auto-advance: next screen every 7s, wraps to the first; any manual move restarts the timer */
+  /* cards inside a slide step one at a time (with the left list), then the slide advances */
+  slides.forEach(function(sl){sl.querySelectorAll("[data-beat]").forEach(function(e){e.removeAttribute("data-beat")})});
+  var beatState=slides.map(function(){return 0});
+  function beatsOf(i){ if(slides[i].querySelector(".tilebeats")) return []; return [].slice.call(slides[i].querySelectorAll(".beats .beat")) }
+  function paintBeats(i){
+    var beats=beatsOf(i), inds=slides[i].querySelector(".tilebeats")?[]:[].slice.call(slides[i].querySelectorAll(".ind li"));
+    var k=beatState[i];
+    beats.forEach(function(b,j){b.classList.toggle("on",j===k)});
+    inds.forEach(function(l,j){l.classList.toggle("on",j===k)});
+  }
+  /* auto-advance: a card step every 3.5s, a full screen every 7s; any manual move restarts the timer */
   var timer=null, reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  function arm(){ if(reduce) return; clearInterval(timer); timer=setInterval(function(){ show(cur+1>=slides.length?0:cur+1) },7000); }
+  function stepOf(){ var n=beatsOf(cur).length; return n>1 && beatState[cur]<n-1 }
+  function arm(){
+    if(reduce) return; clearTimeout(timer);
+    timer=setTimeout(function(){
+      if(stepOf()){ beatState[cur]++; paintBeats(cur); arm(); }
+      else { show(cur+1>=slides.length?0:cur+1) }
+    }, 3000);
+  }
+  ["mousemove","mousedown","keydown","wheel","touchstart","scroll"].forEach(function(ev){
+    window.addEventListener(ev,function(){ arm() },{passive:true,capture:true});
+  });
   var _show=show; show=function(i,push){ _show(i,push); arm(); };
   arm();
   var h=location.hash.slice(1), start=slides.findIndex(function(s){return s.id===h});
@@ -650,7 +704,7 @@ custom_js = """<script>
 function pick(box,btnSel,paneSel,i){box.querySelectorAll(btnSel).forEach(function(b){b.classList.toggle('on',+b.dataset.i===i)});box.querySelectorAll(paneSel).forEach(function(p){p.classList.toggle('on',+p.dataset.i===i)})}
 var map=document.getElementById('lqmap');
 if(map){var root=map.closest('.lq');var panel=root.querySelector('.lq-panel');
- map.querySelectorAll('.lq-n').forEach(function(b){b.addEventListener('click',function(){pick(root,'.lq-n','.lq-d',+b.dataset.i);if(panel){panel.classList.remove('flash');void panel.offsetWidth;panel.classList.add('flash')}})});
+ map.querySelectorAll('.lq-n').forEach(function(b){b.addEventListener('click',function(){b.classList.add('seen');pick(root,'.lq-n','.lq-d',+b.dataset.i);if(panel){panel.classList.remove('flash');void panel.offsetWidth;panel.classList.add('flash')}})});
  /* when the map scrolls into view: bounce the buttons in once, then pulse the first unvisited one as a hint */
  var played=false;
  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(!e.isIntersecting||played)return;played=true;io.disconnect();
