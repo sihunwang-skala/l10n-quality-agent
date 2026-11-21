@@ -556,6 +556,14 @@ html[data-theme=dark] .cards .card::before{color:var(--ac)}
 /* l10n additions on top of the shared case-study CSS */
 .ph.win{width:100%;max-width:340px;aspect-ratio:4/4.7;border-width:8px;border-radius:18px}
 .ph.win .notch{display:none}
+/* hero screenshots: wide browser window below the text, so the web app is readable */
+.hero-grid{grid-template-columns:minmax(0,1fr)!important}
+.ph-wrap{max-width:1040px;width:100%;margin:28px auto 0}
+.ph.win{width:100%;max-width:1040px;height:auto;aspect-ratio:auto;border:0;border-radius:14px;background:#fff;box-shadow:0 24px 60px rgba(20,20,40,.18);overflow:hidden;padding:0}
+.ph.win::before{content:"";display:block;height:30px;background:#eceef2;border-bottom:1px solid #d9dde4}
+.ph.win .pi{position:relative;inset:auto;width:100%;height:auto;max-height:660px;object-fit:cover;object-position:top;transform:none;opacity:1;display:none}
+.ph.win .pi.on{display:block}
+.ph-tabs{justify-content:flex-start}
 .ph.win{background:#fff}
 .ph.win .pi{object-position:top;object-fit:contain;background:#fff;display:none}
 .ph.win .pi.on{display:block}
