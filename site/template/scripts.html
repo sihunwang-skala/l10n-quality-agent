@@ -37,7 +37,7 @@ function update(){
    sc.__idx=cur;idx=cur}
   beats.forEach(function(e){var b=+e.dataset.beat;e.classList.toggle('on',b===idx);e.classList.toggle('past',b<idx)});
   sc.querySelectorAll('[data-at]').forEach(function(e){var on=p>=+e.dataset.at||!pinned;e.classList.toggle('on',on);if(on)e.querySelectorAll('.cnt').forEach(count)});
-  var hm=sc.querySelector('[data-fill]');if(hm){wrap(hm);var ws=hm.querySelectorAll('.w'),m=ws.length;ws.forEach(function(w,i){w.classList.toggle('on',i<m)});hm.classList.toggle('done',m>=ws.length)}
+  var hm=sc.querySelector('[data-fill]');if(hm){wrap(hm);var ws=hm.querySelectorAll('.w'),m=pinned?Math.ceil(clamp((p-0.06)/0.62)*ws.length):ws.length;ws.forEach(function(w,i){w.classList.toggle('on',i<m)});hm.classList.toggle('done',m>=ws.length)}
  })}
 var ticking=false;function req(){if(!ticking){ticking=true;requestAnimationFrame(function(){ticking=false;update()})}}
 addEventListener('scroll',req,{passive:true});addEventListener('resize',function(){pinned=matchMedia('(min-width:900px)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches;root.classList.toggle('pinned',pinned);req()});
